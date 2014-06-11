@@ -4,7 +4,7 @@ A function for loading CSS asynchronously
 
 ## Usage
 
-Place `loadCSS` function inline in the `head` of your page, then call it by passing it a stylesheet URL.
+Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page, then call it by passing it a stylesheet URL.
 
 ``` html
 <script>

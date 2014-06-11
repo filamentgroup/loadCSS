@@ -1,6 +1,8 @@
 # loadCSS
 
 A function for loading CSS asynchronously
+[c]2014 @scottjehl, Filament Group, Inc.
+Licensed MIT
 
 ## Usage
 

@@ -3,7 +3,7 @@ loadCSS: load CSS files asynchronously.
 [c]2014 @scottjehl, Filament Group, Inc.
 Licensed MIT
 */
-function loadCSS( href, before ){
+function loadCSS( href, before, media ){
 	"use strict";
 	/*
 		How to use:
@@ -18,6 +18,7 @@ function loadCSS( href, before ){
 				By default, `before` uses the first <script> element in the page.
 				However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 				If so, pass a different reference element to the `before` argument and it'll insert before that instead
+		- `media` is the value for the <link>'s media attribute. Default is "all" or if using the <noscript> option, whatever the original's attribute is.
 	
 		Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
 	*/
@@ -32,23 +33,21 @@ function loadCSS( href, before ){
 	
 	// Inject <link> into DOM
 	function injectLink(ss,ref) {
-	
-		// Save a reference to the original media attribute or default to "all"
-		var media = ss.media || "all";
+		// Save a reference to the original media attribute, use the `media` argument, or default to "all"
+		var ssMedia = ss.media || media || "all";
 		// Temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 		ss.media = "only x";
 		ref.parentNode.insertBefore( ss, ref );
 		// Reset original media attribute so that the styleshet applies once it loads
 		window.setTimeout(function(){
-			ss.media = media;
+			ss.media = ssMedia;
 		},1);
-		
 	}
 	
 	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ],
 			i = 0;
 	
-	if ( href !== undefined && href !== "" ) {
+	if ( href ) {
 		// If `href` is set, add those CSS files
 		if ( href instanceof Array ) {
 			for (; i < href.length; i++){
@@ -57,7 +56,6 @@ function loadCSS( href, before ){
 		} else {
 			injectLink(makeLink(href),ref);
 		}
-		
 	} else {
 		// Otherwise, find all `noscript` elements with the class `async-css` and pull any `link` elements from there
 		var noscripts = window.document.getElementsByTagName("noscript");
@@ -82,7 +80,6 @@ function loadCSS( href, before ){
 				var link = links[i].cloneNode(true);
 				injectLink(link,ref);
 			}
-	
 		}
 	}
 }

@@ -13,7 +13,7 @@ Licensed MIT
 		However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 		If so, pass a different reference element to the `before` argument and it'll insert before that instead
 
-- `media` is the value for the `<link>`'s media attribute. Default is "all" or if using the <noscript> option, whatever the original's attribute is.
+- `media` is the value for the `<link>`'s media attribute. Default is "all" or if using the `<noscript>` option, whatever the original's attribute is.
 
 
 ## Usage

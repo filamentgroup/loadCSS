@@ -54,7 +54,7 @@ Call it by passing it a stylesheet URL or array of URLs.
 ```
 
 ### Insertion Point
-By default, your stylesheet will be inserted before the first `script` tag in the DOM (which may be the one shown above). If you need another insert location, use the optional `before` argument to specify a different sibling element. The stylesheet will be inserted before the element you specify.
+By default, your stylesheet will be inserted before the first `<script>` tag in the DOM (which may be the one shown above). If you need another insert location, use the optional `before` argument to specify a different sibling element. The stylesheet will be inserted before the element you specify.
 
 ``` html
 <head>
@@ -70,7 +70,7 @@ By default, your stylesheet will be inserted before the first `script` tag in th
 
 ### `media` Attribute Override
 
-You can optionally pass a string to the media argument to set the media="" of the stylesheet.  The default value is "all" or if using the <noscript> option, whatever the original's attribute is.
+You can optionally pass a string to the media argument to set the media="" of the stylesheet.  The default value is "all" or if using the `<noscript>` option, whatever the original's attribute is.
 ``` html
 <head>
 ...

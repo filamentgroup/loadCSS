@@ -12,6 +12,16 @@ function loadCSS( href, before, media ){
 	// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 	// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 	// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+
+  // DELETE OLD STYLESHEET IF IT ALREADY EXISTS
+  var current_ss = window.document.getElementsByTagName( "link" );
+  for ( var i = 0, ss; ss = current_ss[i]; i++ ) {
+    if ( ss.getAttribute( "href" ) === href ) {
+      ss.remove();
+    }
+  }
+
+  // ADD THE NEW STYLESHEET
 	var ss = window.document.createElement( "link" );
 	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
 	ss.rel = "stylesheet";
@@ -24,4 +34,4 @@ function loadCSS( href, before, media ){
 	setTimeout( function(){
 		ss.media = media || "all";
 	} );
- }
+}

@@ -6,7 +6,7 @@ Licensed MIT
 
 ## Usage
 
-Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable). 
+Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
 
 Then call it by passing it a stylesheet URL:
 
@@ -16,7 +16,7 @@ Then call it by passing it a stylesheet URL:
 <script>
   loadCSS( href, before, media ){ ... }
   // load a file
-  loadCSS( "path/to/mystylesheet.css" );  
+  loadCSS( "path/to/mystylesheet.css" );
 </script>
 ...
 </head>

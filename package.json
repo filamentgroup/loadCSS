@@ -1,0 +1,11 @@
+{
+  "name": "load-css",
+  "private": true,
+  "main": "loadCSS.js",
+  "scripts": {
+    "minify": "uglifyjs loadCSS.js -m -o loadCSS.min.js"
+  },
+  "devDependencies": {
+    "uglify-js": "2.4.x"
+  }
+}

@@ -14,7 +14,8 @@ Then call it by passing it a stylesheet URL:
 <head>
 ...
 <script>
-  loadCSS( href, before, media ){ ... }
+  // include loadCSS here...
+  function loadCSS( href, before, media ){ ... }
   // load a file
   loadCSS( "path/to/mystylesheet.css" );
 </script>

@@ -24,4 +24,5 @@ function loadCSS( href, before, media ){
 	setTimeout( function(){
 		ss.media = media || "all";
 	} );
+	return ss;
  }

@@ -20,7 +20,7 @@ function loadCSS( href, before, media ){
 	ss.media = "only x";
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
-	// set media back to `all` so that the styleshet applies once it loads
+	// set media back to `all` so that the stylesheet applies once it loads
 	setTimeout( function(){
 		ss.media = media || "all";
 	} );

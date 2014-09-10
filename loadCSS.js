@@ -25,4 +25,4 @@ function loadCSS( href, before, media ){
 		ss.media = media || "all";
 	} );
 	return ss;
- }
+}

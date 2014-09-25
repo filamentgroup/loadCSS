@@ -57,7 +57,7 @@ if( "querySelector" in win.document ) {
 }
 ```
 
-Where `/url/to/woff.css` (and `/url/to/ttf.css`) contain something like:
+Where `/url/to/woff.css` and `/url/to/ttf.css` contain something like:
 
 ``` css
 @font-face {

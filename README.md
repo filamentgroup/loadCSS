@@ -32,3 +32,39 @@ Then call it by passing it a stylesheet URL:
 #### Contributions and bug fixes
 
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!
+
+### Usage Example with Content Fonts
+
+Defeating the Flash of Invisible Text (FOIT) is easy with `loadCSS`. The Flash of Unstyled Text (FOUT) is a feature for progressively rendered web sites—we want our content usable by readers as quicky as possible.
+
+``` javascript
+// Cut the mustard, choose your own method here—querySelector is an easy one.
+if( "querySelector" in win.document ) {
+
+	// test for font-face version to load via Data URI'd CSS
+	var fontFile = "/url/to/woff.css",
+		ua = window.navigator.userAgent;
+
+	// Android's default browser needs TTF instead of WOFF
+	if( ua.indexOf( "Android 4." ) > -1 && ua.indexOf( "like Gecko" ) > -1 && ua.indexOf( "Chrome" ) === -1 ) {
+		fontFile = "/url/to/ttf.css";
+	}
+
+	// load fonts
+	if( fontFile ) {
+		loadCSS( fontFile );
+	}
+}
+```
+
+Where `/url/to/woff.css` (and `/url/to/ttf.css`) contain something like:
+
+``` css
+@font-face {
+  font-family: My Font Family Name;
+  /* Important: Data URI here to prevent FOIT */
+  src: url("data:application/x-font-woff;charset=utf-8;base64,...") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+```

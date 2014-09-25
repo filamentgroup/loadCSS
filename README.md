@@ -35,7 +35,7 @@ Both are very much appreciated - especially bug fixes. As for contributions, the
 
 ### Usage Example with Content Fonts
 
-Defeating the Flash of Invisible Text (FOIT) is easy with `loadCSS`. The Flash of Unstyled Text (FOUT) is a feature for progressively rendered web sites—we want our content usable by readers as quicky as possible.
+Defeating the Flash of Invisible Text (FOIT) is easy with `loadCSS`. The Flash of Unstyled Text (FOUT) is a feature for progressively rendered web sites—we want our content usable by readers as soon as possible.
 
 ``` javascript
 // Cut the mustard, choose your own method here—querySelector is an easy one.

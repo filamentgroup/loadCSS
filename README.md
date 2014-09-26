@@ -63,7 +63,7 @@ Where `/url/to/woff.css` and `/url/to/ttf.css` contain something like:
 @font-face {
   font-family: My Font Family Name;
   /* Important: Data URI here to prevent FOIT */
-  src: url("data:application/x-font-woff;charset=utf-8;base64,...") format("truetype");
+  src: url("data:application/x-font-woff;charset=utf-8;base64,...") format("woff");
   font-weight: normal;
   font-style: normal;
 }

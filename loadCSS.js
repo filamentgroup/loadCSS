@@ -12,6 +12,25 @@ function loadCSS( href, before, media ){
 	// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 	// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 	// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+	
+//Making a Check If the argument for href contains a valid file (source) or Not.
+//This Will Prevent Formation Of Useless <links> in Main HTML Source.
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  xmlhttp.onreadystatechange=function(){
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    	//IF File ( argument - href(url)) is there and present in available state .
+    	//Begin Populating Main HTML with the Equivalent HTML Code.
+    	
 	var ss = window.document.createElement( "link" );
 	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
 	ss.rel = "stylesheet";
@@ -26,3 +45,12 @@ function loadCSS( href, before, media ){
 	} );
 	return ss;
  }
+ 
+  	
+ }
+
+	//As The Check is Going To Be (asynchronous) so third param is true
+	xmlhttp.open("GET",href,true);
+	xmlhttp.send();
+
+}

@@ -5,7 +5,6 @@ Licensed MIT
 */
 function loadCSS( href, before, media ){
 	"use strict";
-
 	// Arguments explained:
 	// `href` is the URL for your CSS file.
 	// `before` optionally defines the element we'll use as a reference for injecting our <link>
@@ -38,7 +37,6 @@ function loadCSS( href, before, media ){
 			setTimeout( toggleMedia );
 		}
 	}
-
 	toggleMedia();
 	return ss;
- }
+}

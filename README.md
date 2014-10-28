@@ -19,6 +19,7 @@ Then call it by passing it a stylesheet URL:
   // load a file
   loadCSS( "path/to/mystylesheet.css" );
 </script>
+<noscript><link href="path/to/mystylesheet.css" rel="stylesheet"></noscript>
 ...
 </head>
 ```

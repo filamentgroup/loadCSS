@@ -40,3 +40,37 @@ function loadCSS( href, before, media ){
 	toggleMedia();
 	return ss;
 }
+
+
+//Adding a New Function As suggested by @dylang Which checks if file exists or not and if file is there it calls our main loadCSS
+function ifFound_loadCSS(href,before,media){
+
+
+	//Making a Check If the argument for href contains a valid file (source) or Not.
+	//This Will Prevent Formation Of Useless <links> in Main HTML Source.
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+ 	{// code for IE7+, Firefox, Chrome, Opera, Safari
+ 		xmlhttp=new XMLHttpRequest();
+ 	}
+	else
+ 	{// code for IE6, IE5
+ 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+ 	}
+
+ 	xmlhttp.onreadystatechange=function(){
+ 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+ 		{
+ 			//IF File ( argument - href(url)) is there and present in available state .
+ 			//Begin Populating Main HTML with the Equivalent HTML Code.
+ 			//Inovke the Main loadCSS()
+			loadCSS(href,before,media);
+
+		}
+	}
+
+	xmlhttp.open("GET",href,true);
+	xmlhttp.send();
+
+
+}

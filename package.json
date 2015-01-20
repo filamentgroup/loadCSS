@@ -1,0 +1,19 @@
+{
+  "name": "fg-loadcss",
+  "version": "0.1.2",
+  "description": "A function for loading CSS asynchronously",
+  "main": "loadCSS.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filamentgroup/loadCSS.git"
+  },
+  "author": "Filament Group <hello@filamentgroup.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/filamentgroup/loadCSS/issues"
+  },
+  "homepage": "https://github.com/filamentgroup/loadCSS"
+}

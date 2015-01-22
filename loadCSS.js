@@ -19,7 +19,7 @@ function loadCSS( href, before, media, callback ){
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	ss.callback = callback || function() {};
+	ss.onload = callback || function() {};
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads

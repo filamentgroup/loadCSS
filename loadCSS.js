@@ -12,9 +12,9 @@ Licensed MIT
 		root.loadCSS = factory();
 	}
 }(this, function () {
+	"use strict";
 
-	function loadCSS( href, before, media, callback ){
-		"use strict";
+	return function loadCSS( href, before, media, callback ){
 		// Arguments explained:
 		// `href` is the URL for your CSS file.
 		// `before` optionally defines the element we'll use as a reference for injecting our <link>
@@ -58,8 +58,5 @@ Licensed MIT
 		}
 		toggleMedia();
 		return ss;
-	}
-
-	return loadCSS;
-
+	};
 }));

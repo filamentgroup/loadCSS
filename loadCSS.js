@@ -22,9 +22,17 @@ Licensed MIT
 		// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 		// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 		// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		var ss = window.document.createElement( "link" );
-		var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
-		var sheets = window.document.styleSheets;
+		if ( typeof before == "string" ) {
+			if ( typeof media == "function" ) {
+				callback = media;
+			}
+			media = before;
+			before = null;
+		}
+		var doc = window.document;
+		var ss = doc.createElement( "link" );
+		var ref = before || doc.getElementsByTagName( "script" )[ 0 ];
+		var sheets = doc.styleSheets;
 		ss.rel = "stylesheet";
 		ss.href = href;
 		// temporarily, set media to something non-matching to ensure it'll fetch without blocking render

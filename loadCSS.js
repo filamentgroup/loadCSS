@@ -3,7 +3,7 @@ loadCSS: load a CSS file asynchronously.
 [c]2014 @scottjehl, Filament Group, Inc.
 Licensed MIT
 */
-function loadCSS( href, before, media, callback ){
+function loadCSS( href, before, media, callback, errorCallback ){
 	"use strict";
 	// Arguments explained:
 	// `href` is the URL for your CSS file.
@@ -20,6 +20,7 @@ function loadCSS( href, before, media, callback ){
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
 	ss.onload = callback || function() {};
+	ss.onerror = errorCallback || function() {};
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads

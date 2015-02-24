@@ -30,6 +30,7 @@ function loadCSS( href, before, media, callback ){
 		for( var i = 0; i < sheets.length; i++ ){
 			if( sheets[ i ].href && sheets[ i ].href.indexOf( href ) > -1 ){
 				defined = true;
+				break;
 			}
 		}
 

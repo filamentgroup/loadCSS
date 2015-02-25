@@ -16,11 +16,22 @@ function loadCSS( href, before, media, callback ){
 	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
 	var sheets = window.document.styleSheets;
 	var waitForOnload = false;
+	var triggered = false;
+	var onload = function() {
+		if( !triggered ) {
+			ss.media = media || "all";
+			triggered = true;
+		}
+		( callback || function() {} )();
+	};
+
 	ss.rel = "stylesheet";
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	ss.onload = callback || function() {};
+	// IE8 uses onload but does not match defined below?
+	// TODO try the href method again
+	ss.onload = onload;
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
@@ -28,26 +39,23 @@ function loadCSS( href, before, media, callback ){
 	function toggleMedia( first ){
 		var defined;
 		for( var i = 0; i < sheets.length; i++ ){
-			if( sheets[ i ].href && sheets[ i ].href.indexOf( href ) > -1 ){
+			if( sheets[ i ].ownerNode === ss ) {
 				defined = true;
-				break;
 			}
 		}
 
 		if( defined ){
-			ss.media = media || "all";
-
 			// Gecko adds to document.styleSheets immediately,
 			// even before the request is finished. So if this happens
 			// we’ll wait for the onload to fire for callbacks.
 			if( first ) {
 				waitForOnload = true;
 			}
-			if( !waitForOnload && callback ) {
-				callback();
+			if( !waitForOnload ) {
+				onload();
 			}
 		}
-		else {
+		else if( !triggered ) {
 			setTimeout( toggleMedia );
 		}
 	}

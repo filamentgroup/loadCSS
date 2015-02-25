@@ -1,0 +1,35 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Chrome Duplicate Request Test</title>
+		<meta charset="utf-8">
+		<script>
+			var ss = document.createElement( "link" );
+			var ref = document.getElementsByTagName( "script" )[ 0 ];
+
+			ss.rel = "stylesheet";
+			ss.href = "http://scottjehl.com/css-temp/slow.php";
+			ss.media = "only x";
+			ref.parentNode.insertBefore( ss, ref );
+
+			(function toggleMedia(){
+				var sheets = document.styleSheets;
+				var defined;
+				for( var i = 0; i < sheets.length; i++ ){
+					if( sheets[ i ].ownerNode === ss ){
+						defined = true;
+						// This causes the duplicate request.
+						ss.media = "all";
+						break;
+					}
+				}
+				if( !defined ){
+					setTimeout( toggleMedia );
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<p>This is a test to see whether or not a loadCSS call will block render. This page uses loadCss to load a CSS file that has a 5 second delay built into its server response time. If loadCSS works properly, you should be able to read this text before the page is styled as white text on green background.</p>
+</body>
+</html>

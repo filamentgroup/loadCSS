@@ -19,7 +19,9 @@ function loadCSS( href, before, media, callback ){
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	ss.onload = callback || function() {};
+	if( callback ) {
+		ss.onload = callback;
+	}
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
@@ -27,7 +29,7 @@ function loadCSS( href, before, media, callback ){
 	function toggleMedia(){
 		var defined;
 		for( var i = 0; i < sheets.length; i++ ){
-			if( sheets[ i ].href && sheets[ i ].href.indexOf( href ) > -1 ){
+			if( sheets[ i ].href && sheets[ i ].href.indexOf( ss.href ) > -1 ){
 				defined = true;
 			}
 		}

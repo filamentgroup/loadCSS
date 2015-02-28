@@ -22,13 +22,18 @@ Licensed MIT
 		// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 		// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 		// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		if ( "function" == typeof before ) {
-			callback = before;
-			before = null;
-		} else if ( "string" == typeof before ) {
+		if ( "string" == typeof before ) {
 			callback = media;
 			media = before;
 			before = null;
+		}
+		if ( "function" == typeof before ) {
+			callback = before;
+			before = media = null;
+		}
+		if ( "function" == typeof media ) {
+			callback = media;
+			media = null;
 		}
 		var doc = window.document;
 		var ss = doc.createElement( "link" );

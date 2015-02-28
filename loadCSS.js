@@ -22,10 +22,11 @@ Licensed MIT
 		// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 		// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 		// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		if ( typeof before == "string" ) {
-			if ( typeof media == "function" ) {
-				callback = media;
-			}
+		if ( "function" == typeof before ) {
+			callback = before;
+			before = null;
+		} else if ( "string" == typeof before ) {
+			callback = media;
 			media = before;
 			before = null;
 		}

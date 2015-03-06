@@ -19,27 +19,38 @@ function loadCSS( href, before, media, callback ){
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	if( callback ) {
-		ss.onload = callback;
-	}
+	ss.onload = function() {
+		ss.onload = null;
+		// Sets the link media back to `all` so that the stylesheet applies once it loads
+		ss.media = media || "all";
+		if( callback ) {
+			callback.call( ss );
+		}
+	};
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
-	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
-	// It is designed to poll until document.styleSheets includes the new sheet.
-	function toggleMedia(){
-		var defined;
-		for( var i = 0; i < sheets.length; i++ ){
-			if( sheets[ i ].href && sheets[ i ].href.indexOf( ss.href ) > -1 ){
-				defined = true;
+
+	// This code is for browsers that don’t support onload, any browser that
+	// supports onload should use that instead.
+	// IE8+, Android 4.4+, Firefox, Chrome, Safari, iOS support onload.
+	// Android < 4.4 does not support onload, inference here:
+	if( "isApplicationInstalled" in navigator ) {
+		(function toggleMedia(){
+			// Poll until document.styleSheets includes the new sheet.
+			var defined;
+			// Note that Gecko and Trident add to document.styleSheets immediately,
+			// even before the stylesheet has loaded but we opt-out and use onload there.
+			for( var i = 0; i < sheets.length; i++ ){
+				if( sheets[ i ].href && sheets[ i ].href.indexOf( ss.href ) > -1 ){
+					defined = true;
+				}
 			}
-		}
-		if( defined ){
-			ss.media = media || "all";
-		}
-		else {
-			setTimeout( toggleMedia );
-		}
+			if( defined ){
+				ss.onload();
+			} else {
+				setTimeout( toggleMedia );
+			}
+		})();
 	}
-	toggleMedia();
 	return ss;
 }

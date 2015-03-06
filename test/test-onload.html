@@ -39,9 +39,11 @@
 
 			// This code is for browsers that don’t support onload, any browser that
 			// supports onload should use that instead.
-			// IE8+, Android 4.4+, Firefox, Chrome, Safari, iOS support onload.
-			// Android < 4.4 does not support onload, inference here:
-			if( "WebKitAnimationEvent" in window ) {
+			// Supports onload: IE8+, Android 4.4+, Firefox, Chrome, Safari, iOS,
+			// 		Android 4.2 Chrome Mobile, Android 4.4 Chrome Mobile and Default Browser
+			// No support for onload: Android 4.2 Browser, Android 2.3
+
+			if( "isApplicationInstalled" in navigator ) {
 				(function toggleMedia(){
 					// Poll until document.styleSheets includes the new sheet.
 					var defined;

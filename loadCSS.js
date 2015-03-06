@@ -34,7 +34,7 @@ function loadCSS( href, before, media, callback ){
 	// supports onload should use that instead.
 	// IE8+, Android 4.4+, Firefox, Chrome, Safari, iOS support onload.
 	// Android < 4.4 does not support onload, inference here:
-	if( "WebKitAnimationEvent" in window ) {
+	if( "isApplicationInstalled" in navigator ) {
 		(function toggleMedia(){
 			// Poll until document.styleSheets includes the new sheet.
 			var defined;

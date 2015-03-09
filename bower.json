@@ -1,0 +1,10 @@
+{
+	"name": "loadcss",
+	"version": "0.1.6",
+	"main": [
+		"loadCSS.js"
+	],
+	"ignore": [
+		"**/.*"
+	]
+}

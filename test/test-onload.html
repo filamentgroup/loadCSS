@@ -56,7 +56,23 @@
 				return ss;
 			}
 
-			loadCSS( "http://scottjehl.com/css-temp/slow.php" );
+			function onloadCSS( ss, callback ) {
+				ss.onload = function() {
+					ss.onload = null;
+					if( callback ) {
+						callback.call( ss );
+					}
+				};
+
+				if( "isApplicationInstalled" in navigator && "ondefined" in ss ) {
+					ss.ondefined( callback );
+				}
+			}
+
+			var ss = loadCSS( "http://www.zachleat.com/test/lastmodified/timeout.php?t=2&lastmodified=1" );
+			onloadCSS( ss, function() {
+				document.body.innerHTML += '<h1>onload!!!</h1>';
+			});
 		</script>
 	</head>
 	<body>

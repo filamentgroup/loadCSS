@@ -29,6 +29,18 @@ Then call it by passing it a stylesheet URL:
 
 - You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
 
+#### Using with `onload`
+
+Include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) on your page.
+
+``` javascript
+function onloadCSS( ss, callback ){ ... }
+
+var stylesheet = loadCSS( "path/to/mystylesheet.css" );
+onloadCSS( stylesheet, function() {
+	console.log( "Stylesheet has asynchronously loaded." );
+});
+```
 
 #### Contributions and bug fixes
 

@@ -4,7 +4,7 @@ loadCSS: load a CSS file asynchronously.
 Licensed MIT
 */
 function loadCSS( href, before, media, callback ){
-	"use strict";
+	'use strict';
 	// Arguments explained:
 	// `href` is the URL for your CSS file.
 	// `before` optionally defines the element we'll use as a reference for injecting our <link>
@@ -12,13 +12,13 @@ function loadCSS( href, before, media, callback ){
 	// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 	// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 	// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-	var ss = window.document.createElement( "link" );
-	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
+	var ss = window.document.createElement( 'link' );
+	var ref = before || window.document.getElementsByTagName( 'script' )[ 0 ];
 	var sheets = window.document.styleSheets;
-	ss.rel = "stylesheet";
+	ss.rel = 'stylesheet';
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
-	ss.media = "only x";
+	ss.media = 'only x';
 	// DEPRECATED
 	if( callback ) {
 		ss.onload = callback;
@@ -45,7 +45,7 @@ function loadCSS( href, before, media, callback ){
 		}
 	};
 	ss.onloadcssdefined(function() {
-		ss.media = media || "all";
+		ss.media = media || 'all';
 	});
 	return ss;
 }

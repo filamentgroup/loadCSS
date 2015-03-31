@@ -3,6 +3,8 @@ loadCSS: load a CSS file asynchronously.
 [c]2014 @scottjehl, Filament Group, Inc.
 Licensed MIT
 */
+
+/* exported loadCSS */
 function loadCSS( href, before, media, callback ){
 	"use strict";
 	// Arguments explained:

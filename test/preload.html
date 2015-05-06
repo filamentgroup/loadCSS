@@ -71,14 +71,16 @@
 			// if link[rel=preload] is not supported, we must fetch the CSS manually using loadCSS
 			if( !preloadSupported() ){
 				var asyncCSS = window.document.getElementById( "asyncCSS" );
-				var href = asyncCSS.href;
-				loadCSS( href, null, asyncCSS );
+				// loadCSS, insert just before the link to be sure of its placement in the source
+				loadCSS( asyncCSS.href, asyncCSS );
 			}
 
 		</script>
 	</head>
 	<body>
-		<p>This is a test to see whether or not a loadCSS call will block render. This page uses loadCss to load a CSS file that has a 5 second delay built into its server response time. If loadCSS works properly, you should be able to read this text before the page is styled as white text on green background.</p>
+		<p>This is a test page that references a stylesheet with <code>link[rel=prefetch]</code>, and fetches the CSS manually using <code>loadCSS</code> in browsers that do not understand <code>link[rel=prefetch]</code> yet (read: all browsers at time of writing)</p>
+
+		<p>The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
 
 </body>
 </html>

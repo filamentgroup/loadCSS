@@ -3,9 +3,6 @@
   "version": "0.1.6",
   "description": "A function for loading CSS asynchronously",
   "main": "loadCSS.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/filamentgroup/loadCSS.git"
@@ -15,5 +12,13 @@
   "bugs": {
     "url": "https://github.com/filamentgroup/loadCSS/issues"
   },
-  "homepage": "https://github.com/filamentgroup/loadCSS"
+  "homepage": "https://github.com/filamentgroup/loadCSS",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jshint": "~0.11.0"
+  },
+  "scripts": {
+    "test": "node node_modules/.bin/grunt"
+  }
 }

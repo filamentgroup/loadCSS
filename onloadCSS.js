@@ -3,6 +3,9 @@ onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS.
 [c]2014 @zachleat, Filament Group, Inc.
 Licensed MIT
 */
+
+/* global navigator */
+/* exported onloadCSS */
 function onloadCSS( ss, callback ) {
 	ss.onload = function() {
 		ss.onload = null;

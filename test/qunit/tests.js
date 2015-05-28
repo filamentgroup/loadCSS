@@ -27,7 +27,7 @@
 		ok( typeof window.loadCSS === "function", "loadCSS should be a function" );
 	});
 
-	test( 'loadCSS adds a styelsheet to CSSOM', function(){
+	test( 'loadCSS adds a stylesheet to CSSOM', function(){
 		expect(1);
 		var omLength = window.document.styleSheets.length;
 		loadCSS("files/test.css");

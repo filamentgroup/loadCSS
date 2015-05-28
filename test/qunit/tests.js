@@ -27,6 +27,13 @@
 		ok( typeof window.loadCSS === "function", "loadCSS should be a function" );
 	});
 
+	test( 'loadCSS adds a styelsheet to CSSOM', function(){
+		expect(1);
+		var omLength = window.document.styleSheets.length;
+		loadCSS("files/test.css");
+		equal(window.document.styleSheets.length, omLength + 1, "stylesheets incremented by 1" );
+	});
+
 
 
 }(window));

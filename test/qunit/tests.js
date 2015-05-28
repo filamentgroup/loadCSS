@@ -34,6 +34,13 @@
 		equal(window.document.styleSheets.length, omLength + 1, "stylesheets incremented by 1" );
 	});
 
+	asyncTest( 'loadCSS loads a stylesheet file', function(){
+		expect(1);
+		loadCSS("files/test.css", null, null, function(){
+			ok("stylesheet loaded successfully");
+			start();
+		});
+	});
 
 
 }(window));

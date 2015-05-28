@@ -37,7 +37,7 @@
 		ok(window.document.styleSheets.length > omLength, "stylesheets incremented" );
 	});
 
-	asyncTest( 'loadCSS loads a CSS file, callback works as expected', function(){
+	asyncTest( 'loadCSS loads a CSS file, deprecated callback works as expected (using onload)', function(){
 		expect(1);
 		loadCSS("files/test.css", null, null, function(){
 			ok("stylesheet loaded successfully");
@@ -47,7 +47,8 @@
 
 	asyncTest( 'loadCSS loads a CSS file with a relative path', function(){
 		expect(1);
-		loadCSS("../../test/qunit/files/test.css", null, null, function(){
+		var ss = loadCSS("../../test/qunit/files/test.css");
+		ss.onloadcssdefined(function(){
 			ok("stylesheet loaded successfully");
 			start();
 		});

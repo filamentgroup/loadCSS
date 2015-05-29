@@ -14,9 +14,9 @@ function loadCSS( href, before, media, callback ){
 	// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
 	// If so, pass a different reference element to the `before` argument and it'll insert before that instead
 	// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-	var ss = window.document.createElement( "link" );
-	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
-	var sheets = window.document.styleSheets;
+	var ss = window.document.createElement( "link" ),
+			ref = before || window.document.getElementsByTagName( "script" )[ 0 ],
+			sheets = window.document.styleSheets;
 	ss.rel = "stylesheet";
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
@@ -31,8 +31,10 @@ function loadCSS( href, before, media, callback ){
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
 	// It is designed to poll until document.styleSheets includes the new sheet.
 	ss.onloadcssdefined = function( cb ){
-		var defined;
-		for( var i = 0; i < sheets.length; i++ ){
+		var defined,
+				i = 0,
+				length = sheets.length;
+		for( ; i < length; i++ ){
 			if( sheets[ i ].href && sheets[ i ].href.indexOf( href ) > -1 ){
 				defined = true;
 			}

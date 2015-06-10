@@ -25,9 +25,23 @@ Then call it by passing it a stylesheet URL:
 ```
 
 #### Optional Arguments
-- By default, your stylesheet will be inserted before the first `script` tag in the DOM (which may be the one shown above). If you need another insert location, use the optional `before` argument to specify a different sibling element. The stylesheet will be inserted before the element you specify.
+- `before`: By default, your stylesheet will be inserted before the first `script` tag in the DOM (which may be the one shown above). **This is risky because users' browser extensions can place scripts in the `head` of your page and unintentionally change the insertion point for the CSS, which can mess up your intended CSS cascade**. If possible we recommend, using the optional `before` argument to specify a particular element to use as an insertion point. The stylesheet will be inserted before the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
+	``` html
+<head>
+...
+<script id="loadcss">
+  // include loadCSS here...
+  function loadCSS( href, before, media ){ ... }
+  // load a file
+  loadCSS( "path/to/mystylesheet.css", document.getElementById("loadcss") );
+</script>
+<noscript><link href="path/to/mystylesheet.css" rel="stylesheet"></noscript>
+...
+</head>
+```
 
-- You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
+- `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
+- `callback` (deprecated): pass an onload callback. Instead of using this callback, we recommend binding an onload handler to the returned `link` element by using the [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) in this repo.
 
 #### Using with `onload`
 
@@ -42,42 +56,12 @@ onloadCSS( stylesheet, function() {
 });
 ```
 
+### Usage Tips
+
+We typically use `loadCSS` to load CSS files that are non-critical to the first rendering of a site. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance.
+
 #### Contributions and bug fixes
 
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!
 
-### Usage Example with Content Fonts
 
-Defeating the Flash of Invisible Text (FOIT) is easy with `loadCSS`. The Flash of Unstyled Text (FOUT) is a feature for progressively rendered web sites—we want our content usable by readers as soon as possible.
-
-``` javascript
-// Cut the mustard, choose your own method here—querySelector is an easy one.
-if( "querySelector" in win.document ) {
-
-	// test for font-face version to load via Data URI'd CSS
-	var fontFile = "/url/to/woff.css",
-		ua = window.navigator.userAgent;
-
-	// Android's default browser needs TTF instead of WOFF
-	if( ua.indexOf( "Android 4." ) > -1 && ua.indexOf( "like Gecko" ) > -1 && ua.indexOf( "Chrome" ) === -1 ) {
-		fontFile = "/url/to/ttf.css";
-	}
-
-	// load fonts
-	if( fontFile ) {
-		loadCSS( fontFile );
-	}
-}
-```
-
-Where `/url/to/woff.css` and `/url/to/ttf.css` contain something like:
-
-``` css
-@font-face {
-  font-family: My Font Family Name;
-  /* Important: Data URI here to prevent FOIT */
-  src: url("data:application/x-font-woff;charset=utf-8;base64,...") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-```

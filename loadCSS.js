@@ -35,6 +35,7 @@ function loadCSS( href, before, media, callback ){
 		for( var i = 0; i < sheets.length; i++ ){
 			if( sheets[ i ].href && sheets[ i ].href === ss.href ){
 				defined = true;
+				break;
 			}
 		}
 		if( defined ){

@@ -32,7 +32,8 @@ function loadCSS( href, before, media, callback ){
 	// It is designed to poll until document.styleSheets includes the new sheet.
 	ss.onloadcssdefined = function( cb ){
 		var defined;
-		for( var i = 0; i < sheets.length; i++ ){
+		var i = sheets.length;
+		while( i-- ){
 			if( sheets[ i ].href && sheets[ i ].href === ss.href ){
 				defined = true;
 				break;

@@ -31,21 +31,17 @@ function loadCSS( href, before, media, callback ){
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
 	// It is designed to poll until document.styleSheets includes the new sheet.
 	ss.onloadcssdefined = function( cb ){
-		var defined;
 		var i = sheets.length;
 		while( i-- ){
 			if( sheets[ i ].href && sheets[ i ].href === ss.href ){
-				defined = true;
-				break;
+				cb();
+				return;
 			}
 		}
-		if( defined ){
-			cb();
-		} else {
-			setTimeout(function() {
-				ss.onloadcssdefined( cb );
-			});
-		}
+		// Try again later
+		setTimeout(function() {
+			ss.onloadcssdefined( cb );
+		});
 	};
 	ss.onloadcssdefined(function() {
 		ss.media = media || "all";

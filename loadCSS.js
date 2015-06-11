@@ -31,9 +31,10 @@ function loadCSS( href, before, media, callback ){
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
 	// It is designed to poll until document.styleSheets includes the new sheet.
 	ss.onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
 		var i = sheets.length;
 		while( i-- ){
-			if( sheets[ i ].href && sheets[ i ].href === ss.href ){
+			if( sheets[ i ].href === resolvedHref ){
 				cb();
 				return;
 			}

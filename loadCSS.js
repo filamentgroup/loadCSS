@@ -50,3 +50,6 @@ function loadCSS( href, before, media, callback ){
 	});
 	return ss;
 }
+
+if(module)
+	module.exports = loadCSS;

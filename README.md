@@ -6,27 +6,11 @@ Licensed MIT
 
 ## Usage
 
-Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
+Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable). Add an `ID` attribute to the `script` element containing the `loadCSS` function so that you can use it as a reference for inserting the stylesheet. This allows you to guarantee the placement of your stylesheet in source order.
 
-Then call it by passing it a stylesheet URL:
+Then call loadCSS by passing it a stylesheet URL and a reference to the script element:
 
 ``` html
-<head>
-...
-<script>
-  // include loadCSS here...
-  function loadCSS( href, before, media ){ ... }
-  // load a file
-  loadCSS( "path/to/mystylesheet.css" );
-</script>
-<noscript><link href="path/to/mystylesheet.css" rel="stylesheet"></noscript>
-...
-</head>
-```
-
-#### Optional Arguments
-- `before`: By default, your stylesheet will be inserted before the first `script` tag in the DOM (which may be the one shown above). **This is risky because users' browser extensions can place scripts in the `head` of your page and unintentionally change the insertion point for the CSS, which can mess up your intended CSS cascade**. If possible we recommend, using the optional `before` argument to specify a particular element to use as an insertion point. The stylesheet will be inserted before the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
-	``` html
 <head>
 ...
 <script id="loadcss">
@@ -39,6 +23,10 @@ Then call it by passing it a stylesheet URL:
 ...
 </head>
 ```
+
+#### Optional Arguments
+
+The first two arguments, `href`, and `before` are required. Additionally, you can specify the following:
 
 - `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
 - `callback` (deprecated): pass an onload callback. Instead of using this callback, we recommend binding an onload handler to the returned `link` element by using the [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) in this repo.

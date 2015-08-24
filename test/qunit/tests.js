@@ -23,6 +23,7 @@
 
 	// initial value of media attr
 	var initialMedia = "only x";
+	var reference = document.getElementById( "loadCSS" );
 
 	test( 'function loadCSS exists', function(){
 		expect(2);
@@ -32,7 +33,7 @@
 
 	asyncTest( 'loadCSS loads a CSS file', function(){
 		expect(1);
-		var ss = loadCSS("files/test.css");
+		var ss = loadCSS("files/test.css", reference );
 		ss.onloadcssdefined(function(){
 			ok("stylesheet loaded successfully");
 			start();
@@ -41,7 +42,7 @@
 
 	asyncTest( 'loadCSS loads a CSS file with a relative path', function(){
 		expect(1);
-		var ss = loadCSS("../../test/qunit/files/test.css");
+		var ss = loadCSS("../../test/qunit/files/test.css", reference );
 		ss.onloadcssdefined(function(){
 			ok("stylesheet loaded successfully");
 			start();
@@ -50,7 +51,7 @@
 
 	asyncTest( 'loadCSS sets media type before and after the stylesheet is loaded', function(){
 		expect(2);
-		var ss = loadCSS("files/test.css");
+		var ss = loadCSS("files/test.css", reference );
 		ok(ss.media, initialMedia, "media type begins as" + initialMedia );
 		ss.onloadcssdefined(function(){
 			equal(ss.media, "all", "media type is all");
@@ -61,7 +62,7 @@
 	asyncTest( 'loadCSS sets media type to a custom value if specified, after load', function(){
 		expect(2);
 		var med = "print";
-		var ss = loadCSS("files/test.css", null, med);
+		var ss = loadCSS("files/test.css", reference, med);
 		ok(ss.media, initialMedia, "media type begins as " + initialMedia );
 		ss.onloadcssdefined(function(){
 			equal(ss.media, med, "media type is " + med);
@@ -72,7 +73,7 @@
 	test( 'loadCSS injects before a particular specified element', function(){
 		expect(1);
 		var elem = window.document.getElementById("before-test");
-		var ss = loadCSS("files/test.css", elem);
+		var ss = loadCSS("files/test.css", elem );
 		equal(ss.nextElementSibling, elem );
 	});
 

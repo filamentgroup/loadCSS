@@ -8,20 +8,17 @@ Licensed MIT
 function loadCSS( href, before, media, callback ){
 	"use strict";
 	// Arguments explained:
-	// `href` is the URL for your CSS file.
-	// `before` optionally defines the element we'll use as a reference for injecting our <link>
-	// By default, `before` uses the first <script> element in the page.
-	// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
-	// If so, pass a different reference element to the `before` argument and it'll insert before that instead
-	// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+	// `href` REQUIRED. The URL for your CSS file.
+	// `before` REQUIRED. The element to use as a reference for injecting the <link>.
+	// `media` OPTIONAL. Media type or query for the stylesheet. (Will be "all" if not defined)
+	// `callback` OPTIONAL. DEPRECATED. A callback bound to the stylesheet's onload handler. Use onloadcssdefined on return object of loadCSS instead.
 	var ss = window.document.createElement( "link" );
-	var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
+	var ref = before;
 	var sheets = window.document.styleSheets;
 	ss.rel = "stylesheet";
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	// DEPRECATED
 	if( callback ) {
 		ss.onload = callback;
 	}

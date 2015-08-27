@@ -60,6 +60,8 @@ onloadCSS( stylesheet, function() {
 
 We typically use `loadCSS` to load CSS files that are non-critical to the first rendering of a site. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance.
 
+The reason this script is sometimes necessary is because there is no native way in HTML (currently at least) to load and apply a CSS file asynchronously. CSS references that use either `link` or `import` will cause browsers to block page rendering by default while their related stylesheet loads.
+
 #### Contributions and bug fixes
 
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!

@@ -5,7 +5,7 @@ Licensed MIT
 */
 
 /* exported loadCSS */
-function loadCSS( href, before, media, callback ){
+function loadCSS( href, before, media ){
 	"use strict";
 	// Arguments explained:
 	// `href` is the URL for your CSS file.
@@ -21,10 +21,6 @@ function loadCSS( href, before, media, callback ){
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
-	// DEPRECATED
-	if( callback ) {
-		ss.onload = callback;
-	}
 
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );

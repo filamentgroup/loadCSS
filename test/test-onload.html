@@ -3,29 +3,28 @@
 	<head>
 		<title>Blocking Test</title>
 		<meta charset="utf-8">
-		<script>
+		<script id="loadCSS">
 			/*!
 			loadCSS: load a CSS file asynchronously.
 			[c]2014 @scottjehl, Filament Group, Inc.
 			Licensed MIT
 			*/
+
+			/* exported loadCSS */
 			function loadCSS( href, before, media, callback ){
 				"use strict";
 				// Arguments explained:
-				// `href` is the URL for your CSS file.
-				// `before` optionally defines the element we'll use as a reference for injecting our <link>
-				// By default, `before` uses the first <script> element in the page.
-				// However, since the order in which stylesheets are referenced matters, you might need a more specific location in your document.
-				// If so, pass a different reference element to the `before` argument and it'll insert before that instead
-				// note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
+				// `href` REQUIRED. The URL for your CSS file.
+				// `before` REQUIRED. The element to use as a reference for injecting the <link>.
+				// `media` OPTIONAL. Media type or query for the stylesheet. (Will be "all" if not defined)
+				// `callback` OPTIONAL. DEPRECATED. A callback bound to the stylesheet's onload handler. Use onloadcssdefined on return object of loadCSS instead.
 				var ss = window.document.createElement( "link" );
-				var ref = before || window.document.getElementsByTagName( "script" )[ 0 ];
+				var ref = before;
 				var sheets = window.document.styleSheets;
 				ss.rel = "stylesheet";
 				ss.href = href;
 				// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 				ss.media = "only x";
-				// DEPRECATED
 				if( callback ) {
 					ss.onload = callback;
 				}
@@ -37,14 +36,13 @@
 				ss.onloadcssdefined = function( cb ){
 					var defined;
 					for( var i = 0; i < sheets.length; i++ ){
-						if( sheets[ i ].href && sheets[ i ].href.indexOf( href ) > -1 ){
+						if( sheets[ i ].href && sheets[ i ].href === ss.href ){
 							defined = true;
 						}
 					}
 					if( defined ){
 						cb();
-					}
-					else {
+					} else {
 						setTimeout(function() {
 							ss.onloadcssdefined( cb );
 						});
@@ -69,7 +67,7 @@
 				}
 			}
 
-			var ss = loadCSS( "http://www.zachleat.com/test/lastmodified/timeout.php?t=2&lastmodified=1" );
+			var ss = loadCSS( "http://www.zachleat.com/test/lastmodified/timeout.php?t=2&lastmodified=1", document.getElementById( "loadCSS" ) );
 			onloadCSS( ss, function() {
 				document.body.innerHTML += '<h1>onload!!!</h1>';
 			});
@@ -77,6 +75,6 @@
 	</head>
 	<body>
 		<p>This is a test to see whether or not a loadCSS call will block render. This page uses loadCss to load a CSS file that has a 5 second delay built into its server response time. If loadCSS works properly, you should be able to read this text before the page is styled as white text on green background.</p>
-		
+
 </body>
 </html>

@@ -14,6 +14,7 @@ Licensed MIT
 		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 		var ss = w.document.createElement( "link" );
 		var ref;
+		var loaded;
 		if( before ){
 			ref = before;
 		}
@@ -38,25 +39,28 @@ Licensed MIT
 		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
 		ss.onloadcssdefined = function( cb ){
-			var defined;
+			if( loaded && cb ){
+				return cb();
+			}
 			for( var i = 0; i < sheets.length; i++ ){
 				if( sheets[ i ].href && sheets[ i ].href === ss.href ){
-					defined = true;
+					loaded = true;
 				}
 			}
-			if( defined ){
-				cb();
-			} else {
-				setTimeout(function() {
-					ss.onloadcssdefined( cb );
-				});
-			}
+			setTimeout(function() {
+				ss.onloadcssdefined( cb );
+			});
 		};
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
-		ss.onloadcssdefined(function() {
+		var toggleMedia = function(){
 			ss.media = media || "all";
-		});
+			toggleMedia = null;
+		};
+		if( "addEventListener" in w ){
+			ss.addEventListener( "load", toggleMedia );
+		}
+		ss.onloadcssdefined( toggleMedia );
 		return ss;
 	};
 }(this));

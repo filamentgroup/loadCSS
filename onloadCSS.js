@@ -5,14 +5,12 @@ Licensed MIT
 */
 
 /* global navigator */
+
 /* exported onloadCSS */
 function onloadCSS( ss, callback ) {
-	ss.onload = function() {
-		ss.onload = null;
-		if( callback ) {
-			callback.call( ss );
-		}
-	};
+	if( "addEventListener" in window ){
+		ss.addEventListener( "load", callback );
+	}
 
 	// This code is for browsers that don’t support onload, any browser that
 	// supports onload should use that instead.

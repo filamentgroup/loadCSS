@@ -54,7 +54,10 @@ Licensed MIT
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
 		var toggleMedia = function(){
-			ss.media = media || "all";
+			// Timeout needed until Firefox bug is fixed https://bugzilla.mozilla.org/show_bug.cgi?id=693725
+			setTimeout(function(){
+				ss.media = media || "all";
+			});
 			toggleMedia = null;
 		};
 		if( "addEventListener" in w ){

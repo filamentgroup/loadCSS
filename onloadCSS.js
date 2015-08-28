@@ -9,7 +9,15 @@ Licensed MIT
 	/* exported onloadCSS */
 	w.onloadCSS = function( ss, callback ) {
 		if( "addEventListener" in w ){
-			ss.addEventListener( "load", callback );
+			ss.addEventListener( "load", function(){
+				// Timeout needed until Firefox bug is fixed, just in case callback attempts to set a stylesheet prop https://bugzilla.mozilla.org/show_bug.cgi?id=693725
+				setTimeout(function(){
+					if( callback ){
+						callback.call( ss );
+						callback = null;
+					}
+				});
+			} );
 		}
 
 		// This code is for browsers that don’t support onload, any browser that

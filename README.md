@@ -72,7 +72,7 @@ LoadCSS attempts to load a css file asynchronously in most any JavaScript-capabl
         <th>Yes</th>
     </tr>
     <tr>
-        <th>Firefox Mac (latest and many recent versions)</th>
+        <th>Firefox Desktop (latest and many recent versions)</th>
         <th>Yes</th>
         <th>Yes</th>
     </tr>
@@ -92,19 +92,29 @@ LoadCSS attempts to load a css file asynchronously in most any JavaScript-capabl
         <th>Yes</th>
     </tr>
     <tr>
+        <th>Chrome Android 5.x</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
         <th>Chrome Android 4.x</th>
         <th>Yes</th>
         <th>Yes</th>
     </tr>
      <tr>
-        <th>Chrome Android 3.x</th>
+        <th>Android Browser 2.3</th>
         <th>Yes</th>
-        <th></th>
+        <th>No</th>
+    </tr>
+    <tr>
+        <th>Kindle Fire HD</th>
+        <th>Yes</th>
+        <th>Yes</th>
     </tr>
      <tr>
-        <th>Chrome Android 4.x</th>
+        <th>Windows Phone IE 8.1</th>
         <th>Yes</th>
-        <th></th>
+        <th>Yes</th>
     </tr>
      <tr>
         <th>IE 11</th>

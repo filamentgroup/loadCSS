@@ -56,6 +56,101 @@ onloadCSS( stylesheet, function() {
 });
 ```
 
+### Browser Support
+
+LoadCSS attempts to load a css file asynchronously in most any JavaScript-capable browser, but some older browsers will still block rendering while the stylesheet is loading. This table outlines css loading support and async loading support.
+
+<table>
+    <tr>
+        <th>Browser</th>
+        <th>CSS Loads Successfully</th>
+        <th>CSS Loads without Blocking Render</th>
+    </tr>
+    <tr>
+        <th>Chrome Mac (latest and many recent versions)</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>Firefox Desktop (latest and many recent versions)</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>Opera Mac (latest and many recent versions)</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>Safari Mac (latest and many recent versions)</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>Safari iOS (latest and many recent versions)</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>Chrome Android 5.x</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>Chrome Android 4.x</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>Android Browser 2.3</th>
+        <th>Yes</th>
+        <th>No</th>
+    </tr>
+    <tr>
+        <th>Kindle Fire HD</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>Windows Phone IE 8.1</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>IE 11</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>IE 10</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+    <tr>
+        <th>IE 9</th>
+        <th>Yes</th>
+        <th>Yes</th>
+    </tr>
+     <tr>
+        <th>IE 8</th>
+        <th>Yes</th>
+        <th>No</th>
+    </tr>
+     <tr>
+        <th>IE 7</th>
+        <th>Yes</th>
+        <th>No</th>
+    </tr>
+     <tr>
+        <th>IE 6</th>
+        <th>Yes</th>
+        <th>No</th>
+    </tr>
+    
+</table>
+
+
+
 ### Usage Tips
 
 We typically use `loadCSS` to load CSS files that are non-critical to the first rendering of a site. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance.

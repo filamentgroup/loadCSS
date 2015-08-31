@@ -39,13 +39,13 @@ Licensed MIT
 		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
 		ss.onloadcssdefined = function( cb ){
-			if( loaded && cb ){
-				return cb();
-			}
 			for( var i = 0; i < sheets.length; i++ ){
 				if( sheets[ i ].href && sheets[ i ].href === ss.href ){
 					loaded = true;
 				}
+			}
+			if( loaded ){
+				return cb();
 			}
 			setTimeout(function() {
 				ss.onloadcssdefined( cb );
@@ -54,14 +54,14 @@ Licensed MIT
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
 		var toggleMedia = function(){
-			// Timeout needed until Firefox bug is fixed https://bugzilla.mozilla.org/show_bug.cgi?id=693725
-			setTimeout(function(){
-				ss.media = media || "all";
-			});
-			toggleMedia = null;
+			toggleMedia = function(){};
+			ss.media = media || "all";
 		};
 		if( "addEventListener" in w ){
-			ss.addEventListener( "load", toggleMedia );
+			ss.addEventListener( "load", function(){
+				// Timeout needed until Firefox bug is fixed https://bugzilla.mozilla.org/show_bug.cgi?id=693725
+				setTimeout( toggleMedia );
+			});
 		}
 		ss.onloadcssdefined( toggleMedia );
 		return ss;

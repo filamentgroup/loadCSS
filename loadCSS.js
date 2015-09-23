@@ -13,14 +13,13 @@ Licensed MIT
 			// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.
 		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 		var doc = w.document;
-		var querySelectorAll = doc.querySelectorAll;
 		var ss = doc.createElement( "link" );
 		var ref;
 		if( before ){
 			ref = before;
 		}
-		else if( querySelectorAll ){
-			var refs = querySelectorAll(  "style,link[rel=stylesheet],script" );
+		else if( doc.querySelectorAll ){
+			var refs = doc.querySelectorAll("style,link[rel=stylesheet],script");
 			// No need to check length. This script has a parent element, at least
 			ref = refs[ refs.length - 1];
 		}

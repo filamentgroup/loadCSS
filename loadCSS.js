@@ -38,9 +38,7 @@ Licensed MIT
 			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
 		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
-		var onloadcssdefined;
-		onloadcssdefined = function (cb)
-		{
+		var onloadcssdefined = function ( cb ){
 			var defined;
 			for( var i = 0; i < sheets.length; i++ ){
 				var sheet = sheets[i];
@@ -58,7 +56,7 @@ Licensed MIT
 		};
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
-		ss.onloadcssdefined=onloadcssdefined;
+		ss.onloadcssdefined = onloadcssdefined;
 		onloadcssdefined(function() {
 			ss.media = media || "all";
 		});

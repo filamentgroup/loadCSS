@@ -6,7 +6,7 @@ Licensed MIT
 
 ## Usage
 
-Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
+Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) or the [minified version](https://marijnhaverbeke.nl/uglifyjs?code_url=https://raw.githubusercontent.com/filamentgroup/loadCSS/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
 
 Then call it by passing it a stylesheet URL:
 

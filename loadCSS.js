@@ -23,7 +23,8 @@ Licensed MIT
 			ref = refs[ refs.length - 1];
 		}
 		else {
-			ref = w.document.getElementsByTagName( "script" )[ 0 ];
+			var scope = w.document.body || w.document.getElementsByTagName( "head" );
+			ref = scope.childNodes[ scope.childNodes.length - 1 ]; 
 		}
 
 		var sheets = w.document.styleSheets;

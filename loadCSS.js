@@ -17,14 +17,15 @@ Licensed MIT
 		if( before ){
 			ref = before;
 		}
-		else if( w.document.querySelectorAll ){
-			var refs = w.document.querySelectorAll(  "style,link[rel=stylesheet],script" );
-			// No need to check length. This script has a parent element, at least
-			ref = refs[ refs.length - 1];
-		}
 		else {
-			var scope = w.document.body || w.document.getElementsByTagName( "head" );
-			ref = scope.childNodes[ scope.childNodes.length - 1 ]; 
+			var refs;
+			if( w.document.querySelectorAll ){
+				refs = w.document.querySelectorAll(  "style,link[rel=stylesheet],script" );
+			}
+			else {
+				refs = ( w.document.body || w.document.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+			}
+			ref = refs[ refs.length - 1];
 		}
 
 		var sheets = w.document.styleSheets;

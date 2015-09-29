@@ -43,11 +43,10 @@ By default, loadCSS will inject the new CSS stylesheet *after* the last styleshe
 ```
 
 - `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
-- `callback` (deprecated): pass an onload callback. Instead of using this callback, we recommend binding an onload handler to the returned `link` element by using the [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) in this repo.
 
 #### Using with `onload`
 
-Include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) on your page.
+Onload listener support with `link` elements is spotty, so if you need to add an onload callback, include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) on your page and use the `onloadCSS` function:
 
 ``` javascript
 function onloadCSS( ss, callback ){ ... }
@@ -60,7 +59,7 @@ onloadCSS( stylesheet, function() {
 
 ### Browser Support
 
-LoadCSS attempts to load a css file asynchronously in most any JavaScript-capable browser, but some older browsers will still block rendering while the stylesheet is loading. This table outlines css loading support and async loading support.
+LoadCSS attempts to load a css file asynchronously, while maintaining the CSS cascade, in any JavaScript-capable browser. However, some older browsers will block rendering while the stylesheet is loading. This table outlines css loading support and async loading support.
 
 <table>
     <tr>

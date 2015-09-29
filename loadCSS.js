@@ -18,13 +18,15 @@ Licensed MIT
 		if( before ){
 			ref = before;
 		}
-		else if( doc.querySelectorAll ){
-			var refs = doc.querySelectorAll("style,link[rel=stylesheet],script");
-			// No need to check length. This script has a parent element, at least
-			ref = refs[ refs.length - 1];
-		}
 		else {
-			ref = doc.getElementsByTagName( "script" )[ 0 ];
+			var refs;
+			if( doc.querySelectorAll ){
+				refs = doc.querySelectorAll(  "style,link[rel=stylesheet],script" );
+			}
+			else {
+				refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+			}
+			ref = refs[ refs.length - 1];
 		}
 
 		var sheets = doc.styleSheets;

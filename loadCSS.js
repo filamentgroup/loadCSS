@@ -18,15 +18,13 @@ Licensed MIT
 		if( before ){
 			ref = before;
 		}
-		else {
-			var refs;
-			if( doc.querySelectorAll ){
-				refs = doc.querySelectorAll(  "style,link[rel=stylesheet],script" );
-			}
-			else {
-				refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
-			}
+		else if( doc.querySelectorAll ){
+			var refs = doc.querySelectorAll("style,link[rel=stylesheet],script");
+			// No need to check length. This script has a parent element, at least
 			ref = refs[ refs.length - 1];
+		}
+		else {
+			ref = doc.getElementsByTagName( "script" )[ 0 ];
 		}
 
 		var sheets = doc.styleSheets;
@@ -40,21 +38,17 @@ Licensed MIT
 			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
 		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
-		var onloadcssdefined = function ( cb ){
-			var defined;
-			for( var i = 0; i < sheets.length; i++ ){
-				var sheet = sheets[i];
-				if( sheet.href && sheet.href === ss.href ){
-					defined = true;
+		var onloadcssdefined = function( cb ){
+			var resolvedHref = ss.href;
+			var i = sheets.length;
+			while( i-- ){
+				if( sheets[ i ].href === resolvedHref ){
+					return cb();
 				}
 			}
-			if( defined ){
-				cb();
-			} else {
-				setTimeout(function() {
-					onloadcssdefined( cb );
-				});
-			}
+			setTimeout(function() {
+				onloadcssdefined( cb );
+			});
 		};
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads

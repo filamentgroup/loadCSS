@@ -19,13 +19,7 @@ Licensed MIT
 			ref = before;
 		}
 		else {
-			var refs;
-			if( doc.querySelectorAll ){
-				refs = doc.querySelectorAll(  "style,link[rel=stylesheet],script" );
-			}
-			else {
-				refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
-			}
+			var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
 			ref = refs[ refs.length - 1];
 		}
 

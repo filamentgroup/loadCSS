@@ -1,6 +1,6 @@
 {
   "name": "fg-loadcss",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A function for loading CSS asynchronously",
   "main": "loadCSS.js",
   "repository": {

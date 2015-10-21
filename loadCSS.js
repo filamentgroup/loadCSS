@@ -56,7 +56,7 @@ Licensed MIT
 	};
 	// commonjs
 	if( module ){
-		module.exports = loadCSS;
+		module.exports = w.loadCSS;
 	}
 }(this));
 

@@ -6,7 +6,7 @@ Licensed MIT
 (function(w){
 	"use strict";
 	/* exported loadCSS */
-	w.loadCSS = function( href, before, media ){
+	w.loadCSS = function( href, before, media, cb ){
 		// Arguments explained:
 		// `href` [REQUIRED] is the URL for your CSS file.
 		// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
@@ -47,16 +47,23 @@ Licensed MIT
 			});
 		};
 
+		var ready = function() {
+			ready = function() {};
+			ss.media = media || "all";
+			if (cb && typeof(cb) === "function") {
+				cb.call(ss);
+			}
+		};
+
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
 		ss.onloadcssdefined = onloadcssdefined;
-		onloadcssdefined(function() {
-			ss.media = media || "all";
-		});
+		ss.addEventListener('load', ready);
+		onloadcssdefined(ready);
 		return ss;
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
 		module.exports = w.loadCSS;
 	}
-}(this));
+}(window));
 

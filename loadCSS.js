@@ -58,5 +58,5 @@ Licensed MIT
 	if( typeof module !== "undefined" ){
 		module.exports = w.loadCSS;
 	}
-}(this));
+}( typeof global !== "undefined" ? global : this ));
 

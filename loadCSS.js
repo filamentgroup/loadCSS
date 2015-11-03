@@ -6,7 +6,7 @@ Licensed MIT
 (function(w){
 	"use strict";
 	/* exported loadCSS */
-	w.loadCSS = function( href, before, media ){
+	var loadCSS = function( href, before, media ){
 		// Arguments explained:
 		// `href` [REQUIRED] is the URL for your CSS file.
 		// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
@@ -56,7 +56,10 @@ Licensed MIT
 	};
 	// commonjs
 	if( typeof module !== "undefined" ){
-		module.exports = w.loadCSS;
+		module.exports = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
 	}
 }( typeof global !== "undefined" ? global : this ));
 

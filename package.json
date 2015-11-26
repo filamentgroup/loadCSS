@@ -1,11 +1,11 @@
 {
   "name": "fg-loadcss",
   "version": "0.2.4",
-  "description": "A function for loading CSS asynchronously",
-  "main": "loadCSS.js",
+  "description": "A function for loading CSS asynchronously. Modified to work with Modulizr",
+  "main": "loadCSS-amd.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/filamentgroup/loadCSS.git"
+    "url": "https://github.com/expjson/loadCSS.git"
   },
   "author": "Filament Group <hello@filamentgroup.com>",
   "license": "MIT",
@@ -14,10 +14,6 @@
   },
   "homepage": "https://github.com/filamentgroup/loadCSS",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-cli": "~0.1.13",
-    "grunt-contrib-jshint": "~0.11.0",
-    "grunt-contrib-qunit": "~0.7.0",
     "gulp-jshint": "^2.0.0",
     "gulp-load-plugins": "^1.1.0",
     "gulp-qunit": "^1.3.0",

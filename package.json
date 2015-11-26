@@ -17,7 +17,12 @@
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
     "grunt-contrib-jshint": "~0.11.0",
-    "grunt-contrib-qunit": "~0.7.0"
+    "grunt-contrib-qunit": "~0.7.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-qunit": "^1.3.0",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0"
   },
   "scripts": {
     "test": "node node_modules/.bin/grunt"

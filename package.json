@@ -1,6 +1,6 @@
 {
-  "name": "fg-loadcss",
-  "version": "0.2.4",
+  "name": "cse-loadcss",
+  "version": "0.0.1",
   "description": "A function for loading CSS asynchronously. Modified to work with Modulizr",
   "main": "loadCSS-amd.js",
   "repository": {
@@ -19,8 +19,5 @@
     "gulp-qunit": "^1.3.0",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0"
-  },
-  "scripts": {
-    "test": "node node_modules/.bin/grunt"
   }
 }

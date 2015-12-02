@@ -5,7 +5,7 @@ Licensed MIT
 
 Modified for UITK use
 */
-define('loadcss',[], function() {
+define('loadcss',[], function(w) {
 
 	"use strict";
 	/* exported loadCSS */

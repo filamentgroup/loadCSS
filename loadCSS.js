@@ -39,7 +39,7 @@ Licensed MIT
 			var i = sheets.length;
 			while( i-- ){
 				if( sheets[ i ].href === resolvedHref ){
-					return cb();
+					return cb.call(ss);
 				}
 			}
 			setTimeout(function() {
@@ -55,7 +55,7 @@ Licensed MIT
 		return ss;
 	};
 	// commonjs
-	if( typeof module !== "undefined" ){
+	if( typeof module !== "undefined" && module.exports ){
 		module.exports = loadCSS;
 	}
 	else {

@@ -58,7 +58,7 @@ Licensed MIT
 		ss.onloadcssdefined = onloadcssdefined;
 		onloadcssdefined(function() {
 			if( ss.media !== newMedia ){
-					ss.media = newMedia;
+				ss.media = newMedia;
 			}
 		});
 		return ss;

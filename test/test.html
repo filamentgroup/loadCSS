@@ -20,6 +20,7 @@
 				// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 				var doc = w.document;
 				var ss = doc.createElement( "link" );
+				var newMedia = media || "all";
 				var ref;
 				if( before ){
 					ref = before;
@@ -34,7 +35,6 @@
 				ss.href = href;
 				// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 				ss.media = "only x";
-				var newMedia = media || "all";
 
 
 				// Inject link
@@ -47,7 +47,7 @@
 					var i = sheets.length;
 					while( i-- ){
 						if( sheets[ i ].href === resolvedHref ){
-							return setTimeout(cb);
+							return cb();
 						}
 					}
 					setTimeout(function() {
@@ -70,8 +70,8 @@
 				return ss;
 			};
 			// commonjs
-			if( typeof module !== "undefined" ){
-				module.exports = loadCSS;
+			if( typeof exports !== "undefined" ){
+				exports.loadCSS = loadCSS;
 			}
 			else {
 				w.loadCSS = loadCSS;

@@ -41,7 +41,7 @@ Licensed MIT
 			var i = sheets.length;
 			while( i-- ){
 				if( sheets[ i ].href === resolvedHref ){
-					return setTimeout(cb);
+					return cb();
 				}
 			}
 			setTimeout(function() {

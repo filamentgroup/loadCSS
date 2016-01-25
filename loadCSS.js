@@ -64,8 +64,8 @@ Licensed MIT
 		return ss;
 	};
 	// commonjs
-	if( typeof module !== "undefined" ){
-		module.exports = loadCSS;
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
 	}
 	else {
 		w.loadCSS = loadCSS;

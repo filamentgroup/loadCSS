@@ -2,7 +2,7 @@
   "name": "fg-loadcss",
   "version": "0.2.4",
   "description": "A function for loading CSS asynchronously",
-  "main": "loadCSS.js",
+  "main": "src/loadCSS.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/filamentgroup/loadCSS.git"

@@ -1,7 +1,7 @@
 <!doctype HTML>
 <html>
 	<head>
-		<title>Test for link[rel=preload]</title>
+		<title>CSS link[rel=preload] Polyfill</title>
 		<meta charset="utf-8">
 
 		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'">
@@ -14,7 +14,7 @@
 			// rel=preload support test
 			function support(){
 			  try {
-					return w.document.createElement("link").relList.supports( "preload" );
+					return w.document.createElement( "link" ).relList.supports( "preload" );
 			  } catch (e) {}
 			}
 			// loop preload links and fetch using loadCSS
@@ -22,8 +22,8 @@
 				var links = w.document.getElementsByTagName( "link" );
 				for( var i = 0; i < links.length; i++ ){
 					var link = links[ i ];
-					if( link.rel === "preload" ){
-						loadCSS( link.href, link );
+					if( link.rel === "preload" && link.getAttribute( "as" ) === "style" ){
+						w.loadCSS( link.href, link );
 						link.rel = null;
 					}
 				}
@@ -39,13 +39,31 @@
 				}
 			}
 		}( this ));
-
 		</script>
+
+		<style>
+			/* a few demo styles */
+			body {
+				font-family: sans-serif;
+				margin: 50px auto;
+				max-width: 60em;
+				padding: 0 20px;
+			}
+
+		</style>
 	</head>
 	<body>
-		<p>This is a test page that references a stylesheet with <code>link[rel=prefetch]</code>, and fetches the CSS manually using <code>loadCSS</code> in browsers that do not understand <code>link[rel=prefetch]</code> yet (read: all browsers at time of writing)</p>
+		<h1>Async CSS w/ link[rel=preload]</h1>
+		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=prefetch]</code>.<p>
 
-		<p>The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
+		<p>That markup looks like this:</p>
+		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
+
+		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
+
+		<p>For browsers that do not yet support <code>link[rel=preload]</code>, this page includes a small script, loadCSS.js, and a feature-test-based polyfill function (cssrelpreload.js) to fetch all <code>link[rel=preload]</code> stylesheets asynchronously and apply them to the page. The function polls the document for new links to preload until the window's onload event fires, and requires no configuration to work.</p>
+
+		<p>Note: The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
 
 </body>
 </html>

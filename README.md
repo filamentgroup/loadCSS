@@ -6,7 +6,7 @@ Licensed MIT
 
 ## Usage
 
-Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
+Place the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) inline in the `head` of your page (it can also be included in an external JavaScript file if preferable).
 
 Then call it by passing it a stylesheet URL:
 
@@ -46,7 +46,7 @@ By default, loadCSS will inject the new CSS stylesheet *after* the last styleshe
 
 #### Using with `onload`
 
-Onload listener support with `link` elements is spotty, so if you need to add an onload callback, include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/onloadCSS.js) on your page and use the `onloadCSS` function:
+Onload listener support with `link` elements is spotty, so if you need to add an onload callback, include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js) on your page and use the `onloadCSS` function:
 
 ``` javascript
 function onloadCSS( ss, callback ){ ... }
@@ -147,7 +147,7 @@ LoadCSS attempts to load a css file asynchronously, while maintaining the CSS ca
         <th>Yes</th>
         <th>No</th>
     </tr>
-    
+
 </table>
 
 
@@ -161,5 +161,3 @@ The reason this script is sometimes necessary is because there is no cross-brows
 #### Contributions and bug fixes
 
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!
-
-

@@ -14,6 +14,7 @@ Licensed MIT
 		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 		var doc = w.document;
 		var ss = doc.createElement( "link" );
+		var newMedia = media || "all";
 		var ref;
 		if( before ){
 			ref = before;
@@ -28,6 +29,7 @@ Licensed MIT
 		ss.href = href;
 		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 		ss.media = "only x";
+
 
 		// Inject link
 			// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
@@ -48,18 +50,24 @@ Licensed MIT
 		};
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
+		if( ss.addEventListener ){
+			ss.addEventListener( "load", function(){
+				this.media = newMedia;
+			});
+		}
 		ss.onloadcssdefined = onloadcssdefined;
 		onloadcssdefined(function() {
-			ss.media = media || "all";
+			if( ss.media !== newMedia ){
+				ss.media = newMedia;
+			}
 		});
 		return ss;
 	};
 	// commonjs
-	if( typeof module !== "undefined" ){
-		module.exports = loadCSS;
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
 	}
 	else {
 		w.loadCSS = loadCSS;
 	}
 }( typeof global !== "undefined" ? global : this ));
-

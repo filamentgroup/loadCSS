@@ -12,7 +12,7 @@
 		(function(w){
 			"use strict";
 			/* exported loadCSS */
-			w.loadCSS = function( href, before, media ){
+			var loadCSS = function( href, before, media ){
 				// Arguments explained:
 				// `href` [REQUIRED] is the URL for your CSS file.
 				// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
@@ -20,6 +20,7 @@
 				// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 				var doc = w.document;
 				var ss = doc.createElement( "link" );
+				var newMedia = media || "all";
 				var ref;
 				if( before ){
 					ref = before;
@@ -34,6 +35,7 @@
 				ss.href = href;
 				// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 				ss.media = "only x";
+
 
 				// Inject link
 					// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
@@ -54,19 +56,35 @@
 				};
 
 				// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
+				if( ss.addEventListener ){
+					ss.addEventListener( "load", function(){
+						this.media = newMedia;
+					});
+				}
 				ss.onloadcssdefined = onloadcssdefined;
 				onloadcssdefined(function() {
-					ss.media = media || "all";
+					if( ss.media !== newMedia ){
+						ss.media = newMedia;
+					}
 				});
 				return ss;
 			};
-		}(this));
+			// commonjs
+			if( typeof exports !== "undefined" ){
+				exports.loadCSS = loadCSS;
+			}
+			else {
+				w.loadCSS = loadCSS;
+			}
+		}( typeof global !== "undefined" ? global : this ));
 
 
 
 
 
-			loadCSS( "http://scottjehl.com/css-temp/slow.php" );
+
+
+			loadCSS( "http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" );
 		</script>
 	</head>
 	<body>

@@ -6,8 +6,10 @@
 
 		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'">
 		<script>
+		/*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
+		!function(e){"use strict";var t=function(t,n,i){var o,a=e.document,d=a.createElement("link"),r=i||"all";if(n)o=n;else{var l=(a.body||a.getElementsByTagName("head")[0]).childNodes;o=l[l.length-1]}var s=a.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o.parentNode.insertBefore(d,n?o:o.nextSibling);var f=function(e){for(var t=d.href,n=s.length;n--;)if(s[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",function(){this.media=r}),d.onloadcssdefined=f,f(function(){d.media!==r&&(d.media=r)}),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
 
-		/* CSS rel=preload polyfill */
+		/* CSS rel=preload polyfill (from src/cssrelpreload.js) */
 		(function( w ){
 			// rel=preload support test
 			function support(){
@@ -19,9 +21,10 @@
 			function poly(){
 				var links = w.document.getElementsByTagName( "link" );
 				for( var i = 0; i < links.length; i++ ){
-					if( links[ i ].getAttribute( "rel" ) === "preload" ){
-						w.loadCSS( links[ i ].href, links[ i ] );
-						links[ i ].rel = null;
+					var link = links[ i ];
+					if( link.rel === "preload" ){
+						loadCSS( link.href, link );
+						link.rel = null;
 					}
 				}
 			}
@@ -32,7 +35,7 @@
 				if( w.addEventListener ){
 					w.addEventListener( "load", function(){
 						w.clearInterval( run );
-					} )
+					} );
 				}
 			}
 		}( this ));

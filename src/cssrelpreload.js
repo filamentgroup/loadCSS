@@ -10,9 +10,10 @@
   function poly(){
     var links = w.document.getElementsByTagName( "link" );
     for( var i = 0; i < links.length; i++ ){
-      if( links[ i ].getAttribute( "rel" ) === "preload" ){
-        w.loadCSS( links[ i ].href, links[ i ] );
-        links[ i ].rel = null;
+      var link = links[ i ];
+      if( link.rel === "preload" ){
+        loadCSS( link.href, link );
+        link.rel = null;
       }
     }
   }

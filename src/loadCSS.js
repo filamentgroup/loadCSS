@@ -30,11 +30,21 @@ Licensed MIT
 		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 		ss.media = "only x";
 
-
+		// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
+		function ready( cb ){
+			if( w.document.body ){
+				return cb();
+			}
+			setTimeout(function(){
+				ready( cb );
+			});
+		}
 		// Inject link
 			// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
 			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		ready( function(){
+			ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		});
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
 		var onloadcssdefined = function( cb ){
 			var resolvedHref = ss.href;
@@ -71,3 +81,35 @@ Licensed MIT
 		w.loadCSS = loadCSS;
 	}
 }( typeof global !== "undefined" ? global : this ));
+
+
+/* CSS rel=preload polyfill (from src/cssrelpreload.js) */
+(function( w ){
+	// rel=preload support test
+	function support(){
+		try {
+			return w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {}
+	}
+	// loop preload links and fetch using loadCSS
+	function poly(){
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" ){
+				w.loadCSS( link.href, link );
+				link.rel = null;
+			}
+		}
+	}
+	// if link[rel=preload] is not supported, we must fetch the CSS manually using loadCSS
+	if( !support() ){
+		poly();
+		var run = w.setInterval( poly, 300 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				w.clearInterval( run );
+			} );
+		}
+	}
+}( this ));

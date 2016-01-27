@@ -32,7 +32,7 @@ Licensed MIT
 
 		// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
 		function ready( cb ){
-			if( w.document.body ){
+			if( doc.body ){
 				return cb();
 			}
 			setTimeout(function(){

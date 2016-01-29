@@ -27,7 +27,7 @@ function onloadCSS( ss, callback ) {
 	//	* Android 2.3 (Pantech Burst P9070)
 
 	// Weak inference targets Android < 4.4
- 	if( "isApplicationInstalled" in navigator ) {
+ 	if( "isApplicationInstalled" in navigator && "onloadcssdefined" in ss ) {
 		ss.onloadcssdefined( newcb );
 	}
 }

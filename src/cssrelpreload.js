@@ -32,6 +32,11 @@
     if( w.addEventListener ){
       w.addEventListener( "load", function(){
         w.clearInterval( run );
+      } );
+    }
+    if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        w.clearInterval( run );
       } )
     }
   }

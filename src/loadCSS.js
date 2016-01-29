@@ -1,8 +1,4 @@
-/*!
-loadCSS: load a CSS file asynchronously.
-[c]2015 @scottjehl, Filament Group, Inc.
-Licensed MIT
-*/
+/*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
 (function(w){
 	"use strict";
 	/* exported loadCSS */

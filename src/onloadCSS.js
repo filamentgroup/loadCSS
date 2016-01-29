@@ -1,8 +1,4 @@
-/*!
-onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS.
-[c]2014 @zachleat, Filament Group, Inc.
-Licensed MIT
-*/
+/*! onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS. [c]2016 @zachleat, Filament Group, Inc. Licensed MIT */
 /* global navigator */
 /* exported onloadCSS */
 function onloadCSS( ss, callback ) {
@@ -19,7 +15,7 @@ function onloadCSS( ss, callback ) {
 	if( ss.attachEvent ){
 		ss.attachEvent( "onload", newcb );
 	}
-	
+
 	// This code is for browsers that don’t support onload
 	// No support for onload (it'll bind but never fire):
 	//	* Android 4.3 (Samsung Galaxy S4, Browserstack)

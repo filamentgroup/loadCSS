@@ -7,8 +7,10 @@
   var rp = loadCSS.relpreload = {};
   rp.support = function(){
     try {
-      return w.document.createElement("link").relList.supports( "preload" );
-    } catch (e) {}
+      return w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      return false;
+    }
   };
 
   // loop preload links and fetch using loadCSS

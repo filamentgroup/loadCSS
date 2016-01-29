@@ -33,7 +33,7 @@
 	asyncTest( 'loadCSS loads a CSS file', function(){
 		expect(1);
 		var ss = loadCSS("files/test.css");
-		ss.onloadcssdefined(function(){
+		onloadCSS( ss, function(){
 			ok("stylesheet loaded successfully");
 			start();
 		});
@@ -42,7 +42,7 @@
 	asyncTest( 'loadCSS loads a CSS file with a relative path', function(){
 		expect(1);
 		var ss = loadCSS("../../test/qunit/files/test.css");
-		ss.onloadcssdefined(function(){
+		onloadCSS( ss, function(){
 			ok("stylesheet loaded successfully");
 			start();
 		});
@@ -52,7 +52,7 @@
 		expect(2);
 		var ss = loadCSS("files/test.css");
 		ok(ss.media, initialMedia, "media type begins as" + initialMedia );
-		ss.onloadcssdefined(function(){
+		onloadCSS( ss, function(){
 			equal(ss.media, "all", "media type is all");
 			start();
 		});
@@ -63,7 +63,7 @@
 		var med = "print";
 		var ss = loadCSS("files/test.css", null, med);
 		ok(ss.media, initialMedia, "media type begins as " + initialMedia );
-		ss.onloadcssdefined(function(){
+		onloadCSS( ss, function(){
 			equal(ss.media, med, "media type is " + med);
 			start();
 		});

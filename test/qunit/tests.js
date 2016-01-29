@@ -76,5 +76,18 @@
 		equal(ss.nextElementSibling, elem );
 	});
 
+	asyncTest( 'onloadCSS callback fires after css is loaded', function(){
+		expect(1);
+		var getStyles = window.getComputedStyle ? function (node) { return window.getComputedStyle(node, null); } : function (node) { return node.currentStyle; };
+		var elem = window.document.createElement("div");
+		elem.className = "bar";
+		document.body.appendChild( elem );
+		var ss = loadCSS("files/test.css?1");
+		onloadCSS( ss, function(){
+			equal(getStyles(elem).backgroundColor, 'rgb(0, 128, 0)', 'background is green' );
+			start();
+		} );
+	});
+
 
 }(window));

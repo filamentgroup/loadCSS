@@ -30,11 +30,21 @@ Licensed MIT
 		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 		ss.media = "only x";
 
-
+		// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
+		function ready( cb ){
+			if( doc.body ){
+				return cb();
+			}
+			setTimeout(function(){
+				ready( cb );
+			});
+		}
 		// Inject link
 			// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
 			// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		ready( function(){
+			ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		});
 		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
 		var onloadcssdefined = function( cb ){
 			var resolvedHref = ss.href;

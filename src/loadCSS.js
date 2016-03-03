@@ -46,7 +46,7 @@
 			var i = sheets.length;
 			while( i-- ){
 				if( sheets[ i ].href === resolvedHref ){
-					return cb.call( ss );
+					return cb();
 				}
 			}
 			setTimeout(function() {

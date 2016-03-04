@@ -29,16 +29,16 @@ Since `rel=preload` does not apply the CSS on its own (it merely fetches it), th
 
 With that markup in the `head` of your page, include the [loadCSS script](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js), as well as the [loadCSS rel=preload polyfill script](https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js) in your page (inline to run right away, or in an external file if the CSS is low-priority). 
 
-No further configuration is needed, as these scripts will automatically detect if the browsers supports `rel=preload`, and if it does not, they will find CSS files referenced in the DOM and preload them using loadCSS. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS (note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support rel=preload).
+No further configuration is needed, as these scripts will automatically detect if the browsers supports `rel=preload`, and if it does not, they will find CSS files referenced in the DOM and preload them using loadCSS. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS (note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support `rel=preload`).
 
-Note: regardless of whether the browser supports rel=preload or not, your CSS file will be referenced from the same spot in the source order as the original `link` element. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order.
+Note: regardless of whether the browser supports `rel=preload` or not, your CSS file will be referenced from the same spot in the source order as the original `link` element. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order.
 
 You can view a demo of this `rel=preload` pattern here: http://filamentgroup.github.io/loadCSS/test/preload.html
 
 
 ## Function API
 
-If you're calling loadCSS manually (without the rel=preload, the function has 3 optional arguments.
+If you're calling loadCSS manually (without the `rel=preload` pattern, the function has 3 optional arguments.
 
 - `before`: By default, loadCSS attempts to inject the stylesheet link *after* all CSS and JS in the page. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use the `before` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *before* the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
 	``` html

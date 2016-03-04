@@ -10,7 +10,6 @@
 		// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 		var doc = w.document;
 		var ss = doc.createElement( "link" );
-		var newMedia = media || "all";
 		var ref;
 		if( before ){
 			ref = before;
@@ -55,18 +54,19 @@
 			});
 		};
 
+		function loadCB(){
+			if( ss.addEventListener ){
+				ss.removeEventListener( "load", loadCB );
+			}
+			ss.media = media || "all";
+		}
+
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
 		if( ss.addEventListener ){
-			ss.addEventListener( "load", function(){
-				this.media = newMedia;
-			});
+			ss.addEventListener( "load", loadCB);
 		}
 		ss.onloadcssdefined = onloadcssdefined;
-		onloadcssdefined(function() {
-			if( ss.media !== newMedia ){
-				ss.media = newMedia;
-			}
-		});
+		onloadcssdefined( loadCB );
 		return ss;
 	};
 	// commonjs

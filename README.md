@@ -10,7 +10,7 @@ Referencing CSS files with `link[rel=stylesheet]` or `@import` will cause most b
 
 ## Basic Usage
 
-With the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) referenced in yoru page, simply call the `loadCSS` function and pass it a stylesheet URL:
+With the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) referenced in your page, simply call the `loadCSS` function and pass it a stylesheet URL:
 
 ```css
 loadCSS( "path/to/mystylesheet.css" );

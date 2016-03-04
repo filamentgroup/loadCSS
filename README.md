@@ -1,8 +1,12 @@
 # loadCSS
 
 A function for loading CSS asynchronously
-[c]2016 @scottjehl, Filament Group, Inc.
+[c]2016 @scottjehl, [Filament Group, Inc.](https://www.filamentgroup.com/)
 Licensed MIT
+
+## Why loadCSS?
+
+Referencing CSS files with `link[rel=stylesheet]` or `@import` will cause most browsers to delay page rendering while the stylesheet loads. This is desirable in many cases, but when loading stylesheets that are not critical to the initial rendering of a page, loadCSS (and upcoming web standards mentioned below) allows you to load stylesheets asynchronously, so they don’t block page rendering.
 
 ## Basic Usage
 
@@ -67,7 +71,7 @@ onloadCSS( stylesheet, function() {
 
 ### Browser Support
 
-LoadCSS attempts to load a css file asynchronously in any JavaScript-capable browser. However, some older browsers will block rendering while the stylesheet is loading. This table outlines css loading support and async loading support.
+loadCSS attempts to load a css file asynchronously in any JavaScript-capable browser. However, some older browsers will block rendering while the stylesheet is loading. This table outlines css loading support and async loading support.
 
 <table>
     <tr>
@@ -162,9 +166,8 @@ LoadCSS attempts to load a css file asynchronously in any JavaScript-capable bro
 
 ### Usage Tips
 
-We typically use `loadCSS` to load CSS files that are non-critical to the initial rendering of a site. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance.
+We typically use `loadCSS` to load CSS files that are non-critical to the initial rendering of a page. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance (note: the newest `rel=preload` pattern is not yet in that readme, but the concepts are the same).
 
-The reason this script is sometimes necessary is because there is no cross-browser means in HTML (currently at least) to load and apply a CSS file asynchronously. CSS references that use either `link` or `import` will cause browsers to block page rendering by default while their related stylesheet loads.
 
 #### Contributions and bug fixes
 

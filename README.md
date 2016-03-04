@@ -24,9 +24,27 @@ Then call it by passing it a stylesheet URL:
 </head>
 ```
 
-By default, loadCSS will inject the new CSS stylesheet *after* the last stylesheet or script in the page. This should retain your CSS cascade as you'd expect.
+By default, loadCSS will inject the new CSS stylesheet *after* the last stylesheet or script that it finds in the page. Multiple calls to loadCSS will reference CSS files in the order they were called, but they may finish loading in a different order than they were called depending on network conditions.
 
-#### Optional Arguments
+## Recommended Pattern
+
+Browsers are beginning to support a standard means of loading CSS (and other file types) asynchronously through `<link rel="preload">` ([W3C Spec](https://www.w3.org/TR/2015/WD-preload-20150721/)). We recommend using this markup pattern to reference any CSS files that should be loaded asynchronously, and using `loadCSS` merely to polyfill support browsers that don't yet support this new feature.
+
+The markup for referencing your CSS file looks like this:
+
+```html
+<link rel="preload" href="/path/to/my/css.css" as="style" onload="this.rel='stylesheet'">
+```
+
+With that in the head of your page, you'll want to include the [loadCSS script](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js), as well as the [loadCSS rel=preload polyfill script](https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js) in your page (inline or external). No further configuration is needed, as these scripts will automatically find CSS files referenced in the DOM and preload them using loadCSS. In browsers that natively support `rel=preload`, these scripts will simply run feature detect and then do nothing, allowing the browser to load and apply the asynchronous CSS (note the onload attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support rel=preload.
+
+Note: regardless of whether the browser supports rel=preload or not, your CSS file will be referenced from the same spot in the source order as the original `link` element. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order.
+
+
+#### Function API
+
+If you're calling loadCSS manually, the function has 3 optional arguments.
+
 - `before`: By default, loadCSS attempts to inject the stylesheet link *after* all CSS and JS in the page. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use the `before` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *before* the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
 	``` html
 <head>

@@ -69,7 +69,7 @@
     			if( ss.addEventListener ){
     				ss.removeEventListener( "load", loadCB );
     			}
-    			this.media = media || "all";
+    			ss.media = media || "all";
     		}
 
     		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads

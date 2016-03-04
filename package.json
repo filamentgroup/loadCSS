@@ -17,7 +17,7 @@
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
     "grunt-contrib-jshint": "~0.12.0",
-    "grunt-contrib-qunit": "~0.7.0"
+    "grunt-contrib-qunit": "~1.0.1"
   },
   "scripts": {
     "test": "node node_modules/.bin/grunt"

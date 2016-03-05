@@ -25,13 +25,13 @@ Browsers are beginning to support a standard markup pattern for loading CSS (and
 The markup for referencing your CSS file looks like this:
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="stylesheet" onload="this.rel='stylesheet'">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 ```
 
-Since `rel=preload` does not apply the CSS on its own (it merely fetches it), there is an `onload` handler on the `link` that will do that for us as soon as the CSS finishes loading. Since this step requires JavaScript, you may want to include an ordinary reference to your CSS file as well, using a `noscript` element to ensure it only applies in non-JavaScript settings. 
+Since `rel=preload` does not apply the CSS on its own (it merely fetches it), there is an `onload` handler on the `link` that will do that for us as soon as the CSS finishes loading. Since this step requires JavaScript, you may want to include an ordinary reference to your CSS file as well, using a `noscript` element to ensure it only applies in non-JavaScript settings.
 
-With that markup in the `head` of your page, include the [loadCSS script](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js), as well as the [loadCSS rel=preload polyfill script](https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js) in your page (inline to run right away, or in an external file if the CSS is low-priority). 
+With that markup in the `head` of your page, include the [loadCSS script](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js), as well as the [loadCSS rel=preload polyfill script](https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js) in your page (inline to run right away, or in an external file if the CSS is low-priority).
 
 No further configuration is needed, as these scripts will automatically detect if the browsers supports `rel=preload`, and if it does not, they will find CSS files referenced in the DOM and preload them using loadCSS. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS (note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support `rel=preload`).
 

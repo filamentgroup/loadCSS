@@ -8,6 +8,9 @@ Licensed MIT
 
 Referencing CSS files with `link[rel=stylesheet]` or `@import` will cause most browsers to delay page rendering while the stylesheet loads. This is desirable in many cases, but when loading stylesheets that are not critical to the initial rendering of a page, loadCSS (and upcoming web standards mentioned below) allows you to load stylesheets asynchronously, so they don’t block page rendering.
 
+* Latest release: https://github.com/filamentgroup/loadCSS/releases
+* NPM: https://www.npmjs.com/package/fg-loadcss
+
 ## Basic Usage
 
 With the [`loadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) referenced in your page, simply call the `loadCSS` function and pass it a stylesheet URL:

@@ -4,7 +4,7 @@
 		<title>CSS link[rel=preload] Polyfill</title>
 		<meta charset="utf-8">
 
-		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="stylesheet" onload="this.rel='stylesheet'">
+		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="http://scottjehl.com/css-temp/slow.php"></noscript>
 		<script>
 		/*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */
@@ -154,7 +154,7 @@
 		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="stylesheet" onload="this.rel='stylesheet'"&gt;</code></pre>
+		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
 

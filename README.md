@@ -25,7 +25,7 @@ Browsers are beginning to support a standard markup pattern for loading CSS (and
 The markup for referencing your CSS file looks like this:
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="stylesheet" onload="this.rel='stylesheet'">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 ```
 

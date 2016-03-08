@@ -7,6 +7,8 @@
 	<!-- Load local QUnit. -->
 	<link rel="stylesheet" href="./libs/qunit/qunit.css" media="screen">
 	<link rel="preload" href="files/preloadtest.css" id="preloadtest" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="files/preloadtest.css?1" id="optintest" as="style" data-loadcss="true">
+	<link rel="preload" href="files/preloadtest.css?2" id="optouttest" as="style" data-loadcss="false">
 	<script src="./libs/qunit/qunit.js"></script>
 	<!-- Load local lib and tests. -->
 	<script src="../../src/loadCSS.js" id="loadCSS"></script>

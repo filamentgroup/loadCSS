@@ -99,6 +99,26 @@
 		ok( typeof window.loadCSS.relpreload.support() === "boolean", "relpreload.support should be a bool" );
 	});
 
+	test( 'rel=preload polyfill respects attributes', function(){
+		expect(2);
+		var optInElem = document.getElementById('optintest');
+		var preloadHref = optInElem.getAttribute("href");
+		var optOutElem = document.getElementById('optouttest');
+
+		function loaded(){
+			return document.querySelector( 'link[href="'+ preloadHref +'"][rel="stylesheet"]' ) || document.querySelector( 'link[href="'+ optInElem.href +'"][rel="stylesheet"]' );
+		}
+
+		if( window.loadCSS.relpreload.support() ){
+			ok( loaded(), "opt in stylesheet is in dom and applied without a polyfill" );
+		}
+		else {
+			ok( loaded(), "opt in stylesheet is in dom and applied with a polyfill" );
+		}
+		ok(optOutElem.rel === "preload", "opt out stylesheet is not requested with a polyfill");
+
+	});
+
 	asyncTest( 'rel=preload stylesheet loads via polyfill', function(){
 		expect(1);
 		var preloadElem = document.getElementById("preloadtest");

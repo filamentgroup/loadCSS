@@ -100,10 +100,11 @@
 	});
 
 	test( 'rel=preload polyfill respects attributes', function(){
-		expect(2);
+		expect(3);
 		var optInElem = document.getElementById('optintest');
 		var preloadHref = optInElem.getAttribute("href");
 		var optOutElem = document.getElementById('optouttest');
+		var asTestElem = document.getElementById('astest');
 
 		function loaded(){
 			return document.querySelector( 'link[href="'+ preloadHref +'"][rel="stylesheet"]' ) || document.querySelector( 'link[href="'+ optInElem.href +'"][rel="stylesheet"]' );
@@ -116,6 +117,7 @@
 			ok( loaded(), "opt in stylesheet is in dom and applied with a polyfill" );
 		}
 		ok(optOutElem.rel === "preload", "opt out stylesheet is not requested with a polyfill");
+		ok(asTestElem.rel === "preload", "stylesheet with unsupported 'as' attribute is not requested with a polyfill");
 
 	});
 

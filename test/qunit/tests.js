@@ -100,23 +100,8 @@
 	});
 
 	test( 'rel=preload polyfill respects attributes', function(){
-		expect(3);
-		var optInElem = document.getElementById('optintest');
-		var preloadHref = optInElem.getAttribute("href");
-		var optOutElem = document.getElementById('optouttest');
+		expect(1);
 		var asTestElem = document.getElementById('astest');
-
-		function loaded(){
-			return document.querySelector( 'link[href="'+ preloadHref +'"][rel="stylesheet"]' ) || document.querySelector( 'link[href="'+ optInElem.href +'"][rel="stylesheet"]' );
-		}
-
-		if( window.loadCSS.relpreload.support() ){
-			ok( loaded(), "opt in stylesheet is in dom and applied without a polyfill" );
-		}
-		else {
-			ok( loaded(), "opt in stylesheet is in dom and applied with a polyfill" );
-		}
-		ok(optOutElem.rel === "preload", "opt out stylesheet is not requested with a polyfill");
 		ok(asTestElem.rel === "preload", "stylesheet with unsupported 'as' attribute is not requested with a polyfill");
 
 	});

@@ -18,9 +18,7 @@
     var links = w.document.getElementsByTagName( "link" );
     for( var i = 0; i < links.length; i++ ){
       var link = links[ i ];
-      if( link.rel === "preload" &&
-          link.getAttribute( "as" ) === "style" &&
-          link.dataset.loadcss !== "false" ){
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" ){
         w.loadCSS( link.href, link );
         link.rel = null;
       }

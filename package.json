@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/filamentgroup/loadCSS",
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "grunt": "~1.0.0",
     "grunt-cli": "~0.1.13",
     "grunt-contrib-jshint": "~0.12.0",
     "grunt-contrib-qunit": "~1.0.1"

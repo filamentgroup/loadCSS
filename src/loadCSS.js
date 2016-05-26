@@ -40,7 +40,7 @@
 		ready( function(){
 			ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
 		});
-		// A method (exposed on return object for external use) that mimics onload by polling until document.styleSheets until it includes the new sheet.
+		// A method (exposed on return object for external use) that mimics onload by polling document.styleSheets until it includes the new sheet.
 		var onloadcssdefined = function( cb ){
 			var resolvedHref = ss.href;
 			var i = sheets.length;

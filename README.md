@@ -34,21 +34,25 @@ The markup for referencing your CSS file looks like this:
 
 Since `rel=preload` does not apply the CSS on its own (it merely fetches it), there is an `onload` handler on the `link` that will do that for us as soon as the CSS finishes loading. Since this step requires JavaScript, you may want to include an ordinary reference to your CSS file as well, using a `noscript` element to ensure it only applies in non-JavaScript settings.
 
-Currently the polyfill must be loaded before the `<link rel="preload">` in order to work ie :
+Exemple on how to setup your markup :
+(loadCSS must be loaded before the polyfill)
 
 ```html
 <header>
+<!-- request your css -->
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
+
+<!-- load external files-->
+<script src="path/to/loadCSS.js"></script>
+<script src="path/to/cssrelpreload.js"></script>
+
 <!-- inline the js code so it runs right away -->
 <script>//content from loadCSS script (https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js)</script>
 <script>//content from rel=preload polyfill script (https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js)</script>
 
 <!-- or for better performance -->
 <script>//content from minified version from both loadCSS and Polyfill scripts (https://gist.github.com/Marabyte/62122715310d5457703156bf5e9509ef)</script>
-
-<!-- request your css -->
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
-
 
 </header>
 ```

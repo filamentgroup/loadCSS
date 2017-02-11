@@ -169,7 +169,7 @@ loadCSS attempts to load a css file asynchronously in any JavaScript-capable bro
 
 ### Usage Tips
 
-We typically use `loadCSS` to load CSS files that are non-critical to the initial rendering of a page. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance (note: the newest `rel=preload` pattern is not yet in that readme, but the concepts are the same).
+We typically use `loadCSS` to load CSS files that are non-critical to the initial rendering of a page. See the [EnhanceJS project Readme](https://github.com/filamentgroup/enhance#enhancejs) for examples of how we typically use it to improve page loading performance.
 
 
 #### Contributions and bug fixes

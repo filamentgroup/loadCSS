@@ -23,7 +23,7 @@ The code above will insert a new CSS stylesheet `link` *after* the last styleshe
 
 ## Recommended Usage Pattern
 
-Browsers are beginning to support a standard markup pattern for loading CSS (and other file types) asynchronously: `<link rel="preload">` ([W3C Spec](https://www.w3.org/TR/2015/WD-preload-20150721/)). We recommend using this markup pattern to reference any CSS files that should be loaded asynchronously, and using `loadCSS` to polyfill support browsers that don't yet support this new feature.
+Browsers are beginning to support a standard markup pattern for loading CSS (and other file types) asynchronously: `<link rel="preload">` ([W3C Spec](https://www.w3.org/TR/2015/WD-preload-20150721/)). We recommend using this markup pattern to reference any CSS files that should be loaded asynchronously, and using `loadCSS` to polyfill support browsers that don't yet support this new feature ([Can I use link rel="preload" ?](http://caniuse.com/#feat=link-rel-preload)).
 
 The markup for referencing your CSS file looks like this:
 
@@ -34,7 +34,28 @@ The markup for referencing your CSS file looks like this:
 
 Since `rel=preload` does not apply the CSS on its own (it merely fetches it), there is an `onload` handler on the `link` that will do that for us as soon as the CSS finishes loading. Since this step requires JavaScript, you may want to include an ordinary reference to your CSS file as well, using a `noscript` element to ensure it only applies in non-JavaScript settings.
 
-With that markup in the `head` of your page, include the [loadCSS script](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js), as well as the [loadCSS rel=preload polyfill script](https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js) in your page (inline to run right away, or in an external file if the CSS is low-priority).
+Exemple on how to setup your markup :
+(loadCSS must be loaded before the polyfill)
+
+```html
+<header>
+<!-- request your css -->
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
+
+<!-- load external files-->
+<script src="path/to/loadCSS.js"></script>
+<script src="path/to/cssrelpreload.js"></script>
+
+<!-- inline the js code so it runs right away -->
+<script>//content from loadCSS script (https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js)</script>
+<script>//content from rel=preload polyfill script (https://github.com/filamentgroup/loadCSS/blob/master/src/cssrelpreload.js)</script>
+
+<!-- or for better performance -->
+<script>//content from minified version from both loadCSS and Polyfill scripts (https://gist.github.com/Marabyte/62122715310d5457703156bf5e9509ef)</script>
+
+</header>
+```
 
 No further configuration is needed, as these scripts will automatically detect if the browsers supports `rel=preload`, and if it does not, they will find CSS files referenced in the DOM and preload them using loadCSS. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS (note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support `rel=preload`).
 

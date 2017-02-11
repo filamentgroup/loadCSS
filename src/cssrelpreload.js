@@ -1,5 +1,5 @@
 /*! CSS rel=preload polyfill. Depends on loadCSS function. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT  */
-(function( w ){
+(window.preloadpolyfill = function( w ){
   // rel=preload support test
   if( !w.loadCSS ){
     return;
@@ -41,4 +41,8 @@
       } )
     }
   }
-}( this ));
+})( this );
+
+document.addEventListener('DOMContentLoaded', function() {
+  preloadpolyfill(window);
+}, false);

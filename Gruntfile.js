@@ -41,4 +41,6 @@ module.exports = function(grunt) {
   });
 
 	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+	grunt.registerTask('stage', ['default']);
+
 };

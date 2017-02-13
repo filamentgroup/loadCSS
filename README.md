@@ -53,7 +53,7 @@ These scripts will automatically detect if a browser supports `rel=preload`. In 
 
 Note: regardless of whether the browser supports `rel=preload` or not, a CSS file will be referenced from the same location in the source order as your original `link` element. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order. Also, any `media` attribute value on the original link element will be retained when the polyfill is in play.
 
-You can view a demo of this `rel=preload` pattern here: http://filamentgroup.github.io/loadCSS/test/preload.html
+You can view a demo of this `rel=preload` pattern here: https://master-origin-loadcss.fgview.com/test/preload.html
 
 
 ## Manual CSS loading with loadCSS

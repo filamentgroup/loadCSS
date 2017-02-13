@@ -1,6 +1,8 @@
 /* global module:false */
 module.exports = function(grunt) {
 
+	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
+
   // Project configuration.
 	grunt.initConfig({
     jshint: {
@@ -12,12 +14,22 @@ module.exports = function(grunt) {
 				src: ['Gruntfile.js', '*.js']
 			}
 		},
-	qunit: {
+		uglify: {
+      options: {
+					preserveComments: /^\!/
+			},
+			dist: {
+				files: {
+					'dist/loadCSS.min.js': ['src/loadCSS.js'],
+					'dist/cssrelpreload.min.js': ['src/cssrelpreload.js'],
+					'dist/onloadCSS.min.js': ['src/onloadCSS.js']
+				}
+			}
+		},
+		qunit: {
 			files: ['test/qunit/**/*.html']
 		}
   });
 
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
-	grunt.registerTask('default', ['jshint', 'qunit']);
+	grunt.registerTask('default', ['jshint', 'uglify', 'qunit']);
 };

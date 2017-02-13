@@ -14,6 +14,15 @@ module.exports = function(grunt) {
 				src: ['Gruntfile.js', '*.js']
 			}
 		},
+		concat: {
+			dist: {
+				files: {
+					'dist/loadCSS.js': ['src/loadCSS.js'],
+					'dist/cssrelpreload.js': ['src/cssrelpreload.js'],
+					'dist/onloadCSS.js': ['src/onloadCSS.js']
+				}
+			}
+		},
 		uglify: {
       options: {
 					preserveComments: /^\!/
@@ -31,5 +40,5 @@ module.exports = function(grunt) {
 		}
   });
 
-	grunt.registerTask('default', ['jshint', 'uglify', 'qunit']);
+	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 };

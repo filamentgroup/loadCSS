@@ -4,8 +4,8 @@
 		<title>CSS link[rel=preload] Polyfill</title>
 		<meta charset="utf-8">
 
-		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="http://scottjehl.com/css-temp/slow.php"></noscript>
+		<link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<script>
 		/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 		!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
@@ -37,7 +37,7 @@
 		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
+		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.css.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
 

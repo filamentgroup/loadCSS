@@ -10,8 +10,8 @@
 		/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
 		!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
 		</script>
-		<link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="http://scottjehl.com/css-temp/slow.php"></noscript>
+		<link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<style>
 			/* a few demo styles */
 			body {
@@ -37,7 +37,7 @@
 		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="http://scottjehl.com/css-temp/slow.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
+		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
 

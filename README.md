@@ -1,5 +1,9 @@
 # loadCSS
 
+[![npm](https://img.shields.io/badge/npm-3.10.10-blue.svg)]()
+[![dependencies](https://david-dm.org/filamentgroup/loadCSS.svg)](https://david-dm.org/filamentgroup/loadCSS)
+[![dev dependencies](https://david-dm.org/filamentgroup/loadCSS.svg/dev-status.svg)](https://david-dm.org/filamentgroup/loadCSS#info=devDependencies)
+
 A function for loading CSS asynchronously
 [c]2017 @scottjehl, @zachleat [Filament Group, Inc.](https://www.filamentgroup.com/)
 Licensed MIT

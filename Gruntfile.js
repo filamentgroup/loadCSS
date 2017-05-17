@@ -25,8 +25,13 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-      options: {
-					preserveComments: /^\!/
+			options: {
+					compress: true,
+					ie8: true,
+					mangle: true,
+					output: {
+						comments: /^!/
+					}
 			},
 			dist: {
 				files: {

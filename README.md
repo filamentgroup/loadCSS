@@ -71,7 +71,7 @@ The code above will insert a new CSS stylesheet `link` *after* the last styleshe
 If you're calling loadCSS manually (without the `rel=preload` pattern, the function has 3 optional arguments.
 
 - `before`: By default, loadCSS attempts to inject the stylesheet link *after* all CSS and JS in the page. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use the `before` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *before* the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
-	``` html
+```html
 <head>
 ...
 <script id="loadcss">
@@ -88,7 +88,7 @@ If you're calling loadCSS manually (without the `rel=preload` pattern, the funct
 
 Onload event support for `link` elements is spotty in some browsers, so if you need to add an onload callback, include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js) on your page and use the `onloadCSS` function:
 
-``` javascript
+```javascript
 var stylesheet = loadCSS( "path/to/mystylesheet.css" );
 onloadCSS( stylesheet, function() {
 	console.log( "Stylesheet has loaded." );

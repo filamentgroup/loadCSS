@@ -3,14 +3,12 @@
 	"curly": true,
 	"eqeqeq": true,
 	"eqnull": true,
-	"expr": true,
 	"immed": true,
-	"noarg": true,
-	"smarttabs": true,
-	"trailing": true,
-	"undef": true,
-	"unused": true,
+	"latedef": true,
+	"newcap": true,
 	"node": true,
-	"loopfunc": true,
-	"predef": [ "window", "document", "define", "shoestring", "XMLHttpRequest", "ActiveXObject", "Window", "localStorage" ]
+	"noarg": true,
+	"sub": true,
+	"undef": true,
+	"unused": true
 }

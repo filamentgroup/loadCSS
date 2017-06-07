@@ -99,6 +99,13 @@
 		ok( typeof window.loadCSS.relpreload.support() === "boolean", "relpreload.support should be a bool" );
 	});
 
+	test( 'rel=preload polyfill respects attributes', function(){
+		expect(1);
+		var asTestElem = document.getElementById('astest');
+		ok(asTestElem.rel === "preload", "stylesheet with unsupported 'as' attribute is not requested with a polyfill");
+
+	});
+
 	asyncTest( 'rel=preload stylesheet loads via polyfill', function(){
 		expect(1);
 		var preloadElem = document.getElementById("preloadtest");

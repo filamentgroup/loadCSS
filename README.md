@@ -60,7 +60,7 @@ You can view a demo of this `rel=preload` pattern here: https://master-origin-lo
 
 The [loadCSS.js](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) file exposes a global `loadCSS` function that you can call to load CSS files programmatically, when needed.
 
-```css
+``` javascript
 loadCSS( "path/to/mystylesheet.css" );
 ```
 

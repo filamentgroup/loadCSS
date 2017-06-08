@@ -21,9 +21,11 @@ function onloadCSS( ss, callback ) {
 	//	* Android 4.3 (Samsung Galaxy S4, Browserstack)
 	//	* Android 4.2 Browser (Samsung Galaxy SIII Mini GT-I8200L)
 	//	* Android 2.3 (Pantech Burst P9070)
+	//  * PhantomJS (Issue ref: https://github.com/ariya/phantomjs/issues/12332, https://github.com/dimaxweb/CSSLoader/issues/4)
 
-	// Weak inference targets Android < 4.4
- 	if( "isApplicationInstalled" in navigator && "onloadcssdefined" in ss ) {
-		ss.onloadcssdefined( newcb );
-	}
+    // Weak inference targets Android < 4.4
+    if ("isApplicationInstalled" in navigator && "onloadcssdefined" in ss ||
+    	/PhantomJS/.test(window.navigator.userAgent) && "onloadcssdefined" in ss) {
+        ss.onloadcssdefined(callback);
+    }
 }

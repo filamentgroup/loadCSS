@@ -68,7 +68,7 @@ The code above will insert a new CSS stylesheet `link` *after* the last styleshe
 
 ## Function API
 
-If you're calling loadCSS manually (without the `rel=preload` pattern, the function has 3 optional arguments.
+If you're calling loadCSS manually (without the `rel=preload` pattern), the function has 2 optional arguments.
 
 - `before`: By default, loadCSS attempts to inject the stylesheet link *after* all CSS and JS in the page. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use the `before` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *before* the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
 ```html

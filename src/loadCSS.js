@@ -13,6 +13,8 @@
 		var ref;
 		if( before ){
 			ref = before;
+			ss.id = before.id;
+			ss.disabled = before.disabled;
 		}
 		else {
 			var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;

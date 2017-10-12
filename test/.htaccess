@@ -1,0 +1,7 @@
+# make sure our ssi includes work
+SSILegacyExprParser on
+
+# enabled SSI for .html files
+AddType text/html .html
+AddHandler server-parsed .html
+Options Indexes Includes FollowSymlinks

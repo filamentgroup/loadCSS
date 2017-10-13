@@ -23,24 +23,33 @@
 		      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" ){
 						var finalMedia = link.media || "all";
 						var priorOnload = link.onload;
+						function enableStylesheet(){
+							link.rel = "stylesheet";
+							link.media = finalMedia;
+							if( w.localStorage ){
+								try {
+									w.localStorage[ link.href ] = true;
+								} catch( e ){}
+							}
+						}
+						if( w.localStorage && w.localStorage[ link.href ] ){
+							return enableStylesheet();
+						}
 						// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
 						// then change that media back to its intended value on load
+						link.onload = function(){
+							enableStylesheet();
+							if( priorOnload ){
+								priorOnload.call( link );
+							}
+						};
 						if( !preloadSupported() ){
-							link.onload = function(){
-								link.media = finalMedia;
-								if( priorOnload ){
-									priorOnload.call( link );
-								}
-							};
 							link.media = "x";
 							link.rel = "stylesheet";
 		      	}
 						// supported or not, set rel=preload to stylesheet after 3 seconds,
 						// which can combat a false positive support test
-						setTimeout(function(){
-							link.rel = "stylesheet";
-							link.media = finalMedia;
-						}, 3000 );
+						setTimeout( enableStylesheet, 3000 );
 					}
 		    }
 			})(this);

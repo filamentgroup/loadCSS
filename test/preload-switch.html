@@ -5,10 +5,9 @@
 		<meta charset="utf-8">
 
 		<script>
-		<!--#include virtual="../src/loadCSS.js" -->
 		<!--#include virtual="../src/cssrelpreload.js" -->
 		</script>
-		<link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'">
+		<link rel="preload" href="slow.css.php" as="style">
 		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<style>
 			/* a few demo styles */
@@ -32,14 +31,11 @@
 	</head>
 	<body>
 		<h1>Async CSS w/ link[rel=preload]</h1>
-		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.<p>
+		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.
+			A script is included to enable asynchronous CSS loading in browsers that do not support <code>link[rel=preload]</code>, and to enable the stylesheet immediately when it is loaded or cached.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
-
-		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
-
-		<p>For browsers that do not yet support <code>link[rel=preload]</code>, this page includes a small script, loadCSS.js, and a feature-test-based polyfill function (cssrelpreload.js) to fetch all <code>link[rel=preload]</code> stylesheets asynchronously and apply them to the page. The function polls the document for new links to preload until the window's onload event fires, and requires no configuration to work.</p>
+		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style""&gt;</code></pre>
 
 		<p>Note: The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
 

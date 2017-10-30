@@ -38,7 +38,7 @@
     for( var i = 0; i < links.length; i++ ){
       var link = links[ i ];
       // qualify links to those with rel=preload and as=style attrs
-      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" ){
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
         // remember existing media attr for ultimate state, or default to 'all'
         var finalMedia = link.media || "all";
         // remember onload attr, if set, to call it later
@@ -64,6 +64,8 @@
         setTimeout( function(){
           rp.enableStylesheet(link, finalMedia );
         }, 3000 );
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
       }
     }
   };

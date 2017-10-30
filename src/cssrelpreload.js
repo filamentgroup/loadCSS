@@ -68,4 +68,16 @@
     }
   };
   rp.poly();
+  var run = w.setInterval( rp.poly, 300 );
+  if( w.addEventListener ){
+    w.addEventListener( "load", function(){
+      rp.poly();
+      w.clearInterval( run );
+    } );
+  }
+  if( w.attachEvent ){
+    w.attachEvent( "onload", function(){
+      w.clearInterval( run );
+    } );
+  }
 })(this);

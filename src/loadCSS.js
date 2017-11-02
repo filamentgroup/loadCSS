@@ -20,6 +20,18 @@
 		}
 
 		var sheets = doc.styleSheets;
+		var i;
+		// Check if style sheet already exists on page
+		for (i = 0; i < sheets.length; i++) {
+			// href attribute of node matches the value passed to loadCSS previously.
+			// We do not use href *property* as that matches the *resolved URL* which may be different!
+			// ownerNode may be NULL if style sheet was transitively included in page,
+			// so guard for that here.
+			if (sheets[ i ].ownerNode && sheets[ i ].ownerNode.getAttribute('href') === href) {
+				return sheets[ i ].ownerNode;
+			}
+		}
+
 		ss.rel = "stylesheet";
 		ss.href = href;
 		// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
@@ -59,6 +71,7 @@
 				ss.removeEventListener( "load", loadCB );
 			}
 			ss.media = media || "all";
+			ss.loaded = true;
 		}
 
 		// once loaded, set link's media back to `all` so that the stylesheet applies once it loads

@@ -82,4 +82,11 @@
       w.clearInterval( run );
     } );
   }
-})(this);
+  // commonjs
+	if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );

@@ -35,6 +35,7 @@
 		var ss = loadCSS("files/test.css");
 		onloadCSS( ss, function(){
 			ok("stylesheet loaded successfully");
+			ss.remove();
 			start();
 		});
 	});
@@ -44,6 +45,7 @@
 		var ss = loadCSS("../../test/qunit/files/test.css");
 		onloadCSS( ss, function(){
 			ok("stylesheet loaded successfully");
+			ss.remove();
 			start();
 		});
 	});
@@ -54,6 +56,7 @@
 		ok(ss.media, initialMedia, "media type begins as" + initialMedia );
 		onloadCSS( ss, function(){
 			equal(ss.media, "all", "media type is all");
+			ss.remove();
 			start();
 		});
 	});
@@ -65,6 +68,7 @@
 		ok(ss.media, initialMedia, "media type begins as " + initialMedia );
 		onloadCSS( ss, function(){
 			equal(ss.media, med, "media type is " + med);
+			ss.remove();
 			start();
 		});
 	});
@@ -74,6 +78,21 @@
 		var elem = window.document.getElementById("before-test");
 		var ss = loadCSS("files/test.css", elem);
 		equal(ss.nextElementSibling, elem );
+		ss.remove();
+	});
+
+	asyncTest( 'loadCSS does not load the same stylesheet twice', function(){
+		expect(2);
+		var ss = loadCSS("files/test.css");
+		onloadCSS( ss, function(){
+			var ss2 = loadCSS("files/test.css");
+			strictEqual(ss, ss2, "loadCSS should not load the same stylesheet twice");
+			onloadCSS(ss2, function(){
+				ok("duplicated stylesheet loaded successfully");
+				ss.remove();
+				start();
+			});
+		});
 	});
 
 	asyncTest( 'onloadCSS callback fires after css is loaded', function(){
@@ -85,6 +104,7 @@
 		var ss = loadCSS("files/test.css?1");
 		onloadCSS( ss, function(){
 			equal(getStyles(elem).backgroundColor, 'rgb(0, 128, 0)', 'background is green' );
+			ss.remove();
 			start();
 		} );
 	});

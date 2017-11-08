@@ -2,6 +2,11 @@
 /* global navigator */
 /* exported onloadCSS */
 function onloadCSS( ss, callback ) {
+	if (ss.loaded) {
+		// Stylesheet is already loaded.
+		setTimeout(callback, 4);
+		return;
+	}
 	var called;
 	function newcb(){
 			if( !called && callback ){

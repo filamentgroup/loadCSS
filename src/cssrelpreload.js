@@ -1,8 +1,8 @@
 /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-/* This file is meant as a standalone workflow for:
+/* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
 - enabling async CSS loading in browsers that do not support rel=preload
-- synchronously activating preload stylesheets that have been cached already
+- applying rel preload css once loaded, whether supported or not.
 */
 (function( w ){
   "use strict";

@@ -24,12 +24,6 @@
   rp.enableStylesheet = function( link, media ){
     link.rel = "stylesheet";
     link.media = media;
-    // set a localStorage flag
-    if( w.localStorage ){
-      try {
-        w.localStorage[ link.href ] = true;
-      } catch( e ){}
-    }
   };
 
   // loop through link elements in DOM
@@ -41,19 +35,15 @@
       if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
         // remember existing media attr for ultimate state, or default to 'all'
         var finalMedia = link.media || "all";
-        // remember onload attr, if set, to call it later
-        var priorOnload = link.onload;
         // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
         // then change that media back to its intended value on load
-        link.onload = function(){
-          rp.enableStylesheet( link, finalMedia );
-          if( priorOnload ){
-            priorOnload.call( link );
-          }
-        };
-        // if a localStorage flag claims we've loaded/cached this stylesheet already, enable it synchronously now
-        if( w.localStorage && w.localStorage[ link.href ] ){
-          return rp.enableStylesheet( link, finalMedia );
+        var newOnload = function(){
+          rp.enableStylesheet(link, finalMedia );
+        }
+        if( link.addEventListener ){
+          link.addEventListener( "load", newOnload );
+        } else if( link.attachEvent ){
+          link.attachEvent( "onload", newOnload );
         }
         // if preload is not supported, try to load asynchronously by using a non-matching media query
         if( !rp.support() ){
@@ -76,8 +66,7 @@
       rp.poly();
       w.clearInterval( run );
     } );
-  }
-  if( w.attachEvent ){
+  } else if( w.attachEvent ){
     w.attachEvent( "onload", function(){
       w.clearInterval( run );
     } );

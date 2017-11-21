@@ -76,7 +76,21 @@
 		equal(ss.nextElementSibling, elem );
 	});
 
-	asyncTest( 'onloadCSS callback fires after css is loaded', function(){
+    test( 'loadCSS loads a CSS file with crossorigin set to a custom value', function(){
+        expect(1);
+        var crossoriginValue = "anonymous";
+        var ss = loadCSS("files/test.css", null, null, crossoriginValue);
+        equal(ss.getAttribute("crossorigin"), crossoriginValue, "value of crossorigin has to be " + crossoriginValue );
+    });
+
+    test( 'loadCSS loads a CSS file with crossorigin set to an empty value', function(){
+        expect(1);
+        var crossoriginValue = "";
+        var ss = loadCSS("files/test.css", null, null, crossoriginValue);
+        equal(ss.getAttribute("crossorigin"), crossoriginValue, "value of crossorigin has to be empty" );
+    });
+
+    asyncTest( 'onloadCSS callback fires after css is loaded', function(){
 		expect(1);
 		var getStyles = window.getComputedStyle ? function (node) { return window.getComputedStyle(node, null); } : function (node) { return node.currentStyle; };
 		var elem = window.document.createElement("div");

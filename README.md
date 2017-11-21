@@ -84,6 +84,20 @@ If you're calling loadCSS manually (without the `rel=preload` pattern, the funct
 
 - `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
 
+- `crossorigin`: You can optionally pass a value to the crossorigin argument to set the `crossorigin` attribute of the stylesheet. By default the attribute is not set.
+```html
+<head>
+...
+<script>
+  // load a CSS file from another domain - paying attention to CORS header
+  loadCSS( "https://cdn.example.org/path/to/mystylesheet.css", null, null, "anonymous" );
+</script>
+...
+</head>
+```
+The crossorigin attribute is required to force the browser to send the origin header when requesting the stylesheet. Without this header, services like Amazon S3 won't send back an access-control-allow-origin header leading to CORS errors.
+For more information see: https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes
+
 #### Using with `onload`
 
 Onload event support for `link` elements is spotty in some browsers, so if you need to add an onload callback, include [`onloadCSS` function](https://github.com/filamentgroup/loadCSS/blob/master/src/onloadCSS.js) on your page and use the `onloadCSS` function:

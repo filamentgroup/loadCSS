@@ -10,6 +10,7 @@
   if( !w.loadCSS ){
     w.loadCSS = function(){};
   }
+  // define on the loadCSS obj
   var rp = loadCSS.relpreload = {};
   // rel=preload feature support test
   rp.support = function(){
@@ -20,14 +21,11 @@
     }
   };
 
-  // function to enable a stylesheet so it applies
-  rp.enableStylesheet = function( link, media ){
-    link.rel = "stylesheet";
-    link.media = media;
-  };
-
   // loop through link elements in DOM
   rp.poly = function(){
+    if( rp.support() ){
+      return;
+    }
     var links = w.document.getElementsByTagName( "link" );
     for( var i = 0; i < links.length; i++ ){
       var link = links[ i ];
@@ -37,40 +35,40 @@
         var finalMedia = link.media || "all";
         // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
         // then change that media back to its intended value on load
-        var newOnload = function(){
-          rp.enableStylesheet(link, finalMedia );
+        var enableStylesheet = function(){
+          link.media = finalMedia;
         }
         if( link.addEventListener ){
-          link.addEventListener( "load", newOnload );
+          link.addEventListener( "load", enableStylesheet );
         } else if( link.attachEvent ){
-          link.attachEvent( "onload", newOnload );
+          link.attachEvent( "onload", enableStylesheet );
         }
-        // if preload is not supported, try to load asynchronously by using a non-matching media query
-        if( !rp.support() ){
-          link.media = "x";
-          link.rel = "stylesheet";
-        }
-        // supported or not, set rel=preload to stylesheet after 3 seconds
-        setTimeout( function(){
-          rp.enableStylesheet(link, finalMedia );
-        }, 3000 );
+        // if preload is not supported, kick off an asynchronous request by using a non-matching media query and rel=stylesheet
+        link.media = "x";
+        link.rel = "stylesheet";
+        // set rel=preload to stylesheet after 3 seconds,
+        // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+        setTimeout( enableStylesheet, 3000 );
         // prevent rerunning on link
         link.setAttribute( "data-loadcss", true );
       }
     }
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 300 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
   };
+  // run once at least
   rp.poly();
-  var run = w.setInterval( rp.poly, 300 );
-  if( w.addEventListener ){
-    w.addEventListener( "load", function(){
-      rp.poly();
-      w.clearInterval( run );
-    } );
-  } else if( w.attachEvent ){
-    w.attachEvent( "onload", function(){
-      w.clearInterval( run );
-    } );
-  }
   // commonjs
 	if( typeof exports !== "undefined" ){
     exports.loadCSS = loadCSS;

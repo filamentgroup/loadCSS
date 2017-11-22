@@ -5,7 +5,7 @@
 		<script>
 		<!--#include virtual="../src/cssrelpreload.js" -->
 		</script>
-		<link rel="preload" href="slow.css.php" as="style">
+		<link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<style>
 			/* a few demo styles */

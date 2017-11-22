@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>CSS link[rel=preload] Polyfill</title>
-		<link rel="preload" href="slow.css.php" as="style" onload="alert('onload attribute')">
+		<link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<script>
 		<!--#include virtual="../src/cssrelpreload.js" -->

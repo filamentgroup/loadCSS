@@ -26,13 +26,13 @@ For each CSS file you'd like to load asynchronously, use a `link` element like t
 In browsers that support it, the `rel=preload` attribute will cause the browser to fetch the stylesheet, but it will not **apply** the CSS once it is loaded (it merely fetches it). To address this, we recommend using an `onload` attribute on the `link` that will do that for us as soon as the CSS finishes loading.
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 ```
 
 This step requires JavaScript to be enabled, so we recommend including an ordinary reference to your stylesheet inside a `noscript` element as a fallback.
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 ```
 
@@ -40,7 +40,7 @@ After linking to your asynchronous stylesheet(s) this way, include the [loadCSS 
 Here's how they would look inlined in the page:
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 <script>
 /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
@@ -49,7 +49,7 @@ Here's how they would look inlined in the page:
 (function(){ ... }());
 </script>
 ```
-These scripts will automatically detect if a browser supports `rel=preload`. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS (note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support `rel=preload`). In browsers that do not support `rel=preload`, they will find CSS files referenced this way in the DOM and load and apply them asynchronously using the loadCSS function.
+These scripts will automatically detect if a browser supports `rel=preload`. In browsers that natively support `rel=preload`, these scripts will do nothing, allowing the browser to load and apply the asynchronous CSS. (Note the `onload` attribute above, which is there to set the `link`'s `rel` attribute to stylesheet once it finishes loading in browsers that support `rel=preload`. The `removeAttribute` call is required to prevent the stylesheet from being parsed a second time when the `rel` is changed, a current issue in Chrome.) In browsers that do not support `rel=preload`, they will find CSS files referenced this way in the DOM and load and apply them asynchronously using the loadCSS function.
 
 Note: regardless of whether the browser supports `rel=preload` or not, a CSS file will be referenced from the same location in the source order as your original `link` element. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order. Also, any `media` attribute value on the original link element will be retained when the polyfill is in play.
 

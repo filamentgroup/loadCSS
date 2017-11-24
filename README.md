@@ -26,13 +26,13 @@ For each CSS file you'd like to load asynchronously, use a `link` element like t
 In browsers that support it, the `rel=preload` attribute will cause the browser to fetch the stylesheet, but it will not **apply** the CSS once it is loaded (it merely fetches it). To address this, we recommend using an `onload` attribute on the `link` that will do that for us as soon as the CSS finishes loading.
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet';this.removeAttribute('onload');">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 ```
 
 This step requires JavaScript to be enabled, so we recommend including an ordinary reference to your stylesheet inside a `noscript` element as a fallback.
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet';this.removeAttribute('onload');">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 ```
 
@@ -40,7 +40,7 @@ After linking to your asynchronous stylesheet(s) this way, include the [loadCSS 
 Here's how they would look inlined in the page:
 
 ```html
-<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.rel='stylesheet';this.removeAttribute('onload');">
+<link rel="preload" href="path/to/mystylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 <script>
 /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */

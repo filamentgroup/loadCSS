@@ -15,7 +15,7 @@ Referencing CSS stylesheets with `link[rel=stylesheet]` or `@import` causes brow
 
 loadCSS is designed to help load CSS files that are **not critical** to the initial rendering of the page, and instead desirable to load in an asynchronous manner. (_For including critical CSS in a page without blocking rendering, we recommend either inlining that CSS in a `style` element, or referencing it externally and server-pushing it using http/2. [Read more here](https://www.filamentgroup.com/lab/modernizing-delivery.html)_)
 
-The standard markup pattern for loading files asynchronously is: `<link rel="preload">` ([W3C Spec](https://www.w3.org/TR/2015/WD-preload-20150721/)). We recommend using this markup pattern to reference your non-critical CSS files. `loadCSS`'s rel=preload polyfill is designed to enable this markup to work in browsers that don't yet support this feature.
+The standard markup pattern for loading files asynchronously is: `<link rel="preload">` ([W3C Spec](https://www.w3.org/TR/2015/WD-preload-20150721/)). We recommend using this markup pattern to reference your non-critical CSS files. `loadCSS`'s rel=preload polyfill is designed to enable this markup to work in browsers that don't yet support this feature ([view link rel="preload" support status](http://caniuse.com/#feat=link-rel-preload)).
 
 For each CSS file you'd like to load asynchronously, use a `link` element like this:
 

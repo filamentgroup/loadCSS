@@ -21,6 +21,22 @@
 		}
 	};
 
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link, media ){
+		function enableStylesheet(){
+			link.media = media;
+		}
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
 	// loop through link elements in DOM
 	rp.poly = function(){
 		if( rp.support() ){
@@ -33,22 +49,12 @@
 			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
 				// remember existing media attr for ultimate state, or default to 'all'
 				var finalMedia = link.media || "all";
-				// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
-				// then change that media back to its intended value on load
-				var enableStylesheet = function(){
-					link.media = finalMedia;
-				}
-				if( link.addEventListener ){
-					link.addEventListener( "load", enableStylesheet );
-				} else if( link.attachEvent ){
-					link.attachEvent( "onload", enableStylesheet );
-				}
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link, finalMedia );
 				// if preload is not supported, kick off an asynchronous request by using a non-matching media query and rel=stylesheet
 				link.media = "x";
 				link.rel = "stylesheet";
-				// set rel=preload to stylesheet after 3 seconds,
-				// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
-				setTimeout( enableStylesheet, 3000 );
+
 				// prevent rerunning on link
 				link.setAttribute( "data-loadcss", true );
 			}

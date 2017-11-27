@@ -99,33 +99,8 @@
 		ok( typeof window.loadCSS.relpreload.support() === "boolean", "relpreload.support should be a bool" );
 	});
 
-	test( 'rel=preload polyfill respects attributes', function(){
-		expect(1);
-		var asTestElem = document.getElementById('astest');
-		ok(asTestElem.rel === "preload", "stylesheet with unsupported 'as' attribute is not requested with a polyfill");
 
-	});
 
-	asyncTest( 'rel=preload stylesheet loads via polyfill', function(){
-		expect(1);
-		var preloadElem = document.getElementById("preloadtest");
-		var preloadHref = preloadElem.getAttribute("href");
-		function loaded(){
-			return document.querySelector( 'link[href="'+ preloadHref +'"][rel="stylesheet"]' ) || document.querySelector( 'link[href="'+ preloadElem.href +'"][rel="stylesheet"]' );
-		}
-
-			window.setTimeout(function(){
-				if( window.loadCSS.relpreload.support() ){
-					ok( loaded(), "stylesheet is in dom and applied without a polyfill" );
-				}
-				else {
-					ok( loaded(), "stylesheet is in dom and applied with a polyfill" );
-				}
-
-				start();
-			},3000);
-
-	});
 
 
 }(window));

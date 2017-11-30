@@ -15,8 +15,8 @@
 				setTimeout(function() {
 					ss.media = "all";
 				});
-				
-  
+
+
   </script>
 </head>
 <body style="margin: 50px">
@@ -25,7 +25,7 @@
 	<p>Toggling a dynamically-embedded stylesheet's media type can cause a double request to the CSS file.</p>
 	<p>The script in this page creates a stylesheet link with a non-matching media type (media="none"), injects it into the DOM, and then toggles its media type back to "all" after a timeout. On some page loads, but not all, the stylesheet will be requested twice. This appears to be true regardless of when the media attribute is toggled (it happens via an onload handler as well, for example). </p>
 	<p>This bug exists in loadCSS and we've so far been unable to work around it. </p>
-<p><a href="http://loa
+
 
 </body>
 </html>

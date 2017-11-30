@@ -2,15 +2,10 @@
 <html>
 	<head>
 		<title>CSS link[rel=preload] Polyfill</title>
-		<meta charset="utf-8">
-
 		<script>
-		/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
-		!function(a){"use strict";var b=function(b,c,d){function e(a){return h.body?a():void setTimeout(function(){e(a)})}function f(){i.addEventListener&&i.removeEventListener("load",f),i.media=d||"all"}var g,h=a.document,i=h.createElement("link");if(c)g=c;else{var j=(h.body||h.getElementsByTagName("head")[0]).childNodes;g=j[j.length-1]}var k=h.styleSheets;i.rel="stylesheet",i.href=b,i.media="only x",e(function(){g.parentNode.insertBefore(i,c?g:g.nextSibling)});var l=function(a){for(var b=i.href,c=k.length;c--;)if(k[c].href===b)return a();setTimeout(function(){l(a)})};return i.addEventListener&&i.addEventListener("load",f),i.onloadcssdefined=l,l(f),i};"undefined"!=typeof exports?exports.loadCSS=b:a.loadCSS=b}("undefined"!=typeof global?global:this);
-		/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
-		!function(a){if(a.loadCSS){var b=loadCSS.relpreload={};if(b.support=function(){try{return a.document.createElement("link").relList.supports("preload")}catch(b){return!1}},b.poly=function(){for(var b=a.document.getElementsByTagName("link"),c=0;c<b.length;c++){var d=b[c];"preload"===d.rel&&"style"===d.getAttribute("as")&&(a.loadCSS(d.href,d,d.getAttribute("media")),d.rel=null)}},!b.support()){b.poly();var c=a.setInterval(b.poly,300);a.addEventListener&&a.addEventListener("load",function(){b.poly(),a.clearInterval(c)}),a.attachEvent&&a.attachEvent("onload",function(){a.clearInterval(c)})}}}(this);
+		<!--#include virtual="../src/cssrelpreload.js" -->
 		</script>
-		<link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'">
+		<link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
 		<style>
 			/* a few demo styles */
@@ -34,14 +29,11 @@
 	</head>
 	<body>
 		<h1>Async CSS w/ link[rel=preload]</h1>
-		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.<p>
+		<p>This is a test page that references a slow-loading stylesheet using the new standard <code>link[rel=preload]</code>.
+			A script is included to enable asynchronous CSS loading in browsers that do not support <code>link[rel=preload]</code>, and to enable the stylesheet immediately when it is loaded or cached.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style" onload="this.rel='stylesheet'"&gt;</code></pre>
-
-		<p>In supporting browsers (such as Chrome Canary at time of writing), this markup will cause the browser to fetch the CSS file in an asynchronous, non-render-blocking manner, and once loaded, its onload event handler will change its rel property to "stylesheet" causing it to apply visibly in the page (the CSS file will color the page background green once loaded).</p>
-
-		<p>For browsers that do not yet support <code>link[rel=preload]</code>, this page includes a small script, loadCSS.js, and a feature-test-based polyfill function (cssrelpreload.js) to fetch all <code>link[rel=preload]</code> stylesheets asynchronously and apply them to the page. The function polls the document for new links to preload until the window's onload event fires, and requires no configuration to work.</p>
+		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>Note: The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
 

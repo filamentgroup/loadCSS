@@ -10,6 +10,7 @@ Referencing CSS stylesheets with `link[rel=stylesheet]` or `@import` causes brow
 
 * Latest release: https://github.com/filamentgroup/loadCSS/releases
 * NPM: https://www.npmjs.com/package/fg-loadcss
+* CDN: https://cdn.jsdelivr.net/npm/fg-loadcss/dist
 
 ## How To Use loadCSS (Recommended example)
 

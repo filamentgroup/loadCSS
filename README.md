@@ -11,6 +11,10 @@ Referencing CSS stylesheets with `link[rel=stylesheet]` or `@import` causes brow
 * Latest release: https://github.com/filamentgroup/loadCSS/releases
 * NPM: https://www.npmjs.com/package/fg-loadcss
 
+## Install via npm
+
+`npm install fg-loadcss --save`
+
 ## How To Use loadCSS (Recommended example)
 
 loadCSS is designed to help load CSS files that are **not critical** to the initial rendering of the page, and instead desirable to load in an asynchronous manner. (_For including critical CSS in a page without blocking rendering, we recommend either inlining that CSS in a `style` element, or referencing it externally and server-pushing it using http/2. [Read more here](https://www.filamentgroup.com/lab/modernizing-delivery.html)_)

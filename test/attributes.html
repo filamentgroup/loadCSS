@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Tests for "link" attributes</title>
+		<script type="text/javascript">
+			<!--#include virtual="../src/loadCSS.js" -->
+			<!--#include virtual="../src/onloadCSS.js" -->
+			(function () {
+				function loadBootstrapCSS( attributes ) {
+					const cacheBuster = Math.random();
+					return loadCSS( 
+						"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" + '?cb=' + cacheBuster,
+						null,
+						null,
+						attributes
+					);
+				}
+
+				// Load Bootstrap with "incorrect" integrity attribute:
+				var incorrectCSSIntegrity = loadBootstrapCSS( {
+					"crossorigin": "anonymous",
+					"integrity": "sha384-incorrect-digest"
+				});
+				incorrectCSSIntegrity.onerror = function( error ) {
+					document.getElementById('incorrect-integrity').innerHTML = '<span class="text-success">Success!</span> Resource not loaded.';
+				}
+				onloadCSS( incorrectCSSIntegrity, function() {
+					document.getElementById('incorrect-integrity').innerHTML = '<span class="text-warning">Warning:</span> Resource should not have loaded.';
+				} );
+
+				// Load Bootstrap with "incorrect" crossorigin attribute:
+				var incorrectCSSCrossOrigin = loadBootstrapCSS( {
+					"crossorigin": "use-credentials",
+					"integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+				});
+				incorrectCSSCrossOrigin.onerror = function( error ) {
+					document.getElementById('incorrect-crossorigin').innerHTML = '<span class="text-success">Success!</span> Resource not loaded.';
+				}
+				onloadCSS( incorrectCSSCrossOrigin, function() {
+					document.getElementById('incorrect-crossorigin').innerHTML = '<span class="text-warning">Warning:</span> Resource should not have loaded.';
+				} );
+
+				// Load Bootstrap with "correct" integrity attribute:
+				var correctCSSIntegrity = loadBootstrapCSS( {
+					"crossorigin": "anonymous",
+					"integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+				} );
+				correctCSSIntegrity.onerror = function( error ) {
+					document.getElementById('correct-integrity').innerHTML = '<span class="text-warning">Warning:</span> Resource should have loaded.';
+				}
+				onloadCSS( correctCSSIntegrity, function() {
+					document.getElementById('correct-integrity').innerHTML = '<span class="text-success">Success!</span> Resource loaded.';
+				} );
+			})();
+		</script>
+	</head>
+	<body style="margin: 50px">
+		<h1>Tests for <code>link</code> attributes</h1>
+		<p>Support for <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a> requires providing <code>integrity</code> and <code>crossorigin</code> attributes to the <code>link</code> Element.</p>
+		<p>By supplying an Object of attribue name/attribute value pairs as the fourth argument to <code>loadCSS()</code>, attributes can be set on the stylesheet's DOM Element.</p>
+		<pre><code>
+loadCSS( 
+	"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+	null,
+	null,
+	{
+		"title": "Bootstrap Styles",
+		"type": "text/css",
+		"crossorigin": "anonymous",
+		"integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		// etc.
+	}
+);
+		</code></pre>
+		<p>The following tests aim to validate the behavior of the API using correct and incorrect configurations:</p>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Test</th>
+					<th>Result</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Correct <code>integrity</code> digest</td>
+					<td id="correct-integrity">Running test...</td>
+				</tr>
+				<tr>
+					<td>Incorrect <code>integrity</code> digest</td>
+					<td id="incorrect-integrity">Running test...</td>
+				</tr>
+				<tr>
+					<td>Incorrect <code>crossorigin</code> attribute</td>
+					<td id="incorrect-crossorigin">Running test...</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

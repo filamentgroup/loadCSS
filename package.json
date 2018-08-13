@@ -16,13 +16,15 @@
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
-    "matchdep": "^1.0.0",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "~0.12.0",
     "grunt-contrib-qunit": "~1.0.1",
     "grunt-contrib-uglify": "^3.0.1",
-    "grunt-contrib-concat": "^0.5.1"
+    "matchdep": "^1.0.0",
+    "uglify-js": "^3.4.7"
   },
   "scripts": {
-    "test": "node node_modules/.bin/grunt"
+    "test": "node node_modules/.bin/grunt",
+    "uglify": "uglifyjs -cmo src/cssrelpreload.min.js --comments /^!/ -- src/cssrelpreload.js"
   }
 }

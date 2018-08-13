@@ -47,7 +47,7 @@ We also recommend `null`ing the onload handler once it is used, since some brows
 <noscript><link rel="stylesheet" href="path/to/mystylesheet.css"></noscript>
 ```
 
-After linking to your asynchronous stylesheet(s) this way, include the the [loadCSS rel=preload polyfill script](src/cssrelpreload.js) in your page. This file should be inlined or linked with http/2 server-push (a simple external script ).
+After linking to your asynchronous stylesheet(s) this way, include the the [loadCSS rel=preload polyfill script (2.95 KB)](src/cssrelpreload.js) in your page ([minimized version, 1.09 KB](src/cssrelpreload.min.js)). This file should be inlined or linked with http/2 server-push (a simple external script ).
 Here's how they would look inlined in the page:
 
 ```html

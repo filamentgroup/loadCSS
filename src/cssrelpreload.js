@@ -30,7 +30,7 @@
 	// then change that media back to its intended value on load
 	rp.bindMediaToggle = function( link ){
 		// remember existing media attr for ultimate state, or default to 'all'
-		var finalMedia = link.media || "all";
+		var finalMedia = link.getAttribute("data-media") || link.media || "all";
 
 		function enableStylesheet(){
 			link.media = finalMedia;

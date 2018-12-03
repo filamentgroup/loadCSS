@@ -14,13 +14,13 @@
   },
   "homepage": "https://github.com/filamentgroup/loadCSS",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-cli": "~0.1.13",
-    "matchdep": "^1.0.0",
-    "grunt-contrib-jshint": "~0.12.0",
-    "grunt-contrib-qunit": "~1.0.1",
-    "grunt-contrib-uglify": "^3.0.1",
-    "grunt-contrib-concat": "^0.5.1"
+    "grunt": "~1.0.3",
+    "grunt-cli": "~1.3.2",
+    "matchdep": "^2.0.0",
+    "grunt-contrib-jshint": "~2.0.0",
+    "grunt-contrib-qunit": "~3.0.1",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-concat": "^1.0.1"
   },
   "scripts": {
     "test": "node node_modules/.bin/grunt"

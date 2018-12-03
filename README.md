@@ -64,7 +64,7 @@ By including this script (_which became standalone and no longer dependent on lo
 
 In browsers that do not support `rel=preload`, the script will apply a workaround (by temporarily manipulating the media attribute) to ensure that the file loads and applies asynchronously. It will also continue at a short interval to look for link elements in the DOM that need to be polyfilled. This means that the script will work from any location in the DOM (before or after the preload link(s)), but we do recommend placing the script **immediately after** all preload links for best performance.
 
-Note: regardless of whether the browser supports `rel=preload` or not, the original link element in the source will be used to fetch and apply the stylesheet. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order. As you'd expect, any `media` attribute present on the original link element will be retained when the polyfill is in play. When the polyfill has a
+Note: regardless of whether the browser supports `rel=preload` or not, the original link element in the source will be used to fetch and apply the stylesheet. Keep this in mind, as you may want to place the `link` in a particular location in your `head` element so that the CSS loads with an expected cascade order. As you'd expect, any `media` attribute present on the original link element will be retained when the polyfill is in play. When the polyfill has asynchronously loaded, it will be enabled immediately.
 
 You can view a demo of this `rel=preload` pattern here: https://master-origin-loadcss.fgview.com/test/preload.html
 

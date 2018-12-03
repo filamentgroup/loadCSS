@@ -1,5 +1,7 @@
 # loadCSS
 
+[![NPM version](http://img.shields.io/npm/v/fg-loadcss.svg)](https://www.npmjs.org/package/fg-loadcss) [![dependencies Status](https://david-dm.org/filamentgroup/loadCSS/status.svg)](https://david-dm.org/filamentgroup/loadCSS) [![devDependencies Status](https://david-dm.org/filamentgroup/loadCSS/dev-status.svg)](https://david-dm.org/filamentgroup/loadCSS?type=dev)
+
 A function for loading CSS asynchronously
 [c]2017 @scottjehl, @zachleat [Filament Group, Inc.](https://www.filamentgroup.com/)
 Licensed MIT

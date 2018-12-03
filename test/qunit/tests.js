@@ -48,6 +48,21 @@
 		});
 	});
 
+	asyncTest( 'loadCSS loads a CSS file with specific attributes', function(){
+		expect(3);
+		var attributes = {
+			title: "Default Style",
+			type: "text/css"
+		};
+		var ss = loadCSS("files/test.css", null, null, attributes);
+		onloadCSS( ss, function(){
+			ok("stylesheet loaded successfully");
+			equal(ss.title, attributes.title, "'title' attribute should be '" + attributes.title + "'");
+			equal(ss.type, attributes.type, "'type' attribute should be '" + attributes.type + "'");
+			start();
+		});
+	});
+
 	asyncTest( 'loadCSS sets media type before and after the stylesheet is loaded', function(){
 		expect(2);
 		var ss = loadCSS("files/test.css");

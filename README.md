@@ -94,6 +94,18 @@ If you're including and calling the loadCSS function (without the `rel=preload` 
 ```
 
 - `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
+- `attributes`: You can also optionally pass an Object of attribute name/attribute value pairs to set on the stylesheet. This can be used to specify Subresource Integrity attributes:
+```javascript
+loadCSS( 
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+  null,
+  null,
+  {
+    "crossorigin": "anonymous",
+    "integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  }
+);
+```
 
 #### Using with `onload`
 

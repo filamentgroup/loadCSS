@@ -37,7 +37,7 @@
 			if( link.addEventListener ){
 				link.removeEventListener( "load", enableStylesheet );
 			} else if( link.attachEvent ){
-				link.removeEvent( "onload", enableStylesheet );
+				link.detachEvent( "onload", enableStylesheet );
 			}
 			link.setAttribute( "onload", null ); 
 			link.media = finalMedia;

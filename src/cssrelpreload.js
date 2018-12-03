@@ -33,6 +33,13 @@
 		var finalMedia = link.media || "all";
 
 		function enableStylesheet(){
+			// unbind listeners
+			if( link.addEventListener ){
+				link.removeEventListener( "load", enableStylesheet );
+			} else if( link.attachEvent ){
+				link.detachEvent( "onload", enableStylesheet );
+			}
+			link.setAttribute( "onload", null ); 
 			link.media = finalMedia;
 		}
 

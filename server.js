@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-const fs = require('fs-extra');
+const fs = require('fs');
 const http = require('http');
 const path = require('path');
 const port = 3000;

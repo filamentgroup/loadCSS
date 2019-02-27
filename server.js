@@ -20,7 +20,7 @@ const contentTypes = {
 	'.css': 'text/css',
 	'.html': 'text/html',
 	'.js': 'application/javascript',
-}
+};
 
 function requestHandler (request, response) {
 	console.log(JSON.stringify(request.url));

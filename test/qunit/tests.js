@@ -1,4 +1,3 @@
-/*global window:true*/
 (function(window) {
 	/*
 		======== A Handy Little QUnit Reference ========
@@ -113,9 +112,5 @@
 		ok( typeof window.loadCSS.relpreload.poly === "function", "relpreload.poly should be a function" );
 		ok( typeof window.loadCSS.relpreload.support() === "boolean", "relpreload.support should be a bool" );
 	});
-
-
-
-
 
 }(window));

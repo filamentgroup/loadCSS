@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<title>CSS link[rel=preload] Polyfill</title>
-		<link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="slow.css.php"></noscript>
+		<link rel="preload" href="slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="slow.css"></noscript>
 		<script>
 		<!--#include virtual="../src/cssrelpreload.js" -->
 		</script>
@@ -32,7 +32,7 @@
 			A script is included to enable asynchronous CSS loading in browsers that do not support <code>link[rel=preload]</code>, and to enable the stylesheet immediately when it is loaded or cached.<p>
 
 		<p>That markup looks like this:</p>
-		<pre><code>&lt;link rel="preload" href="slow.css.php" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;</code></pre>
+		<pre><code>&lt;link rel="preload" href="slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>Note: The CSS file  has a 5 second delay built into its server response time. If it is loaded in a non-blocking manner as desired, you should be able to read this text before the page is styled as white text on green background.</p>
 

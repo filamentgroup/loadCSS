@@ -12,5 +12,12 @@
 	"unused": true,
 	"node": true,
 	"loopfunc": true,
-	"predef": [ "window", "document", "define", "shoestring", "XMLHttpRequest", "ActiveXObject", "Window", "localStorage" ]
+
+	"browser": true,
+	"qunit": true,
+
+	"globals": {
+		"loadCSS": false,
+		"onloadCSS": false
+	}
 }

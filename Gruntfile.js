@@ -1,17 +1,21 @@
 /* global module:false */
 module.exports = function(grunt) {
 
-	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
+	require( 'matchdep' ).filterDev( ['grunt-*', '!grunt-cli'] ).forEach( grunt.loadNpmTasks );
 
-  // Project configuration.
+	// Project configuration.
 	grunt.initConfig({
-    jshint: {
+		jshint: {
 			all: {
 				options: {
 					jshintrc: ".jshintrc"
 				},
 
-				src: ['Gruntfile.js', '*.js']
+				src: [
+					'*.js',
+					'test/**/*.js',
+					'src/**/*.js',
+				]
 			}
 		},
 		concat: {
@@ -24,7 +28,7 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-      options: {
+			options: {
 					preserveComments: /^\!/
 			},
 			dist: {
@@ -38,9 +42,8 @@ module.exports = function(grunt) {
 		qunit: {
 			files: ['test/qunit/**/*.html']
 		}
-  });
+	});
 
 	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 	grunt.registerTask('stage', ['default']);
-
 };

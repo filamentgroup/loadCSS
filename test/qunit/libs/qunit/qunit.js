@@ -7,6 +7,7 @@
  * Released under the MIT license.
  * http://jquery.org/license
  */
+/* jshint ignore:start */
 
 (function( window ) {
 

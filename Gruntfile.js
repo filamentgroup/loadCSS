@@ -1,29 +1,16 @@
 /* global module:false */
-module.exports = function(grunt) {
+module.exports = function( grunt ) {
 
-	require( 'matchdep' ).filterDev( ['grunt-*', '!grunt-cli'] ).forEach( grunt.loadNpmTasks );
+	require( "matchdep" ).filterDev( [ "grunt-*", "!grunt-cli" ] ).forEach( grunt.loadNpmTasks );
 
 	// Project configuration.
-	grunt.initConfig({
-		jshint: {
-			all: {
-				options: {
-					jshintrc: ".jshintrc"
-				},
-
-				src: [
-					'*.js',
-					'test/**/*.js',
-					'src/**/*.js',
-				]
-			}
-		},
+	grunt.initConfig( {
 		concat: {
 			dist: {
 				files: {
-					'dist/loadCSS.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.js': ['src/cssrelpreload.js'],
-					'dist/onloadCSS.js': ['src/onloadCSS.js']
+					"dist/loadCSS.js": [ "src/loadCSS.js" ],
+					"dist/cssrelpreload.js": [ "src/cssrelpreload.js" ],
+					"dist/onloadCSS.js": [ "src/onloadCSS.js" ]
 				}
 			}
 		},
@@ -33,17 +20,17 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'dist/loadCSS.min.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.min.js': ['src/cssrelpreload.js'],
-					'dist/onloadCSS.min.js': ['src/onloadCSS.js']
+					"dist/loadCSS.min.js": [ "src/loadCSS.js" ],
+					"dist/cssrelpreload.min.js": [ "src/cssrelpreload.js" ],
+					"dist/onloadCSS.min.js": [ "src/onloadCSS.js" ]
 				}
 			}
 		},
 		qunit: {
-			files: ['test/qunit/**/*.html']
+			files: [ "test/qunit/**/*.html" ]
 		}
-	});
+	} );
 
-	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-	grunt.registerTask('stage', ['default']);
+	grunt.registerTask( "default", [ "qunit", "concat", "uglify" ] );
+	grunt.registerTask( "stage", [ "default" ] );
 };

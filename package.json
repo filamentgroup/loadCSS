@@ -2,7 +2,7 @@
   "name": "fg-loadcss",
   "version": "2.1.0",
   "description": "A function for loading CSS asynchronously",
-  "main": "src/loadCSS.js",
+  "main": "dist/loadCSS.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/filamentgroup/loadCSS.git"
@@ -13,6 +13,9 @@
     "url": "https://github.com/filamentgroup/loadCSS/issues"
   },
   "homepage": "https://github.com/filamentgroup/loadCSS",
+  "files": [
+    "dist/*"
+  ],
   "devDependencies": {
     "eslint": "^5.15.1",
     "eslint-config-jquery": "^1.0.1",
@@ -28,7 +31,8 @@
   "scripts": {
     "start": "npx ./server.js",
     "test": "npx grunt",
-    "lint": "eslint --fix -- *.js src/**/*.js test/**/*.js"
+    "lint": "eslint --fix -- *.js src/**/*.js test/**/*.js",
+    "prepublishOnly": "run-s lint test"
   },
   "husky": {
     "hooks": {

@@ -1,18 +1,51 @@
-/* jshint esversion: 6 */
-
 const fs = require( "fs" );
 const http = require( "http" );
+const open = require( "opn" );
 const path = require( "path" );
-const port = 3000;
+
 
 const server = http.createServer( requestHandler );
+const port = 3000;
+const cssDelay = 1200;
+
+
+server.on( "close", () => {
+	console.log( "\nServer closed." );
+	process.exit();
+} );
 
 server.listen( port, ( err ) => {
 	if ( err ) {
-		return console.error( "could not run server", err );
+		return console.error( "Could not run server:\n", err );
 	}
 
-	console.log( `server is listening on ${port}` );
+	console.log( `Server is listening on port ${port}.` );
+	console.log( "Stop using SIGINT (Ctrl+C)\n" );
+
+	console.log( "Launching default browser\n" );
+	open( "http://localhost:3000" );
+
+	// https://stackoverflow.com/a/14861513
+	if ( process.platform === "win32" ) {
+		require( "readline" )
+		.createInterface( {
+			input: process.stdin,
+			output: process.stdout
+		} )
+		.on( "SIGINT", () => {
+			process.emit( "SIGINT" );
+		} );
+	}
+
+	process.on( "SIGINT", () => {
+		server.close();
+		console.log( "\nReceived SIGINT, Closing server." );
+	} );
+
+	process.on( "SIGTERM", () => {
+		server.close();
+		console.log( "\nReceived SIGTERM, Closing server." );
+	} );
 } );
 
 
@@ -24,26 +57,41 @@ const contentTypes = {
 
 function requestHandler( request, response ) {
 	console.log( JSON.stringify( request.url ) );
+
 	try {
 		response.setHeader( "charset", "UTF-8" );
-		response.setHeader( "Cache-Control", "max-age=500" );
+		response.setHeader( "Cache-Control", "no-store" );
 
-		if ( !path.extname( request.url ) ) {
-			request.url += "/index.html";
+		let slug = request.url;
+		if ( !path.extname( slug ) ) {
+			slug += "/index.html";
 		}
 
-		response.setHeader( "Content-type", contentTypes[ path.extname( request.url ) ] );
+		response.setHeader( "Content-type", contentTypes[ path.extname( slug ) ] );
+
+		let filePath = path.join( "test", slug );
+
+		if ( !fs.existsSync( filePath ) ) {
+			filePath = path.join( "src", slug );
+		}
+
+		if ( !fs.existsSync( filePath ) ) {
+			throw new Error( `Could not find a file matching "${request.url}"` );
+		}
 
 		const content = fs.readFileSync(
-			path.join( ".", request.url )
-		).toString().replace( /<!--#include virtual="([^"]+)" -->/g, ( match, filepath ) => fs.readFileSync(
-			path.resolve( path.dirname( path.join( ".", request.url ) ), filepath )
-		) );
+			filePath
+		).toString().replace(
+			/<!--#include virtual="([^"]+)" -->/g,
+			( _, filepath ) => fs.readFileSync(
+				path.resolve( path.dirname( path.join( ".", slug ) ), filepath )
+			)
+		);
 
-		if ( request.url.endsWith( "slow.css" ) ) {
+		if ( slug.endsWith( "slow.css" ) ) {
 			setTimeout( () => {
 				response.end( content );
-			}, 5000 );
+			}, cssDelay );
 		} else {
 			response.end( content );
 		}

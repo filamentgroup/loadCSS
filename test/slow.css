@@ -1,2 +1,5 @@
-/* This file was delivered after a purposeful 5 second delay to demonstrate latency. */
-body { background: green; color: #fff; }
+/* This file was delivered after a purposeful delay to demonstrate latency. */
+body {
+	background: green;
+	color: #fff;
+}

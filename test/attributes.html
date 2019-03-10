@@ -7,10 +7,11 @@
 		<script type="text/javascript">
 			<!--#include virtual="../src/loadCSS.js" -->
 			<!--#include virtual="../src/onloadCSS.js" -->
+
 			(function () {
 				function loadBootstrapCSS( attributes ) {
 					const cacheBuster = Math.random();
-					return loadCSS( 
+					return loadCSS(
 						"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" + '?cb=' + cacheBuster,
 						null,
 						null,
@@ -58,10 +59,16 @@
 	</head>
 	<body style="margin: 50px">
 		<h1>Tests for <code>link</code> attributes</h1>
-		<p>Support for <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a> requires providing <code>integrity</code> and <code>crossorigin</code> attributes to the <code>link</code> Element.</p>
-		<p>By supplying an Object of attribue name/attribute value pairs as the fourth argument to <code>loadCSS()</code>, attributes can be set on the stylesheet's DOM Element.</p>
+		<p>
+			Support for <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>
+			requires providing <code>integrity</code> and <code>crossorigin</code> attributes to the <code>link</code> Element.
+		</p>
+		<p>
+			By supplying an Object of attribue name/attribute value pairs as the fourth argument to <code>loadCSS()</code>,
+			attributes can be set on the stylesheet's DOM Element.
+		</p>
 		<pre><code>
-loadCSS( 
+loadCSS(
 	"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
 	null,
 	null,

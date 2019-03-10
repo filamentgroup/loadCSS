@@ -4,9 +4,7 @@
 		<title>CSS link[rel=preload] Polyfill</title>
 		<link rel="preload" href="slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="slow.css"></noscript>
-		<script>
-		<!--#include virtual="../src/cssrelpreload.js" -->
-		</script>
+		<script><!--#include virtual="../src/cssrelpreload.js" --></script>
 		<style>
 			/* a few demo styles */
 			body {

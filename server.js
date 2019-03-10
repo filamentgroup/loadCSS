@@ -83,8 +83,8 @@ function requestHandler( request, response ) {
 			filePath
 		).toString().replace(
 			/<!--#include virtual="([^"]+)" -->/g,
-			( _, filepath ) => fs.readFileSync(
-				path.resolve( path.dirname( path.join( ".", slug ) ), filepath )
+			( _, includePath ) => fs.readFileSync(
+				path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
 			)
 		);
 

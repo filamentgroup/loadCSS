@@ -149,7 +149,8 @@ onloadCSS( stylesheet, function() {
 ```
 
 ### Browser Support
-
+MODERN=[IE9+
+LEGACY=-IE8]
 loadCSS attempts to load a css file asynchronously in any JavaScript-capable browser. However, some older browsers such as Internet Explorer 8 and older will block rendering while the stylesheet is loading. This merely means that the stylesheet will load as if you referenced it with an ordinary link element.
 
 

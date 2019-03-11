@@ -1,4 +1,4 @@
-/* This file was delivered after a purposeful delay to demonstrate latency. */
+/* This file gets delivered after a purposeful delay to demonstrate latency. */
 body {
 	background: green;
 	color: #fff;

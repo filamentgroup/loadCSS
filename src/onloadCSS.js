@@ -1,19 +1,20 @@
 /*! onloadCSS. (onload callback for loadCSS) [c]2017 Filament Group, Inc. MIT License */
-/* global navigator */
-/* exported onloadCSS */
 // eslint-disable-next-line no-unused-vars
 function onloadCSS( ss, callback ) {
 	var called;
 	function newcb() {
-			if ( !called && callback ) {
-				called = true;
-				callback.call( ss );
-			}
+		if ( !called && callback ) {
+			called = true;
+			callback.call( ss );
+		}
 	}
+
+	ss.addEventListener( "load", newcb ); // MODERN
+
+	// LEGACY/
 	if ( ss.addEventListener ) {
 		ss.addEventListener( "load", newcb );
-	}
-	if ( ss.attachEvent ) {
+	} else if ( ss.attachEvent ) {
 		ss.attachEvent( "onload", newcb );
 	}
 
@@ -26,5 +27,6 @@ function onloadCSS( ss, callback ) {
 	// Weak inference targets Android < 4.4
 	if ( "isApplicationInstalled" in navigator && "onloadcssdefined" in ss ) {
 		ss.onloadcssdefined( newcb );
-	}
+	}//
+	// /LEGACY
 }

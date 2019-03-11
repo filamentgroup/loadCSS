@@ -1,53 +1,8 @@
 const fs = require( "fs" );
 const http = require( "http" );
-const open = require( "opn" );
 const path = require( "path" );
 
-
-const server = http.createServer( requestHandler );
-const port = 3000;
 const cssDelay = 1200;
-
-
-server.on( "close", () => {
-	console.log( "\nServer closed." );
-	process.exit();
-} );
-
-server.listen( port, ( err ) => {
-	if ( err ) {
-		return console.error( "Could not run server:\n", err );
-	}
-
-	console.log( `Server is listening on port ${port}.` );
-	console.log( "Stop using SIGINT (Ctrl+C)\n" );
-
-	console.log( "Launching default browser\n" );
-	open( "http://localhost:3000" );
-
-	// https://stackoverflow.com/a/14861513
-	if ( process.platform === "win32" ) {
-		require( "readline" )
-		.createInterface( {
-			input: process.stdin,
-			output: process.stdout
-		} )
-		.on( "SIGINT", () => {
-			process.emit( "SIGINT" );
-		} );
-	}
-
-	process.on( "SIGINT", () => {
-		server.close();
-		console.log( "\nReceived SIGINT, Closing server." );
-	} );
-
-	process.on( "SIGTERM", () => {
-		server.close();
-		console.log( "\nReceived SIGTERM, Closing server." );
-	} );
-} );
-
 
 const contentTypes = {
 	".css": "text/css",
@@ -55,55 +10,116 @@ const contentTypes = {
 	".js": "application/javascript"
 };
 
-function requestHandler( request, response ) {
-	console.log( JSON.stringify( request.url ) );
+module.exports = function runServer( {
+	port = 3000,
+	onLaunch = ()=>{},
+	onRequest = ()=>{},
+	verbose = false
+} ) {
+	const server = http.createServer( requestHandler );
 
-	try {
-		response.setHeader( "charset", "UTF-8" );
-		response.setHeader( "Cache-Control", "no-store" );
+	server.on( "close", () => {
+		console.log( "\nServer closed." );
+		process.exit();
+	} );
 
-		let slug = request.url;
-		if ( !path.extname( slug ) ) {
-			slug += "/index.html";
+	server.listen( port, launchCallback );
+
+	return server;
+
+	function launchCallback( err ) {
+		if ( err ) {
+			return console.error( "Could not run server:\n", err );
 		}
 
-		response.setHeader( "Content-type", contentTypes[ path.extname( slug ) ] );
+		console.log( `Server is listening on port ${port}.` );
+		console.log( "Stop using SIGINT (Ctrl+C)\n" );
 
-		let filePath = path.join( "test", slug );
+		onLaunch();
 
-		if ( !fs.existsSync( filePath ) ) {
-			filePath = path.join( "src", slug );
+		// https://stackoverflow.com/a/14861513
+		if ( process.platform === "win32" ) {
+			require( "readline" )
+				.createInterface( {
+					input: process.stdin,
+					output: process.stdout
+				} )
+				.on( "SIGINT", () => {
+					process.emit( "SIGINT" );
+				} )
+			;
 		}
 
-		if ( !fs.existsSync( filePath ) ) {
-			throw new Error( `Could not find a file matching "${request.url}"` );
-		}
+		process.on( "SIGINT", () => {
+			server.close();
+			console.log( "\nReceived SIGINT, Closing server." );
+		} );
 
-		const content = fs.readFileSync(
-			filePath
-		).toString().replace(
-			/<!--#include virtual="([^"]+)" -->/g,
-			( _, includePath ) => fs.readFileSync(
-				path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
-			)
-		);
-
-		if ( slug.endsWith( "slow.css" ) ) {
-			setTimeout( () => {
-				response.end( content );
-			}, cssDelay );
-		} else {
-			response.end( content );
-		}
-	} catch ( error ) {
-		const errorMessage = ( error.message && ( error.message + "\n" + error.stack ) ) || error;
-
-		if ( errorMessage.includes( "ENOENT" ) ) {
-			response.statusCode = 404;
-		} else {
-			response.statusCode = 500;
-		}
-
-		response.end( "<pre>" + errorMessage );
+		process.on( "SIGTERM", () => {
+			server.close();
+			console.log( "\nReceived SIGTERM, Closing server." );
+		} );
 	}
-}
+
+	function requestHandler( request, response ) {
+		if ( verbose ) {
+			console.log( JSON.stringify( request.url ) );
+		}
+
+		try {
+			onRequest();
+
+			response.setHeader( "charset", "UTF-8" );
+			response.setHeader( "Cache-Control", "no-store" );
+
+			let slug = request.url.replace( /\?.*/, "" );
+			if ( !path.extname( slug ) ) {
+				slug += "/index.html";
+			}
+
+			response.setHeader(
+				"Content-type",
+				contentTypes[ path.extname( slug ) ]
+			);
+
+			let filePath = path.join( "test", slug );
+
+			if ( !fs.existsSync( filePath ) ) {
+				filePath = path.join( "dist", slug );
+			}
+
+			if ( !fs.existsSync( filePath ) ) {
+				throw new Error( `Could not find a file matching "${request.url}"` );
+			}
+
+			const content = fs.readFileSync(
+				filePath
+			).toString().replace(
+				/<!--#include virtual="([^"]+)" -->/g,
+				( _, includePath ) => fs.readFileSync(
+					path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
+				)
+			);
+
+			if ( slug.endsWith( "slow.css" ) ) {
+				setTimeout( () => {
+					response.end( content );
+				}, cssDelay );
+			} else {
+				response.end( content );
+			}
+		} catch ( error ) {
+			const errorMessage = (
+				error.message && ( error.message + "\n" + error.stack )
+			) || error;
+
+			if ( errorMessage.includes( "ENOENT" ) ) {
+				response.statusCode = 404;
+			} else {
+				response.statusCode = 500;
+			}
+
+			response.end( "<pre>" + errorMessage );
+		}
+	}
+};

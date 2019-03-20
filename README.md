@@ -17,8 +17,8 @@ A polyfill for `rel=preload` style-loading and a function for loading CSS asynch
 - [Manual CSS loading with loadCSS](#manual-css-loading-with-loadcss)
   * [Function API](#function-api)
     + [Using with `onload`](#using-with-onload)
-  * [Browser Support](#browser-support)
-    + [Contributions and bug fixes](#contributions-and-bug-fixes)
+- [Browser Support](#browser-support)
+- [Contributions and bug fixes](#contributions-and-bug-fixes)
 
 <!-- tocstop -->
 
@@ -107,34 +107,38 @@ loadCSS( "path/to/mystylesheet.css" );
 
 The code above will insert a new CSS stylesheet `link` *after* the last stylesheet or script that it finds in the page, and the function will return a reference to that `link` element, should you want to reference it later in your script. Multiple calls to loadCSS will reference CSS files in the order they are called, but keep in mind that they may finish loading in a different order than they were called.
 
+> **IMPORTANT:**
+  If, at call time, the document's last element is a comment, you will get an error,
+  unless you specify the injection point using `insertBefore`/`appendTo`
+
 ### Function API
 
-If you're including and calling the loadCSS function (without the `rel=preload` pattern), the function has 3 optional arguments.
+If you're including and calling the loadCSS function (without the `rel=preload` pattern), the function has an optional second argument, that accepts an object with these properties:
 
-- `before`: By default, loadCSS attempts to inject the stylesheet link *after* all CSS and JS in the page. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use the `before` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *before* the element you specify. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
+- `insertBefore`/`appendTo`: By default, loadCSS attempts to inject the stylesheet link at the end of `body` or `head`, whichever is available at call time. However, if you desire a more specific location in your document, such as before a particular stylesheet link, you can use either the `insertBefore` or `appendTo` argument to specify a particular element to use as an insertion point. Your stylesheet will be inserted *at the end of* the element you specify in `appendTo` or *before* the element you specify in `insertBefore`, `appendTo` taking precedence. For example, here's how that can be done by simply applying an `id` attribute to your `script`.
 ```html
 <head>
 ...
 <script id="loadcss">
   // load a CSS file just before the script element containing this code
-  loadCSS( "path/to/mystylesheet.css", document.getElementById("loadcss") );
+  loadCSS( "path/to/mystylesheet.css", {
+    insertBefore: document.getElementById("loadcss")
+  } );
 </script>
 ...
 </head>
 ```
 
-- `media`: You can optionally pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
-- `attributes`: You can also optionally pass an Object of attribute name/attribute value pairs to set on the stylesheet. This can be used to specify Subresource Integrity attributes:
+- `media`: You can pass a string to the media argument to set the `media=""` of the stylesheet - the default value is `all`.
+- `attributes`: You can pass an Object of attribute name/attribute value pairs to set on the stylesheet. This can be used to specify Subresource Integrity attributes:
 ```javascript
 loadCSS(
-  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
-  null,
-  null,
-  {
-    "crossorigin": "anonymous",
-    "integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", {
+  attributes: {
+    crossorigin: "anonymous",
+    integrity: "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   }
-);
+} );
 ```
 
 #### Using with `onload`
@@ -148,12 +152,11 @@ onloadCSS( stylesheet, function() {
 });
 ```
 
-### Browser Support
-MODERN=[IE9+
-LEGACY=-IE8]
-loadCSS attempts to load a css file asynchronously in any JavaScript-capable browser. However, some older browsers such as Internet Explorer 8 and older will block rendering while the stylesheet is loading. This merely means that the stylesheet will load as if you referenced it with an ordinary link element.
+## Browser Support
+Both the polyfill and the function support post-IE8 Browsers.
+
+The polyfill is also available for pre-IE9 browsers. For that, use the legacy variant (`loadCSS/dist/polyfill.legacy`/`loadCSS/dist/polyfill.legacy.min`)
 
 
-#### Contributions and bug fixes
-
+## Contributions and bug fixes
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!

@@ -2,7 +2,8 @@ const fs = require( "fs" );
 const http = require( "http" );
 const path = require( "path" );
 
-const cssDelay = 1200;
+const cssDelay = 100;
+const cssDelayLong = 1200;
 
 const contentTypes = {
 	".css": "text/css",
@@ -101,7 +102,30 @@ module.exports = function runServer( {
 				)
 			);
 
-			if ( slug.endsWith( "slow.css" ) ) {
+			// CSS files get special handling to prevent race conditions
+			// or make pre-/post-load states visible
+			if ( slug.endsWith( ".css" ) ) {
+
+				// slow means a relatively long delay
+				if ( slug.endsWith( "slow.css" ) ) {
+					setTimeout( () => {
+						response.end( content );
+					}, cssDelayLong );
+
+					return;
+				}
+
+				// defaults should be loaded first
+				if ( slug.endsWith( "default.css" ) ) {
+					response.end( content );
+					setTimeout( () => {
+						response.end( content );
+					}, cssDelay );
+
+					return;
+				}
+
+				response.end( content );
 				setTimeout( () => {
 					response.end( content );
 				}, cssDelay );

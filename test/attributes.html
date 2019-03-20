@@ -5,17 +5,15 @@
 		<meta name="viewport" content="width=device-width">
 		<title>Tests for "link" attributes</title>
 		<script type="text/javascript">
-			<!--#include virtual="../src/loadCSS.js" -->
-			<!--#include virtual="../src/onloadCSS.js" -->
+			<!--#include virtual="../dist/loadCSS.global.js" -->
+			<!--#include virtual="../dist/onloadCSS.js" -->
 
 			(function () {
 				function loadBootstrapCSS( attributes ) {
 					const cacheBuster = Math.random();
 					return loadCSS(
 						"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" + '?cb=' + cacheBuster,
-						null,
-						null,
-						attributes
+						{ attributes: attributes }
 					);
 				}
 
@@ -64,21 +62,19 @@
 			requires providing <code>integrity</code> and <code>crossorigin</code> attributes to the <code>link</code> Element.
 		</p>
 		<p>
-			By supplying an Object of attribue name/attribute value pairs as the fourth argument to <code>loadCSS()</code>,
+			By supplying an Object of attribue name/attribute value pairs in the options argument to <code>loadCSS()</code>,
 			attributes can be set on the stylesheet's DOM Element.
 		</p>
 		<pre><code>
 loadCSS(
 	"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
-	null,
-	null,
-	{
+	{ attributes: {
 		"title": "Bootstrap Styles",
 		"type": "text/css",
 		"crossorigin": "anonymous",
 		"integrity": "sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 		// etc.
-	}
+	} }
 );
 		</code></pre>
 		<p>The following tests aim to validate the behavior of the API using correct and incorrect configurations:</p>

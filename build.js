@@ -1,6 +1,12 @@
 const path = require( "path" );
+
+const chokidar = require( "chokidar" );
 const uglify = require( "uglify-es" ).minify;
+
 const { readFileSync, outputFileSync, removeSync } = require( "fs-extra" );
+
+
+const watch = process.argv.includes( "-w" );
 
 
 const modern = "MODERN";
@@ -17,33 +23,48 @@ let allGood = true;
 
 removeSync( "dist" );
 
-( ()=>{
-const originalCode = source( "polyfill.js" );
-const [ modernCode, legacyCode ] = sift( originalCode, [ modern, legacy ] );
-write( "polyfill.js", modernCode );
-write( "polyfill.legacy.js", legacyCode );
-} )();
+if ( watch ) {
+	console.info( "\nWatching :)\n" );
 
-( ()=>{
-const originalCode = source( "loadCSS.js" );
-const [ cjsCode, esmCode, globalCode ] = sift( originalCode, [ cjs, esm, gns ] );
-write( "loadCSS.js", cjsCode );
-write( "loadCSS.mjs", esmCode );
-write( "loadCSS.global.js", globalCode );
-} )();
-
-( ()=>{
-const originalCode = source( "onloadCSS.js" );
-const [ modernCode, legacyCode ] = sift( originalCode, [ modern, legacy ] );
-write( "onloadCSS.js", modernCode );
-write( "onloadCSS.legacy.js", legacyCode );
-} )();
-
-
-if ( allGood ) {
-	console.info( "\nAll good! :)\n" );
+	chokidar.watch( "src/polyfill.js" ).on( "all", buildPolyfill );
+	chokidar.watch( "src/loadCSS.js" ).on( "all", buildLoadCSS );
+	chokidar.watch( "src/onloadCSS.js" ).on( "all", buildOnloadCSS );
 } else {
-	console.info( "\nBetter check the warnings above :\\\n" );
+	buildPolyfill();
+	buildLoadCSS();
+	buildOnloadCSS();
+
+	if ( allGood ) {
+		console.info( "\nAll good! :)\n" );
+	} else {
+		console.info( "\nBetter check the warnings above :\\\n" );
+	};
+}
+
+
+//
+
+
+function buildPolyfill() {
+	const originalCode = source( "polyfill.js" );
+	const [ modernCode, legacyCode ] = sift( originalCode, [ modern, legacy ] );
+	write( "polyfill.js", modernCode );
+	write( "polyfill.legacy.js", legacyCode );
+};
+
+function buildLoadCSS() {
+	const originalCode = source( "loadCSS.js" );
+	const [ cjsCode, esmCode, globalCode ] = sift( originalCode, [ cjs, esm, gns ] );
+	write( "loadCSS.js", cjsCode );
+	write( "loadCSS.mjs", esmCode );
+	write( "loadCSS.global.js", globalCode );
+};
+
+function buildOnloadCSS() {
+	const originalCode = source( "onloadCSS.js" );
+	const [ modernCode, legacyCode ] = sift( originalCode, [ modern, legacy ] );
+	write( "onloadCSS.js", modernCode );
+	write( "onloadCSS.legacy.js", legacyCode );
 };
 
 

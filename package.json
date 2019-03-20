@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/filamentgroup/loadCSS",
   "devDependencies": {
+    "chokidar": "^2.1.2",
     "eslint": "^5.15.1",
     "eslint-config-jquery": "^1.0.1",
     "fs-extra": "^7.0.1",
@@ -31,9 +32,11 @@
     "uglify-es": "^3.3.9"
   },
   "scripts": {
-    "start": "node serve",
+    "start": "run-p buildWatch serve",
+    "serve": "node serve",
     "test": "npx grunt",
     "build": "node build.js",
+    "buildWatch": "node build.js -w",
     "commitReadme": "git add README.md",
     "lint": "eslint --fix -- *.js src/**/*.js test/**/*.js",
     "prepublishOnly": "run-s lint build test readmeToc",

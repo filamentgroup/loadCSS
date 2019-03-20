@@ -2,7 +2,15 @@
 ( function( window ) { // GLOBAL
 "use strict"; // GLOBAL
 
-var loadCSS = function( href, before, media, attributes ) {
+var loadCSS = function( href, options ) {
+	var document = window.document;
+	options = options || {};
+
+	var attributes = options.attributes;
+	var media = options.media || "all";
+
+	var appendTo = options.appendTo;
+	var insertBefore = options.insertBefore;
 
 	// Arguments explained:
 	// `href` [REQUIRED] is the URL for your CSS file.
@@ -10,35 +18,31 @@ var loadCSS = function( href, before, media, attributes ) {
 	// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.
 	// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
 	// `attributes` [OPTIONAL] is the Object of attribute name/attribute value pairs to set on the stylesheet's DOM Element.
-	var doc = window.document;
-	var ss = doc.createElement( "link" );
-	var ref;
-	if ( before ) {
-		ref = before;
-	} else {
-		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
-		ref = refs[ refs.length - 1 ];
+	var stylesheetLink = document.createElement( "link" );
+
+	if ( !insertBefore && !appendTo ) {
+		appendTo = ( document.documentElement.lastChild );
 	}
 
-	var sheets = doc.styleSheets;
+	var sheets = document.styleSheets;
 
 	// Set any of the provided attributes to the stylesheet DOM Element.
 	if ( attributes ) {
 		for ( var attributeName in attributes ) {
 			if ( attributes.hasOwnProperty( attributeName ) ) {
-				ss.setAttribute( attributeName, attributes[ attributeName ] );
+				stylesheetLink.setAttribute( attributeName, attributes[ attributeName ] );
 			}
 		}
 	}
-	ss.rel = "stylesheet";
-	ss.href = href;
+	stylesheetLink.rel = "stylesheet";
+	stylesheetLink.href = href;
 
 	// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
-	ss.media = "only x";
+	stylesheetLink.media = "only x";
 
 	// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
 	function ready( cb ) {
-		if ( doc.body ) {
+		if ( document.body ) {
 			return cb();
 		}
 		setTimeout( function() {
@@ -51,12 +55,16 @@ var loadCSS = function( href, before, media, attributes ) {
 	// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
 	// TODO: this relies on parentNode existing, which is the main problem fixed by document.insertbefore
 	ready( function() {
-		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+		if ( appendTo ) {
+			appendTo.appendChild( stylesheetLink );
+		} else {
+			insertBefore.parentNode.insertBefore( stylesheetLink, insertBefore );
+		}
 	} );
 
 	// A method (exposed on return object for external use) that mimics onload by polling document.styleSheets until it includes the new sheet.
 	var onloadcssdefined = function( cb ) {
-		var resolvedHref = ss.href;
+		var resolvedHref = stylesheetLink.href;
 		var i = sheets.length;
 		while ( i-- ) {
 			if ( sheets[ i ].href === resolvedHref ) {
@@ -69,19 +77,20 @@ var loadCSS = function( href, before, media, attributes ) {
 	};
 
 	function loadCB() {
-		if ( ss.addEventListener ) {
-			ss.removeEventListener( "load", loadCB );
+		if ( stylesheetLink.addEventListener ) {
+			stylesheetLink.removeEventListener( "load", loadCB );
 		}
-		ss.media = media || "all";
+		stylesheetLink.media = media;
 	}
 
 	// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
-	if ( ss.addEventListener ) {
-		ss.addEventListener( "load", loadCB );
+	if ( stylesheetLink.addEventListener ) {
+		stylesheetLink.addEventListener( "load", loadCB );
 	}
-	ss.onloadcssdefined = onloadcssdefined;
+
+	stylesheetLink.onloadcssdefined = onloadcssdefined;
 	onloadcssdefined( loadCB );
-	return ss;
+	return stylesheetLink;
 };
 
 window.loadCSS = loadCSS; // GLOBAL

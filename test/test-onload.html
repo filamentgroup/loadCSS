@@ -1,11 +1,11 @@
 <!doctype HTML>
 <html>
 	<head>
-		<title>Blocking Test</title>
+		<title>Callback Test</title>
 		<meta charset="utf-8">
 		<script>
-			<!--#include virtual="../src/loadCSS.js" -->
-			<!--#include virtual="../src/onloadCSS.js" -->
+			<!--#include virtual="../dist/loadCSS.global.js" -->
+			<!--#include virtual="../dist/onloadCSS.js" -->
 
 			var ss = loadCSS( "slow.css" );
 			onloadCSS( ss, function() {
@@ -15,10 +15,9 @@
 	</head>
 	<body>
 		<p>
-			This is a test to see whether or not a loadCSS call will block render.
-			This page uses loadCss to load a CSS file that has a delay built into its server response time.
+			This is a test to see whether the onload callback fires after loading.
 			If loadCSS works properly,
-			you should be able to read this text before the page is styled as white text on green background.
+			a headline should appear when the page is styled as white text on green background.
 		</p>
 	</body>
 </html>

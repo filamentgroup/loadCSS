@@ -1,0 +1,27 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Insertion Test</title>
+		<meta charset="utf-8">
+		<!-- inject.append.css -->
+	</head>
+	<body>
+		<p>
+			This is a test to see whether or not a loadCSS will insert the link element at the correct place.
+			To make sure that load-order is not the culprit,
+			the first file to load is inserted at the place furthest down the document.
+		</p>
+		<!-- inject.insert.css -->
+		<p id="target">
+			I should be all green.
+		</p>
+		<script>
+			<!--#include virtual="../dist/loadCSS.global.js" -->
+
+			loadCSS( "inject.default.css" );
+			loadCSS( "inject.append.css", { appendTo: document.head } );
+			loadCSS( "inject.insert.css", { insertBefore: document.getElementById('target') } );
+		</script>
+		<!-- inject.default.css -->
+	</body>
+</html>

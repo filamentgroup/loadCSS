@@ -95,13 +95,21 @@ module.exports = function runServer( {
 
 			const content = fs.readFileSync(
 				filePath
-			).toString().replace(
-				/<!--#include (\w+)="([^"]+)" -->/g,
-				( _, tagName, includePath ) => includeTag(
-					tagName,
-					path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
+			).toString()
+				.replace(
+					/<!--#include (\w+)="([^"]+)" -->/g,
+					( _, tagName, includePath ) => includeTag(
+						tagName,
+						path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
+					)
 				)
-			);
+
+				// see https://github.com/filamentgroup/loadCSS/issues/36#issuecomment-89058404
+				.replace(
+					"</head>",
+					"<script></script></head>"
+				)
+			;
 
 			// CSS files get special handling to prevent race conditions
 			// or make pre-/post-load states visible

@@ -63,12 +63,27 @@ function buildLoadCSS() {
 };
 
 function buildOnloadCSS() {
-	console.info( "Building onloadCSS\n" );
+	console.info( "Building onloadCSS" );
 
 	const originalCode = source( "onloadCSS.js" );
-	const [ modernCode, legacyCode ] = sievery( originalCode, [ modern, legacy ] );
-	write( "onloadCSS.js", modernCode );
-	write( "onloadCSS.legacy.js", legacyCode );
+	const [ cjsCode, esmCode, globalCode ] = sievery( originalCode, [ cjs, esm, gns ] );
+
+	console.info( "    CJS" );
+	const [ modernCJS, legacyCJS ] = sievery( cjsCode, [ modern, legacy ] );
+	write( "onloadCSS.js", modernCJS );
+	write( "onloadCSS.legacy.js", legacyCJS );
+
+	console.info( "    ESM" );
+	const [ modernESM, legacyESM ] = sievery( esmCode, [ modern, legacy ] );
+	write( "onloadCSS.mjs", modernESM );
+	write( "onloadCSS.legacy.mjs", legacyESM );
+
+	console.info( "    Global" );
+	const [ modernGlobal, legacyGlobal ] = sievery( globalCode, [ modern, legacy ] );
+	write( "onloadCSS.global.js", modernGlobal );
+	write( "onloadCSS.global.legacy.js", legacyGlobal );
+
+	console.info();
 };
 
 

@@ -2,11 +2,13 @@
 ( function( window ) { // GLOBAL
 "use strict"; // GLOBAL
 
+var document = window.document;
+
 /**
  * @typedef {Object} Options
  *
  * @property {string} [media=all] - the media type or query for the stylesheet
- * @property {Object} attributes - attributes to be set on the generated link element
+ * @property {Object} [attributes] - attributes to be set on the generated link element
  * @property {HTMLElement} [appendTo=document.documentElement.lastChild]
  *           - container to append the generated link element to
  * @property {HTMLElement} [insertBefore]
@@ -20,49 +22,43 @@
  * @param {Options} options - options
  */
 var loadCSS = function( href, options ) {
-	var document = window.document;
-	options = options || {};
+	options = options || Object.create( null );
 
-	var attributes = options.attributes;
+
+	var attributes = options.attributes || Object.create( null );
 	var media = options.media || "all";
 
 	var appendTo = options.appendTo;
 	var insertBefore = options.insertBefore;
 
-	var stylesheetLink = document.createElement( "link" );
-
 	if ( !insertBefore && !appendTo ) {
 		appendTo = ( document.documentElement.lastChild );
 	}
 
-	var sheets = document.styleSheets;
+
+	var stylesheetLink = document.createElement( "link" );
+
+	var linkedStylesheets = document.styleSheets;
 
 	// Set any of the provided attributes to the stylesheet DOM Element.
-	if ( attributes ) {
-		for ( var attributeName in attributes ) {
-			if ( attributes.hasOwnProperty( attributeName ) ) {
-				stylesheetLink.setAttribute( attributeName, attributes[ attributeName ] );
-			}
+	for ( var attributeName in attributes ) {
+		if ( attributes.hasOwnProperty( attributeName ) ) {
+			stylesheetLink.setAttribute( attributeName, attributes[ attributeName ] );
 		}
 	}
+
 	stylesheetLink.rel = "stylesheet";
 	stylesheetLink.href = href;
+	var resolvedHref = stylesheetLink.href;
 
 	// temporarily set media to something inapplicable to ensure it'll fetch without blocking render
 	stylesheetLink.media = "only x";
 
-	// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
-	function ready( cb ) {
-		if ( document.body ) {
-			return cb();
-		}
-		setTimeout( function() {
-			ready( cb );
-		} );
-	}
+
+	//
 
 	// Inject link
-	ready( function() {
+	onBody( function() {
 		if ( appendTo ) {
 			appendTo.appendChild( stylesheetLink );
 		} else {
@@ -70,39 +66,46 @@ var loadCSS = function( href, options ) {
 		}
 	} );
 
+	// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
+	stylesheetLink.onloadcsslinked = onlink;
+	onlink( activateStylesheet );
+
+	return stylesheetLink;
+
 	// A method (exposed on return object for external use) that mimics onload by polling document.styleSheets until it includes the new sheet.
-	var onloadcssdefined = function( cb ) {
-		var resolvedHref = stylesheetLink.href;
-		var i = sheets.length;
+	function onlink( loadEventHandler ) {
+		var i = linkedStylesheets.length;
+
 		while ( i-- ) {
-			if ( sheets[ i ].href === resolvedHref ) {
-				return cb();
+			if ( linkedStylesheets[ i ].href === resolvedHref ) {
+				loadEventHandler();
+				return;
 			}
 		}
+
 		setTimeout( function() {
-			onloadcssdefined( cb );
+			onlink( loadEventHandler );
 		} );
 	};
 
-	function loadCB() {
-		if ( stylesheetLink.addEventListener ) {
-			stylesheetLink.removeEventListener( "load", loadCB );
-		}
+	function activateStylesheet() {
 		stylesheetLink.media = media;
 	}
-
-	// once loaded, set link's media back to `all` so that the stylesheet applies once it loads
-	if ( stylesheetLink.addEventListener ) {
-		stylesheetLink.addEventListener( "load", loadCB );
-	}
-
-	stylesheetLink.onloadcssdefined = onloadcssdefined;
-	onloadcssdefined( loadCB );
-	return stylesheetLink;
 };
 
-window.loadCSS = loadCSS; // GLOBAL
-exports.loadCSS = loadCSS; // CJS
-} )( typeof global !== "undefined" ? global : this ); // GLOBAL
 
+// wait until body is defined before injecting link. This ensures a non-blocking load in IE11.
+function onBody( cb ) {
+	if ( document.body ) {
+		return cb();
+	}
+
+	setTimeout( function() {
+		onBody( cb );
+	} );
+}
+
+window.loadCSS = loadCSS; // GLOBAL
+} )( typeof global !== "undefined" ? global : this ); // GLOBAL
+exports.loadCSS = loadCSS; // CJS
 export default loadCSS; // ESM

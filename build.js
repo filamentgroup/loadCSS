@@ -44,6 +44,8 @@ if ( watch ) {
 
 
 function buildPolyfill() {
+	console.info( "Building polyfill\n" );
+
 	const originalCode = source( "polyfill.js" );
 	const [ modernCode, legacyCode ] = sievery( originalCode, [ modern, legacy ] );
 	write( "polyfill.js", modernCode );
@@ -51,6 +53,8 @@ function buildPolyfill() {
 };
 
 function buildLoadCSS() {
+	console.info( "Building loadCSS\n" );
+
 	const originalCode = source( "loadCSS.js" );
 	const [ cjsCode, esmCode, globalCode ] = sievery( originalCode, [ cjs, esm, gns ] );
 	write( "loadCSS.js", cjsCode );
@@ -59,6 +63,8 @@ function buildLoadCSS() {
 };
 
 function buildOnloadCSS() {
+	console.info( "Building onloadCSS\n" );
+
 	const originalCode = source( "onloadCSS.js" );
 	const [ modernCode, legacyCode ] = sievery( originalCode, [ modern, legacy ] );
 	write( "onloadCSS.js", modernCode );

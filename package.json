@@ -1,6 +1,6 @@
 {
   "name": "fg-loadcss",
-  "version": "3.0.0-alpha",
+  "version": "3.0.0-rc",
   "description": "A polyfill for `rel=preload` style-loading and a function for loading CSS asynchronously",
   "main": "dist/loadCSS.js",
   "files": [

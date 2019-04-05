@@ -7,7 +7,7 @@ const uglify = require( "uglify-es" ).minify;
 const { readFileSync, outputFileSync, removeSync } = require( "fs-extra" );
 
 
-const watch = process.argv.includes( "-w" );
+const watchMode = process.argv.includes( "-w" );
 
 
 const modern = "MODERN";
@@ -31,12 +31,12 @@ if ( allGood ) {
 	console.info( "\nBetter check the warnings above :\\\n" );
 };
 
-if ( watch ) {
+if ( watchMode ) {
 	console.info( "\nWatching :)\n" );
 
-	chokidar.watch( "src/polyfill.js" ).on( "change", buildPolyfill );
-	chokidar.watch( "src/loadCSS.js" ).on( "change", buildLoadCSS );
-	chokidar.watch( "src/onloadCSS.js" ).on( "change", buildOnloadCSS );
+	watch( "src/polyfill.js", buildPolyfill );
+	watch( "src/loadCSS.js", buildLoadCSS );
+	watch( "src/onloadCSS.js", buildOnloadCSS );
 }
 
 
@@ -122,4 +122,13 @@ function minify( code ) {
 	}
 
 	return result.code;
+}
+
+function watch( filePath, changeHandler ) {
+	chokidar.watch( filePath, {
+		awaitWriteFinish: {
+			stabilityThreshold: 200,
+			pollInterval: 10
+		}
+	} ).on( "change", changeHandler );
 }

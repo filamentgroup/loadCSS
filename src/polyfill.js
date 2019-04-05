@@ -25,7 +25,7 @@ try {
 findLinksAndBind();
 
 // rerun polyfill on an interval while the page is loading
-var run = window.setInterval( findLinksAndBind, 500 );
+var poll = window.setInterval( findLinksAndBind, 500 );
 
 document.addEventListener( "DOMContentLoaded", pageLoadHandler ); // MODERN
 // LEGACY/
@@ -37,20 +37,21 @@ if ( window.addEventListener ) {
 // /LEGACY
 
 
-//
-
-
 function pageLoadHandler() {
-	window.clearInterval( run );
+	window.clearInterval( poll );
 
 	// one last time to make sure all links are covered
 	findLinksAndBind();
 }
 
 
+//
+
+
 function findLinksAndBind() {
-	var links = document.querySelectorAll( "link[rel=preload][as=style]:not([data-loadcss])" ); // MODERN
-	var links = document.getElementsByTagName( "link" ); // LEGACY
+	var links =
+	document.querySelectorAll( "link[rel=preload][as=style]:not([data-loadcss])" ); // MODERN
+	document.getElementsByTagName( "link" ); // LEGACY
 
 	// loop through link elements in DOM
 	for ( var i = 0; i < links.length; i++ ) {
@@ -101,6 +102,10 @@ function bindMediaToggle( link ) {
 	// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
 	setTimeout( applyStylesheet, 3000 ); //
 	// /LEGACY
+
+
+	//
+
 
 	function loadStylesheet() {
 		link.rel = "stylesheet";

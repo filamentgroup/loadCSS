@@ -2,6 +2,23 @@
 ( function( window ) { // GLOBAL
 "use strict"; // GLOBAL
 
+/**
+ * @typedef {Object} Options
+ *
+ * @property {string} [media=all] - the media type or query for the stylesheet
+ * @property {Object} attributes - attributes to be set on the generated link element
+ * @property {HTMLElement} [appendTo=document.documentElement.lastChild]
+ *           - container to append the generated link element to
+ * @property {HTMLElement} [insertBefore]
+ *           - specific element to insert the link element before, only used if `appendTo` is empty
+ */
+
+/**
+ * loads CSS asynchronously
+ *
+ * @param {string} href - the URL to use for the link tag
+ * @param {Options} options - options
+ */
 var loadCSS = function( href, options ) {
 	var document = window.document;
 	options = options || {};
@@ -12,12 +29,6 @@ var loadCSS = function( href, options ) {
 	var appendTo = options.appendTo;
 	var insertBefore = options.insertBefore;
 
-	// Arguments explained:
-	// `href` [REQUIRED] is the URL for your CSS file.
-	// `before` [OPTIONAL] is the element the script should use as a reference for injecting our stylesheet <link> before
-	// By default, loadCSS attempts to inject the link after the last stylesheet or script in the DOM. However, you might desire a more specific location in your document.
-	// `media` [OPTIONAL] is the media type or query of the stylesheet. By default it will be 'all'
-	// `attributes` [OPTIONAL] is the Object of attribute name/attribute value pairs to set on the stylesheet's DOM Element.
 	var stylesheetLink = document.createElement( "link" );
 
 	if ( !insertBefore && !appendTo ) {
@@ -51,9 +62,6 @@ var loadCSS = function( href, options ) {
 	}
 
 	// Inject link
-	// Note: the ternary preserves the existing behavior of "before" argument, but we could choose to change the argument to "after" in a later release and standardize on ref.nextSibling for all refs
-	// Note: `insertBefore` is used instead of `appendChild`, for safety re: http://www.paulirish.com/2011/surefire-dom-element-insertion/
-	// TODO: this relies on parentNode existing, which is the main problem fixed by document.insertbefore
 	ready( function() {
 		if ( appendTo ) {
 			appendTo.appendChild( stylesheetLink );

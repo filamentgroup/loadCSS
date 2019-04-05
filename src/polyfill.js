@@ -110,7 +110,7 @@ function bindMediaToggle( link ) {
 	function applyStylesheet() {
 
 		// unbind listeners
-		link.addEventListener( "load", applyStylesheet ); // MODERN
+		link.removeEventListener( "load", applyStylesheet ); // MODERN
 		// LEGACY/
 		if ( link.addEventListener ) {
 			link.removeEventListener( "load", applyStylesheet );
@@ -118,6 +118,9 @@ function bindMediaToggle( link ) {
 			link.detachEvent( "onload", applyStylesheet );
 		} //
 		// /LEGACY
+
+		// safety net for https://github.com/filamentgroup/loadCSS/issues/262
+		link.onload = null;
 
 		// activate for desired media type
 		link.media = finalMedia;

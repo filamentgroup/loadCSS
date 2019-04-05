@@ -2,27 +2,10 @@
 <html>
 	<head>
 		<title>CSS link[rel=preload] Polyfill</title>
-		<script><!--#include virtual="../dist/polyfill.js" --></script>
-		<link rel="preload" href="slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="slow.css"></noscript>
-		<style>
-			/* a few demo styles */
-			body {
-				font-family: sans-serif;
-				margin: 50px auto;
-				max-width: 40em;
-				padding: 0 20px;
-				line-height: 1.5
-			}
-			pre {
-				white-space: normal;
-				background: #fff;
-				padding: 15px;
-				border: 1px solid rgba(0,0,0,.3);
-				color: #333;
-			}
-
-		</style>
+		<!--#include script="../../dist/polyfill.js" -->
+		<link rel="preload" href="/slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="/slow.css"></noscript>
+		<!--#include style="demo.css" -->
 		<script></script><!-- here to ensure a non-blocking load still occurs in IE and Edge, even if scripts follow loadCSS in head -->
 	</head>
 	<body>
@@ -41,7 +24,7 @@
 		<pre><code>&lt;link rel="preload" href="slow.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;</code></pre>
 
 		<p>
-			Note: The CSS file  has a 5 second delay built into its server response time.
+			Note: The CSS file has a delay built into its server response time.
 			If it is loaded in a non-blocking manner as desired,
 			you should be able to read this text before the page is styled as white text on green background.
 		</p>

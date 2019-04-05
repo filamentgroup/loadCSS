@@ -15,9 +15,8 @@
 		<p id="target">
 			I should be all green.
 		</p>
+		<!--#include script="../../dist/loadCSS.global.js" -->
 		<script>
-			<!--#include virtual="../dist/loadCSS.global.js" -->
-
 			loadCSS( "inject.default.css" );
 			loadCSS( "inject.append.css", { appendTo: document.head } );
 			loadCSS( "inject.insert.css", { insertBefore: document.getElementById('target') } );

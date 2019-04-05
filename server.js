@@ -6,9 +6,9 @@ const cssDelay = 100;
 const cssDelayLong = 1200;
 
 const contentTypes = {
-	".css": "text/css",
-	".html": "text/html",
-	".js": "application/javascript"
+	".css": "text/css; charset=utf-8",
+	".html": "text/html; charset=utf-8",
+	".js": "application/javascript; charset=utf-8"
 };
 
 module.exports = function runServer( {
@@ -96,8 +96,9 @@ module.exports = function runServer( {
 			const content = fs.readFileSync(
 				filePath
 			).toString().replace(
-				/<!--#include virtual="([^"]+)" -->/g,
-				( _, includePath ) => fs.readFileSync(
+				/<!--#include (\w+)="([^"]+)" -->/g,
+				( _, tagName, includePath ) => includeTag(
+					tagName,
 					path.resolve( path.dirname( path.join( ".", filePath ) ), includePath )
 				)
 			);
@@ -147,3 +148,8 @@ module.exports = function runServer( {
 		}
 	}
 };
+
+function includeTag( tagName, filePath ) {
+	const fileData = fs.readFileSync( filePath ).toString();
+	return `<${tagName}>${fileData}</${tagName}>`;
+}

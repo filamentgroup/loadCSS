@@ -1,0 +1,15 @@
+/* a few demo styles */
+body {
+	font-family: sans-serif;
+	margin: 50px auto;
+	max-width: 40em;
+	padding: 0 20px;
+	line-height: 1.5
+}
+pre {
+	white-space: normal;
+	background: #fff;
+	padding: 15px;
+	border: 1px solid rgba(0,0,0,.3);
+	color: #333;
+}

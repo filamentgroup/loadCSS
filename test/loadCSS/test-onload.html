@@ -1,0 +1,22 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Callback Test</title>
+		<meta charset="utf-8">
+		<!--#include script="../../dist/loadCSS.global.js" -->
+		<!--#include script="../../dist/onloadCSS.global.js" -->
+		<script>
+			var ss = loadCSS( "/slow.css" );
+			onloadCSS( ss, function() {
+				document.body.innerHTML += '<h1>onload!!!</h1>';
+			});
+		</script>
+	</head>
+	<body>
+		<p>
+			This is a test to see whether the onload callback fires after loading.
+			If loadCSS works properly,
+			a headline should appear when the page is styled as white text on green background.
+		</p>
+	</body>
+</html>

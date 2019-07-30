@@ -7,7 +7,7 @@
  * Released under the MIT license.
  * http://jquery.org/license
  */
-/* jshint ignore:start */
+/* eslint-disable */
 
 (function( window ) {
 

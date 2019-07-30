@@ -1,0 +1,5 @@
+/* This file gets delivered without a delay. */
+body {
+	background: green;
+	color: #fff;
+}

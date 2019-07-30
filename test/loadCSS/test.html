@@ -1,0 +1,22 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Blocking Test</title>
+		<meta charset="utf-8">
+		<style>
+			body {
+				background: #ccc;
+			}
+		</style>
+		<!--#include script="../../dist/loadCSS.global.js" -->
+		<script> loadCSS( "/slow.css" ); </script>
+	</head>
+	<body>
+		<p>
+			This is a test to see whether or not a loadCSS call will block render.
+			This page uses loadCss to load a CSS file that has a delay built into its server response time.
+			If loadCSS works properly,
+			you should be able to read this text before the page is styled as white text on green background.
+		</p>
+	</body>
+</html>

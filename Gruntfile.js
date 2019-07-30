@@ -1,49 +1,28 @@
-/* global module:false */
-module.exports = function(grunt) {
+const runServer = require( "./server" );
+const port = 3003;
 
-	require( 'matchdep' ).filterDev( ['grunt-*', '!grunt-cli'] ).forEach( grunt.loadNpmTasks );
+let server;
+let timeout;
 
-	// Project configuration.
-	grunt.initConfig({
-		jshint: {
-			all: {
-				options: {
-					jshintrc: ".jshintrc"
-				},
+module.exports = function( grunt ) {
+	server = runServer( {
+		port,
+		onLaunch: serverCloseSoon,
+		onRequest: serverCloseSoon
+	} );
 
-				src: [
-					'*.js',
-					'test/**/*.js',
-					'src/**/*.js',
-				]
-			}
-		},
-		concat: {
-			dist: {
-				files: {
-					'dist/loadCSS.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.js': ['src/cssrelpreload.js'],
-					'dist/onloadCSS.js': ['src/onloadCSS.js']
-				}
-			}
-		},
-		uglify: {
-			options: {
-					preserveComments: /^\!/
-			},
-			dist: {
-				files: {
-					'dist/loadCSS.min.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.min.js': ['src/cssrelpreload.js'],
-					'dist/onloadCSS.min.js': ['src/onloadCSS.js']
-				}
-			}
-		},
-		qunit: {
-			files: ['test/qunit/**/*.html']
-		}
-	});
+	grunt.loadNpmTasks( "grunt-contrib-qunit" );
 
-	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-	grunt.registerTask('stage', ['default']);
+	grunt.initConfig( {
+		qunit: { all: { options: {
+			urls: [ "http://localhost:" + port + "/qunit/index.html" ]
+		} } }
+	} );
+
+	grunt.registerTask( "default", [ "qunit" ] );
 };
+
+function serverCloseSoon() {
+	clearTimeout( timeout );
+	timeout = setTimeout( ()=>server.close(), 500 );
+}

@@ -22,7 +22,6 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'dist/loadCSS.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.js': ['src/cssrelpreload.js'],
 					'dist/onloadCSS.js': ['src/onloadCSS.js']
 				}
 			}
@@ -34,7 +33,6 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					'dist/loadCSS.min.js': ['src/loadCSS.js'],
-					'dist/cssrelpreload.min.js': ['src/cssrelpreload.js'],
 					'dist/onloadCSS.min.js': ['src/onloadCSS.js']
 				}
 			}

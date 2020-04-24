@@ -1,4 +1,4 @@
-/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/*! loadCSS. [c]2020 Filament Group, Inc. MIT License */
 (function(w){
 	"use strict";
 	/* exported loadCSS */

@@ -103,14 +103,5 @@
 		} );
 	});
 
-	test( 'loadCSS preload polyfill methods ', function(){
-		expect(5);
-
-		ok( window.loadCSS.relpreload, "loadCSS.relpreload should exist" );
-		ok( typeof window.loadCSS.relpreload === "object", "relpreload should be an object" );
-		ok( typeof window.loadCSS.relpreload.support === "function", "relpreload.support should be a function" );
-		ok( typeof window.loadCSS.relpreload.poly === "function", "relpreload.poly should be a function" );
-		ok( typeof window.loadCSS.relpreload.support() === "boolean", "relpreload.support should be a bool" );
-	});
 
 }(window));

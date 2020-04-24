@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>CSS link media toggle</title>
-		<link rel="stylesheet" href="slow.css" media="print" onload="this.media='all'">
+		<link rel="stylesheet" href="slow.css" media="print" onload="this.media='all'; this.onload=null;">
 		<noscript><link rel="stylesheet" href="slow.css"></noscript>
 		
 		<style>

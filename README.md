@@ -75,6 +75,15 @@ onloadCSS( stylesheet, function() {
 The loadCSS patterns attempt to load a css file asynchronously in any JavaScript-capable browser. However, some older browsers such as Internet Explorer 8 and older will block rendering while the stylesheet is loading. This merely means that the stylesheet will load as if you referenced it with an ordinary link element.
 
 
+# Changes in version 3.0 (no more preload polyfill)
+
+As of version 3.0, we no longer support or include a polyfill for a `rel=preload` markup pattern. This is because we have since determined that the markup pattern described at the top of this readme is simpler and better for performance, while the former preload pattern could sometimes conflict with resource priorities in ways that aren't helpful for loading CSS in a non-blocking way.
+
+To update, you can change your preload markup to [this HTML pattern](https://github.com/filamentgroup/loadCSS/blob/master/README.md#how-to-use) and delete the JS from your build.
+
+Since this change breaks the API from prior versions, we made it a major version bump. That way, if you are still needing to use the now-deprecated preload pattern, you can keep your code pointing at prior versions that are still on NPM, such as version 2.1.0 https://github.com/filamentgroup/loadCSS/releases/tag/v2.1.0
+
+
 #### Contributions and bug fixes
 
 Both are very much appreciated - especially bug fixes. As for contributions, the goals of this project are to keep things very simple and utilitarian, so if we don't accept a feature addition, it's not necessarily because it's a bad idea. It just may not meet the goals of the project. Thanks!

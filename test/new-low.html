@@ -13,7 +13,7 @@
 
 		<p>This test page demonstrates a new pattern for loading a stylesheet asynchronously at a low priority. The page will turn green when the CSS loads. </p>
 <pre><code>
-&lt;link rel=&quot;alternate stylesheet preload&quot; href=&quot;slow.css&quot; title=&quot;styles&quot; as=&quot;style&quot; onload=&quot;this.title=&#39;&#39;;this.rel=&#39;stylesheet&#39;&quot;&gt;
+&lt;link rel=&quot;alternate stylesheet&quot; href=&quot;slow.css&quot; title=&quot;styles&quot; as=&quot;style&quot; onload=&quot;this.title=&#39;&#39;;this.rel=&#39;stylesheet&#39;&quot;&gt;
 </code></pre>
 		<p>Instead of the <a href="recommended.html"> usual print toggle</a>, this page is loading CSS with rel="alternate stylesheet", which will load async at a low priority. Onload, the rel is set to stylesheet and title is turned off, causing it to apply. 
 			What's nice about this pattern is you can add another rel value of "preload" to increase its priority from low to high. <a href="new-high.html">View high priority async demo</a> </p>

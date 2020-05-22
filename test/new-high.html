@@ -1,0 +1,24 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Recommended Pattern Test</title>
+		<meta charset="utf-8">
+        <link rel="alternate stylesheet preload" href="slow.css" title="styles" as="style" onload="this.title='';this.rel='stylesheet'">
+	</head>
+	<body style="font-family: sans-serif;">
+
+		<p><a href="https://github.com/filamentgroup/loadCSS/">LoadCSS Project</a></p>
+
+		<h1>LoadCSS: High-Priority Asynchronous CSS Loading Demo</h1>
+
+		<p>This test page demonstrates a new pattern for loading a stylesheet asynchronously at a low priority. The page will turn green when the CSS loads. </p>
+<pre><code>
+&lt;link rel=&quot;alternate stylesheet preload&quot; href=&quot;slow.css&quot; title=&quot;styles&quot; as=&quot;style&quot; onload=&quot;this.title=&#39;&#39;;this.rel=&#39;stylesheet&#39;&quot;&gt;
+</code></pre>
+        <p>Instead of the <a href="recommended.html"> usual print toggle</a>, this page is loading CSS with rel="alternate stylesheet preload", which will load async at a high priority. 
+            On load, the rel is set to stylesheet and title is turned off, causing it to apply. 
+			What's nice about this pattern is you can lower the priority by removing the rel value of "preload" to decrease its priority from high to low. <a href="new-low.html">View low priority async demo</a> </p>
+
+
+	</body>
+</html>

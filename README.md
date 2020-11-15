@@ -21,7 +21,11 @@ That is probably all you need! But if you want to load a CSS file from a JavaScr
 
 ## Dynamic CSS loading with the loadCSS function
 
-The [loadCSS.js](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) file exposes a global `loadCSS` function that you can call to load CSS files programmatically, if needed. This is handy for cases where you need to dynamically load CSS from script.
+First, include the loadCSS library into your project.  This can be done by directly including the [loadCSS.js](https://github.com/filamentgroup/loadCSS/blob/master/src/loadCSS.js) file which exposes a global `loadCSS` function.
+
+If you prefer, you can also install loadCSS via npm: `npm i fg-loadcss` and import the `loadCSS` function into the necessary files.
+
+Once you have `loadCSS` available installed in your project, use it as so:
 
 ``` javascript
 loadCSS( "path/to/mystylesheet.css" );

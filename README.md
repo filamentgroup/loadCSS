@@ -13,7 +13,7 @@ Referencing CSS stylesheets with `link[rel=stylesheet]` or `@import` causes brow
 
 As a primary pattern, we recommend loading asynchronous CSS like this from HTML:
 
-`<link rel="stylesheet" href="/path/to/my.css" media="print" onload="this.media='all'; this.onload=null;">`
+`<link rel="stylesheet" href="/path/to/my.css" media="print" onload="media='all';onload=null">`
 
 This article explains why this approach is best: https://www.filamentgroup.com/lab/load-css-simpler/
 

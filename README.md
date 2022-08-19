@@ -4,7 +4,7 @@ A pattern for loading CSS asynchronously
 [c]2020 @scottjehl, @zachleat [Filament Group, Inc.](https://www.filamentgroup.com/)
 Licensed MIT
 
-## Why an ansychronous CSS loader?
+## Why an asynchronous CSS loader?
 
 Referencing CSS stylesheets with `link[rel=stylesheet]` or `@import` causes browsers to delay page rendering while a stylesheet loads. When loading stylesheets that are not critical to the initial rendering of a page, this blocking behavior is undesirable. The pattern below allows us to fetch and apply CSS asynchronously. If necessary, this repo also offers a separate (and optional) JavaScript function for loading stylesheets dynamically.
 

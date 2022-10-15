@@ -8,9 +8,9 @@
   var wait = function(callback) {
     if ('queueMicrotask' in window) {
       queueMicrotask(callback);
+    } else {
+      setTimeout(callback);
     }
-
-    setTimeout(callback);
   }
 
 	/* exported loadCSS */

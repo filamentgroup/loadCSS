@@ -1,6 +1,18 @@
 /*! loadCSS. [c]2020 Filament Group, Inc. MIT License */
 (function(w){
 	"use strict";
+
+  // Runs callback function when the execution stack is empty
+  // It's preferable to use the queueMicrotask function than setTimeout for performance reasons
+  // https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
+  var wait = function(callback) {
+    if ('queueMicrotask' in window) {
+      queueMicrotask(callback);
+    }
+
+    setTimeout(callback);
+  }
+
 	/* exported loadCSS */
 	var loadCSS = function( href, before, media, attributes ){
 		// Arguments explained:
@@ -39,7 +51,7 @@
 			if( doc.body ){
 				return cb();
 			}
-			setTimeout(function(){
+			wait(function(){
 				ready( cb );
 			});
 		}
@@ -58,7 +70,7 @@
 					return cb();
 				}
 			}
-			setTimeout(function() {
+			wait(function() {
 				onloadcssdefined( cb );
 			});
 		};

@@ -7,11 +7,11 @@
   // https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
   var wait = function(callback) {
     if ('queueMicrotask' in window) {
-      queueMicrotask(callback);
+      window.queueMicrotask(callback);
     } else {
       setTimeout(callback);
     }
-  }
+  };
 
 	/* exported loadCSS */
 	var loadCSS = function( href, before, media, attributes ){

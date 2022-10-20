@@ -1,3 +1,5 @@
+:warning: This project is archived and the repository is no longer maintained. 				
+
 # loadCSS
 
 A pattern for loading CSS asynchronously
